@@ -1,15 +1,63 @@
 import React from "react"
 import { graphql } from "gatsby";
+import get from 'lodash/get'
 import Navbar from "../components/navbar"
 
 const DemoPage = ({ data }) => {
-    console.log(data);
+    const sections = get(data, 'allContentfulPageSection.edges');
     return <>
         <Navbar />
-        <h1>Hi people</h1>
-        <p>Welcome to your new Gatsby site.</p>
-        <p>Now go build something great.</p>
-        <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
+        <div style={{ marginBottom: `1.45rem` }}>
+            {sections.map(({ node }) => {
+                console.log(node);
+                if (node.sectionIndex === 1) {
+                    const bgImageUrl = get(node, 'backgroundImage.file.url');
+                    const body = get(node, 'body.childMarkdownRemark.html');
+                    console.log('bgImageUrl: => ', bgImageUrl.slice(2, bgImageUrl.length))
+                    console.log('body => ', body);
+                    return (
+                        <section key={node.id}
+                            style={{
+                                minHeight: '400px',
+                                backgroundImage: `url(${bgImageUrl.slice(2, bgImageUrl.length)})`,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'flex-end',
+                                alignItems: 'center',
+                                paddingLeft: '10rem',
+                                paddingRight: '10rem',
+                                lineHeight: 'normal',
+                            }}>
+
+                            <h1 style={{ 
+                                marginBottom: '0px',
+                                fontWeight: 'bold',
+                                fontSize: '40px',
+                                }}>{node.title}</h1>
+
+                            <div
+                                style={{
+                                    fontSize: '0.88rem',
+                                    fontWeight: 'bold',
+                                    alignContent: 'center',
+                                    textAlign: 'center',
+                                    padding: '0px'
+                                }}
+                                dangerouslySetInnerHTML={{
+                                    __html: body,
+                                }}
+                            />
+                        </section>
+                    )
+                }
+                else {
+                    return (
+                        <section key={node.id}>
+                            {node.title}
+                        </section>
+                    )
+                }
+            })}
         </div>
     </>
 }
@@ -17,10 +65,11 @@ const DemoPage = ({ data }) => {
 export default DemoPage;
 
 export const query = graphql`
-query MyQuery {
-    allContentfulPageSection(filter: {page: {eq: "Home"}}) {
+query DemoPageQuery {
+    allContentfulPageSection(filter: {page: {eq: "Home"}}, sort: {fields: createdAt, order: ASC}) {
       edges {
         node {
+          id
           sectionIndex
           medias {
             title
@@ -66,5 +115,5 @@ query MyQuery {
         }
       }
     }
-  }  
+  }   
 `
