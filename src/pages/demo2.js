@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
+import Helmet from 'react-helmet'
 import '../styles/global.css'
 import Navbar from '../components/navbar'
 
@@ -16,6 +17,12 @@ const Demo2Page = ({ data }) => {
 
   return (
     <>
+      <Helmet bodyAttributes={{ class: 'body-general' }}>
+        <link
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"
+          rel="stylesheet"
+        />
+      </Helmet>
       <Navbar />
       <div className="section-hero">
         <img src={sections[0].backgroundImage.file.url} alt="" />
