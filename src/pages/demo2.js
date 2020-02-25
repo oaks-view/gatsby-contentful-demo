@@ -34,9 +34,33 @@ const Demo2Page = ({ data }) => {
                 key={`col-${i}`}
               >
                 <a href={item.linkTo} className="link-block-2 w-inline-block">
-                  <img src={item.medias[0].file.url} alt="" />
+                  <img
+                    src={item.medias[0].file.url}
+                    alt=""
+                    className="flags-countries"
+                  />
                   <div className="titles-countries">{item.title}</div>
                 </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="section-general">
+        <div className="container-general w-container">
+          <h3 className="h3-general">{sections[2].title}</h3>
+          <p className="text-general">{sections[2].body.body}</p>
+          <div className="column-data w-row">
+            {sections[2].medias.map((item, i) => (
+              <div
+                className={`column-${[14, 21, 15][i]} w-col w-col-4`}
+                key={`img-${i}`}
+              >
+                <img
+                  src={item.file.url}
+                  alt=""
+                  className={`image-${[13, 15, 14][i]}`}
+                />
               </div>
             ))}
           </div>

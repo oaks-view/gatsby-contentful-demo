@@ -10,8 +10,15 @@
   z-index: -100;
 }
 
+.flags-countries {
+  height: 65px;
+}
+
 @media (max-width: 479px) {
   .section-hero > img {
     height: 200px;
+  }
+  .flags-countries {
+    height: 31px;
   }
 }
