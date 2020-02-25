@@ -4,11 +4,11 @@ import get from 'lodash/get'
 import Navbar from "../components/navbar"
 
 const DemoPage = ({ data }) => {
-    const sections = get(data, 'allContentfulPageSection.edges');
+    const sections = get(data, 'contentfulPage.sections');
     return <>
         <Navbar />
         <div style={{ marginBottom: `1.45rem` }}>
-            {sections.map(({ node }) => {
+            {sections.map(node => {
                 console.log(node);
                 if (node.sectionIndex === 1) {
                     const bgImageUrl = get(node, 'backgroundImage.file.url');
@@ -29,11 +29,11 @@ const DemoPage = ({ data }) => {
                                 lineHeight: 'normal',
                             }}>
 
-                            <h1 style={{ 
+                            <h1 style={{
                                 marginBottom: '0px',
                                 fontWeight: 'bold',
                                 fontSize: '40px',
-                                }}>{node.title}</h1>
+                            }}>{node.title}</h1>
 
                             <div
                                 style={{
@@ -66,54 +66,51 @@ export default DemoPage;
 
 export const query = graphql`
 query DemoPageQuery {
-    allContentfulPageSection(filter: {page: {eq: "Home"}}, sort: {fields: createdAt, order: ASC}) {
-      edges {
-        node {
-          id
-          sectionIndex
-          medias {
-            title
-            file {
-              url
-              fileName
-            }
+    contentfulPage(title: {eq: "Home"}) {
+      sections {
+        id
+        sectionIndex
+        medias {
+          title
+          file {
+            url
+            fileName
           }
+        }
+        body {
+          childMarkdownRemark {
+            html
+            rawMarkdownBody
+          }
+          body
+        }
+        title
+        backgroundImage {
+          file {
+            url
+          }
+        }
+        subSections {
+          title
           body {
             childMarkdownRemark {
               html
               rawMarkdownBody
             }
-            body
           }
-          title
           backgroundImage {
             file {
               url
             }
           }
-          subSections {
-            title
-            page
-            body {
-              childMarkdownRemark {
-                html
-                rawMarkdownBody
-              }
-            }
-            backgroundImage {
-              file {
-                url
-              }
-            }
-            medias {
-              file {
-                url
-                fileName
-              }
+          medias {
+            file {
+              url
+              fileName
             }
           }
         }
       }
     }
-  }   
+  }    
 `
