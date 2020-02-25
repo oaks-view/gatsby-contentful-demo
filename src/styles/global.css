@@ -1,1 +1,17 @@
 @import url('https://assets.website-files.com/5c1e6553753a40654a10796b/css/movinga-select-page.408f8f29a.css');
+
+.section-hero {
+  background-image: none;
+  position: relative;
+}
+
+.section-hero > img {
+  position: absolute;
+  z-index: -100;
+}
+
+@media (max-width: 479px) {
+  .section-hero > img {
+    height: 200px;
+  }
+}

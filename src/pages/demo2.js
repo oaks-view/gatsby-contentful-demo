@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import '../styles/global.css'
-import Navbar from "../components/navbar"
+import Navbar from '../components/navbar'
 
 // import { Link } from "gatsby"
 // import Image from "../components/image"
@@ -16,9 +16,10 @@ const Demo2Page = ({ data }) => {
 
   return (
     <>
-    <Navbar />
+      <Navbar />
       <div className="section-hero">
-        <div className="c w-container">
+        <img src={sections[0].backgroundImage.file.url} alt="" />
+        <div className="container-hero w-container">
           <h1 className="h1-general">{sections[0].title}</h1>
           <h2 className="h2-general">{sections[0].body.body}</h2>
         </div>
