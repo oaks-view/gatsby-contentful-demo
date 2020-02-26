@@ -18,6 +18,8 @@ const Demo2Page = ({ data }) => {
   const section2 = sections.find(x => x.slug.startsWith('where-do-you'))
   const section3 = sections.find(x => x.slug.startsWith('a-reliable-partner'))
   const section4 = sections.find(x => x.slug.startsWith('moving-experts'))
+  const section5 = sections.find(x => x.slug.startsWith('your-benefits'))
+
 
   return (
     <>
@@ -89,6 +91,26 @@ const Demo2Page = ({ data }) => {
             <a href="#select" className="cta-general w-button">
               Get a free offer
             </a>
+          </div>
+        </div>
+      </div>
+      <div className="section-general">
+        <div className="container-general w-container">
+          <h3 className="h3-general">{section5.title}</h3>
+          <div className="usp-icons w-row">
+            {section5.subSections.map((item, i) => (
+              <div className="column-usp-icons w-col w-col-3" key={i}><img
+                src={item.backgroundImage.file.url}
+                alt="Individual-services" className="w-hidden-small w-hidden-tiny benefits-img" /></div>
+            ))}
+          </div>
+          <div className="usp-text w-row">
+            {section5.subSections.map((item, i) => (
+              <div className="column-17 w-col w-col-3" key={i}>
+                <div className="subtitles-general">{item.title}</div>
+                <div className="text-general center">{item.body.body}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
