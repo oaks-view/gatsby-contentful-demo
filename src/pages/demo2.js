@@ -4,6 +4,7 @@ import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import '../styles/global.css'
 import Navbar from '../components/navbar'
+import Footer from '../components/footer'
 
 // import { Link } from "gatsby"
 // import Image from "../components/image"
@@ -144,6 +145,7 @@ const Demo2Page = ({ data }) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }
