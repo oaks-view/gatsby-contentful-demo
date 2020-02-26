@@ -20,6 +20,7 @@ const Demo2Page = ({ data }) => {
   const section4 = sections.find(x => x.slug.startsWith('moving-experts'))
   const section5 = sections.find(x => x.slug.startsWith('your-benefits'))
   const section6 = sections.find(x => x.slug.startsWith('become-a-movinga-partner'))
+  const section7 = sections.find(x => x.slug.startsWith('partners'))
 
 
   return (
@@ -115,19 +116,32 @@ const Demo2Page = ({ data }) => {
           </div>
         </div>
       </div>
-
       <div className="section-general gray-background">
         <div className="container-general w-container">
-            <h3 className="h3-general">{section6.title}</h3>
+          <h3 className="h3-general">{section6.title}</h3>
           <div className="columns-4 w-row">
             {section6.subSections.map((item, i) => (
-              <div className="column-14 w-col w-col-6">
-              <h4 className="h4-general">{item.title}<br /></h4>
-              <p className="text-general center">{item.body.body}<br /></p>
-            </div>
+              <div className="column-14 w-col w-col-6" key={i}>
+                <h4 className="h4-general">{item.title}<br /></h4>
+                <p className="text-general center">{item.body.body}<br /></p>
+              </div>
             ))}
           </div>
           <div className="div-cta"><a href="#select" className="cta-general w-button">Get a free offer</a></div>
+        </div>
+      </div>
+      <div className="section-general newspaper">
+        <div className="w-container">
+          <div className="div-block-18">
+            {section7.subSections.map((item, i) => (
+              <a href={item.linkTo}
+                target="_blank" className="w-inline-block" key={i}>
+                <img
+                  src={item.backgroundImage.file.url}
+                  alt="" className={`image-${2 + i}`} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </>
