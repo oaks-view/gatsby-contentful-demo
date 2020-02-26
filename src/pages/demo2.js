@@ -78,30 +78,20 @@ const Demo2Page = ({ data }) => {
           </div>
         </div>
       </div>
-
-      {/*  */}
-
       <div className="container-general w-container">
-            <h3 className="h3-general">{section5.title}</h3>
+        <h3 className="h3-general">{section5.title}</h3>
         <div className="usp-icons w-row">
-          <div className="column-usp-icons w-col w-col-3"><img
-            src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7cd7753a4004c911425c_book%20online.svg"
-            alt="simple-online-booking" className="w-hidden-small w-hidden-tiny" /></div>
-          <div className="column-usp-icons w-col w-col-3"><img
-            src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7d84da604b747825b5e3_Customisable.svg"
-            alt="Individual-services" className="w-hidden-small w-hidden-tiny" /></div>
-          <div className="column-usp-icons w-col w-col-3"><img
-            src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7d8e114105b04bff21cd_Money.svg"
-            alt="fair-prices" className="w-hidden-small w-hidden-tiny" /></div>
-          <div className="column-usp-icons w-col w-col-3"><img
-            src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7d98fa9b3bd416d87904_Truck.svg"
-            alt="certified-experts" className="w-hidden-small w-hidden-tiny" /></div>
+          {section5.subSections.map((item, i) => (
+            <div className="column-usp-icons w-col w-col-3"><img
+              src={item.backgroundImage.file.url}
+              alt="Individual-services" className="w-hidden-small w-hidden-tiny" /></div>
+          ))}
         </div>
         <div className="usp-text w-row">
           {section5.subSections.map((item, i) => (
-            <div className="column-17 w-col w-col-3">
+            <div className="column-17 w-col w-col-3" key={i}>
               <div className="subtitles-general">{item.title}</div>
-              <div className="text-general center">{item.body.body}7575757</div>
+              <div className="text-general center">{item.body.body}</div>
             </div>
           ))}
         </div>
