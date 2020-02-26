@@ -14,6 +14,10 @@ const Demo2Page = ({ data }) => {
   } = get(data, 'allContentfulPage.edges[0]')
   console.log(sections[1])
 
+  const benefitSection = sections.find(x => x.sectionIndex === 5);
+
+  console.log("benefitSection => %j", benefitSection);
+
   return (
     <>
       <Navbar />
@@ -63,6 +67,44 @@ const Demo2Page = ({ data }) => {
                 />
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/*  */}
+
+      <div className="container-general w-container">
+        <h3 className="h3-general">YOUR BENEFITS WITH MOVINGA</h3>
+        <div className="usp-icons w-row">
+          <div className="column-usp-icons w-col w-col-3"><img
+            src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7cd7753a4004c911425c_book%20online.svg"
+            alt="simple-online-booking" className="w-hidden-small w-hidden-tiny" /></div>
+          <div className="column-usp-icons w-col w-col-3"><img
+            src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7d84da604b747825b5e3_Customisable.svg"
+            alt="Individual-services" className="w-hidden-small w-hidden-tiny" /></div>
+          <div className="column-usp-icons w-col w-col-3"><img
+            src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7d8e114105b04bff21cd_Money.svg"
+            alt="fair-prices" className="w-hidden-small w-hidden-tiny" /></div>
+          <div className="column-usp-icons w-col w-col-3"><img
+            src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7d98fa9b3bd416d87904_Truck.svg"
+            alt="certified-experts" className="w-hidden-small w-hidden-tiny" /></div>
+        </div>
+        <div className="usp-text w-row">
+          <div className="column-usp-text w-col w-col-3">
+            <div className="subtitles-general">Simple online booking</div>
+            <div className="text-general center">Book your move from home with a few clicks</div>
+          </div>
+          <div className="column-17 w-col w-col-3">
+            <div className="subtitles-general">Individual service</div>
+            <div className="text-general center">Customise your move with our additional services</div>
+          </div>
+          <div className="column-19 w-col w-col-3">
+            <div className="subtitles-general">Fair prices</div>
+            <div className="text-general center">We deliver great service for low costs</div>
+          </div>
+          <div className="column-20 w-col w-col-3">
+            <div className="subtitles-general">Certified experts</div>
+            <div className="text-general center">A network of experienced movers</div>
           </div>
         </div>
       </div>
