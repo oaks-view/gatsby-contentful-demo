@@ -162,7 +162,6 @@ export const query = graphql`
             body {
               body
             }
-            sectionIndex
             medias {
               file {
                 url
