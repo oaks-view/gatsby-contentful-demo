@@ -19,6 +19,7 @@ const Demo2Page = ({ data }) => {
   const section3 = sections.find(x => x.slug.startsWith('a-reliable-partner'))
   const section4 = sections.find(x => x.slug.startsWith('moving-experts'))
   const section5 = sections.find(x => x.slug.startsWith('your-benefits'))
+  const section6 = sections.find(x => x.slug.startsWith('become-a-movinga-partner'))
 
 
   return (
@@ -112,6 +113,21 @@ const Demo2Page = ({ data }) => {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div class="section-general gray-background">
+        <div class="container-general w-container">
+            <h3 class="h3-general">{section6.title}</h3>
+          <div class="columns-4 w-row">
+            {section6.subSections.map((item, i) => (
+              <div class="column-14 w-col w-col-6">
+              <h4 class="h4-general">{item.title}<br /></h4>
+              <p class="text-general center">{item.body.body}<br /></p>
+            </div>
+            ))}
+          </div>
+          <div class="div-cta"><a href="#select" class="cta-general w-button">Get a free offer</a></div>
         </div>
       </div>
     </>
