@@ -1,0 +1,26 @@
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.icon404 {
+    margin-bottom: 15px;
+    width: 206px;
+}
+
+.title {
+    color: #494949;
+}
+
+.description {
+    font-size: 16px;
+    line-height: 1.4em;
+    max-width: 290px;
+    text-align: center;
+    font-family: 'Avenir Next Pro', sans-serif;
+    color: #919191;
+}
