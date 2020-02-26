@@ -1,4 +1,5 @@
-# gatsby-contentful-starter
+# gatsby-contentful-demo
+This is a proof of conncept on contentful and gatsby
 
 Gatsby [Contentful](https://www.contentful.com) starter for creating a blog
 
