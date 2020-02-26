@@ -17,10 +17,8 @@ const Demo2Page = ({ data }) => {
   const section1 = sections.find(x => x.slug.startsWith('welcome-to-movinga'))
   const section2 = sections.find(x => x.slug.startsWith('where-do-you'))
   const section3 = sections.find(x => x.slug.startsWith('a-reliable-partner'))
+  const section5 = sections.find(x => x.sectionIndex === 5);
 
-  const benefitSection = sections.find(x => x.sectionIndex === 5);
-
-  console.log("benefitSection => %j", benefitSection);
 
   return (
     <>
@@ -84,7 +82,7 @@ const Demo2Page = ({ data }) => {
       {/*  */}
 
       <div className="container-general w-container">
-        <h3 className="h3-general">YOUR BENEFITS WITH MOVINGA</h3>
+            <h3 className="h3-general">{section5.title}</h3>
         <div className="usp-icons w-row">
           <div className="column-usp-icons w-col w-col-3"><img
             src="https://assets.website-files.com/5c1e6553753a40654a10796b/5c1f7cd7753a4004c911425c_book%20online.svg"
@@ -100,22 +98,12 @@ const Demo2Page = ({ data }) => {
             alt="certified-experts" className="w-hidden-small w-hidden-tiny" /></div>
         </div>
         <div className="usp-text w-row">
-          <div className="column-usp-text w-col w-col-3">
-            <div className="subtitles-general">Simple online booking</div>
-            <div className="text-general center">Book your move from home with a few clicks</div>
-          </div>
-          <div className="column-17 w-col w-col-3">
-            <div className="subtitles-general">Individual service</div>
-            <div className="text-general center">Customise your move with our additional services</div>
-          </div>
-          <div className="column-19 w-col w-col-3">
-            <div className="subtitles-general">Fair prices</div>
-            <div className="text-general center">We deliver great service for low costs</div>
-          </div>
-          <div className="column-20 w-col w-col-3">
-            <div className="subtitles-general">Certified experts</div>
-            <div className="text-general center">A network of experienced movers</div>
-          </div>
+          {section5.subSections.map((item, i) => (
+            <div className="column-17 w-col w-col-3">
+              <div className="subtitles-general">{item.title}</div>
+              <div className="text-general center">{item.body.body}7575757</div>
+            </div>
+          ))}
         </div>
       </div>
     </>
