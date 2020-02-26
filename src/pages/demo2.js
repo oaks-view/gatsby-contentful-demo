@@ -4,6 +4,7 @@ import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import '../styles/global.css'
 import Navbar from '../components/navbar'
+import Footer from '../components/footer'
 
 // import { Link } from "gatsby"
 // import Image from "../components/image"
@@ -144,67 +145,7 @@ const Demo2Page = ({ data }) => {
           </div>
         </div>
       </div>
-    
-    {/* footer */}
-    <div class="section-footer">
-    <div class="container-general w-container">
-        <div class="footer-text">We’re here to help you move.<br />Mo - Fr: 07:30 - 21:00&nbsp;&nbsp; |&nbsp; Sa: 08:00 -
-            18:00</div>
-        <div class="columns-general footer w-row">
-            <div class="column-centered footer-icons w-col w-col-6 w-col-small-6 w-col-tiny-tiny-stack"><a
-                    href="tel:+493076758002" class="footer-link-icon w-inline-block"><img
-                        src="/images/helpline.svg"
-                        alt="" /></a><a href="tel:+493076758002" class="footer-link">+49 30 76758002</a></div>
-            <div class="column-centered footer-icons w-col w-col-6 w-col-small-6 w-col-tiny-tiny-stack"><a
-                    href="mailto:service@movinga.de" class="footer-link-icon w-inline-block"><img
-                        src="/images/mail.svg"
-                        alt="" /></a><a href="mailto:service@movinga.de" class="footer-link">service@movinga.de</a></div>
-        </div>
-        <div class="line"></div>
-        <div class="columns-footer w-row">
-            <div class="column-footer-text w-col w-col-4 w-col-small-4">
-                <h3 class="footer-links categories">Germany</h3><a href="https://www.movinga.de/uber-uns"
-                    class="link-footer">Über uns<br /></a><a href="https://careers.movinga.com/"
-                    class="link-footer">Karriere<br /></a><a href="https://www.movinga.de/bewertungen"
-                    class="link-footer">Bewertungen<br /></a><a href="https://www.movinga.de/hub/"
-                    class="link-footer">Blog<br /></a><a href="https://www.movinga.de/faq"
-                    class="link-footer">Hilfe<br /></a>
-            </div>
-            <div class="column-footer-text w-col w-col-4 w-col-small-4">
-                <h3 class="footer-links categories">France</h3><a href="https://www.movinga.fr/a-propos"
-                    class="link-footer">À propos de nous<br /></a><a href="https://careers.movinga.com/"
-                    class="link-footer">Carrière<br /></a><a href="https://www.movinga.fr/avis-clients"
-                    class="link-footer">Nos avis clients<br /></a><a href="https://www.movinga.fr/hub/"
-                    class="link-footer">Blog<br /></a><a href="https://www.movinga.fr/faq"
-                    class="link-footer">Aide<br /></a>
-            </div>
-            <div class="column-footer-text w-col w-col-4 w-col-small-4">
-                <h3 class="footer-links categories">Sweden</h3><a href="https://www.movinga.se/om-oss"
-                    class="link-footer">Om oss<br /></a><a href="https://careers.movinga.com/"
-                    class="link-footer">Karriär<br /></a><a href="https://www.movinga.se/omdomen"
-                    class="link-footer">Omdömen<br /></a><a href="https://www.movinga.se/hub/"
-                    class="link-footer">Blogg<br /></a><a href="https://www.movinga.se/fragor-och-svar"
-                    class="link-footer">Hjälp<br /></a>
-            </div>
-        </div>
-        <div class="columns-cards w-row">
-            <div class="column-general w-col w-col-2 w-col-small-2">
-                <div class="text-light-footer gmbh">© 2020 Movinga GmbH</div>
-            </div>
-            <div class="column-general w-col w-col-2 w-col-small-2"><a href="/data-privacy-notice"
-                    class="link-footer center">Data Privacy<br /></a></div>
-            <div class="column-general w-col w-col-2 w-col-small-2"><a href="/imprint"
-                    class="link-footer center">Imprint<br /></a></div>
-            <div class="column-general w-col w-col-2 w-col-small-2"><a href="https://www.movinga.com/about-us"
-                    class="link-footer center">About us<br /></a></div>
-            <div class="column-card w-col w-col-4 w-col-small-4">
-                <div class="text-light-footer gmbh">We accept :</div><img
-                    src="/images/payment-methods.png"
-                    alt="" class="image-12" />
-            </div>
-        </div>
-    </div>
-</div>
+      <Footer />
     </>
   )
 }
