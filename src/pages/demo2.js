@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
+import Helmet from 'react-helmet'
 import '../styles/global.css'
 import Navbar from '../components/navbar'
 
@@ -12,7 +13,10 @@ const Demo2Page = ({ data }) => {
   const {
     node: { sections },
   } = get(data, 'allContentfulPage.edges[0]')
-  console.log(sections[1])
+
+  const section1 = sections.find(x => x.slug.startsWith('welcome-to-movinga'))
+  const section2 = sections.find(x => x.slug.startsWith('where-do-you'))
+  const section3 = sections.find(x => x.slug.startsWith('a-reliable-partner'))
 
   const benefitSection = sections.find(x => x.sectionIndex === 5);
 
@@ -20,19 +24,25 @@ const Demo2Page = ({ data }) => {
 
   return (
     <>
+      <Helmet bodyAttributes={{ class: 'body-general' }}>
+        <link
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"
+          rel="stylesheet"
+        />
+      </Helmet>
       <Navbar />
       <div className="section-hero">
-        <img src={sections[0].backgroundImage.file.url} alt="" />
+        <img src={section1.backgroundImage.file.url} alt="" />
         <div className="container-hero w-container">
-          <h1 className="h1-general">{sections[0].title}</h1>
-          <h2 className="h2-general">{sections[0].body.body}</h2>
+          <h1 className="h1-general">{section1.title}</h1>
+          <h2 className="h2-general">{section1.body.body}</h2>
         </div>
       </div>
       <div id="select" className="section-general gray-background">
         <div className="container-general w-container">
-          <h3 className="h3-general">{sections[1].title}</h3>
+          <h3 className="h3-general">{section2.title}</h3>
           <div className="columns w-row">
-            {(sections[1].subSections || []).map((item, i) => (
+            {(section2.subSections || []).map((item, i) => (
               <div
                 className={`column${i > 0 ? `-${i + 1}` : ''} w-col w-col-4`}
                 key={`col-${i}`}
@@ -52,10 +62,10 @@ const Demo2Page = ({ data }) => {
       </div>
       <div className="section-general">
         <div className="container-general w-container">
-          <h3 className="h3-general">{sections[2].title}</h3>
-          <p className="text-general">{sections[2].body.body}</p>
+          <h3 className="h3-general">{section3.title}</h3>
+          <p className="text-general">{section3.body.body}</p>
           <div className="column-data w-row">
-            {sections[2].medias.map((item, i) => (
+            {section3.medias.map((item, i) => (
               <div
                 className={`column-${[14, 21, 15][i]} w-col w-col-4`}
                 key={`img-${i}`}
