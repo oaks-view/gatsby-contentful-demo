@@ -94,6 +94,7 @@ const Demo2Page = ({ data }) => {
           </div>
         </div>
       </div>
+      <div className="section-general">
       <div className="container-general w-container">
         <h3 className="h3-general">{section5.title}</h3>
         <div className="usp-icons w-row">
@@ -112,7 +113,9 @@ const Demo2Page = ({ data }) => {
           ))}
         </div>
       </div>
-    </>
+    
+      </div>
+      </>
   )
 }
 
