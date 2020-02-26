@@ -15,7 +15,7 @@
 }
 
 .benefits-img {
-    max-width: 50%;
+  max-width: 50%;
 }
 
 .section-general {
@@ -33,7 +33,8 @@
 .section-banner > img {
   position: absolute;
   z-index: -100;
-  margin-top: -700px;
+  width: 100%;
+  margin-top: -350px;
 }
 
 @media (max-width: 479px) {
