@@ -17,6 +17,7 @@ const Demo2Page = ({ data }) => {
   const section1 = sections.find(x => x.slug.startsWith('welcome-to-movinga'))
   const section2 = sections.find(x => x.slug.startsWith('where-do-you'))
   const section3 = sections.find(x => x.slug.startsWith('a-reliable-partner'))
+  const section4 = sections.find(x => x.slug.startsWith('moving-experts'))
 
   return (
     <>
@@ -73,6 +74,21 @@ const Demo2Page = ({ data }) => {
                 />
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+      <div className="section-banner">
+        <img src={section4.backgroundImage.file.url} alt="" />
+        <div className="container-general w-container">
+          <div className="test-banner">{section4.body.body}</div>
+          {/* TODO add cta button represention on contentful */}
+          <div className="div-cta two-cta">
+            <a href="tel:+493076758002" className="cta-general w-button">
+              +49 30 76758002
+            </a>
+            <a href="#select" className="cta-general w-button">
+              Get a free offer
+            </a>
           </div>
         </div>
       </div>
