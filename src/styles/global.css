@@ -18,11 +18,28 @@
   background: #fff;
 }
 
+.section-banner {
+  background-image: none;
+  height: 178px;
+  position: relative;
+}
+
+/* HACK: display only a portion of the image. ideally image would be fixed
+ * and we scroll over it like movinga.com */
+.section-banner > img {
+  position: absolute;
+  z-index: -100;
+  margin-top: -700px;
+}
+
 @media (max-width: 479px) {
   .section-hero > img {
     height: 200px;
   }
   .flags-countries {
     height: 31px;
+  }
+  .section-banner > img {
+    margin-top: -80px;
   }
 }
