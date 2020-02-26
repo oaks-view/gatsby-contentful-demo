@@ -82,9 +82,9 @@ const Demo2Page = ({ data }) => {
         <h3 className="h3-general">{section5.title}</h3>
         <div className="usp-icons w-row">
           {section5.subSections.map((item, i) => (
-            <div className="column-usp-icons w-col w-col-3"><img
+            <div className="column-usp-icons w-col w-col-3" key={i}><img
               src={item.backgroundImage.file.url}
-              alt="Individual-services" className="w-hidden-small w-hidden-tiny" /></div>
+              alt="Individual-services" className="w-hidden-small w-hidden-tiny benefits-img" /></div>
           ))}
         </div>
         <div className="usp-text w-row">
