@@ -27,6 +27,7 @@ const HomeDE = ({ data }) => {
   const section3 = sections.find(x => x.slug.startsWith('basic-package-and-additional-services'))
   const section4 = sections.find(x => x.slug.startsWith('always-included-in-your-move'))
   const section5 = sections.find(x => x.slug.startsWith('optional-services'))
+  const section6 = sections.find(x => x.slug.startsWith('movinga-move-your-home-professional-moving-companies-all-over-germany'))
 
   console.log('section1Subsection2 => ', section1);
 
@@ -179,8 +180,6 @@ const HomeDE = ({ data }) => {
           </div>
         </div>
       </div>
-
-
       <div className="section-general gray-background">
         <div className="container-general w-container">
           <h3 className="h3-general city">{section3.title}</h3>
@@ -197,23 +196,31 @@ const HomeDE = ({ data }) => {
                       <div className="text-general">{item.title}</div>
                     </div>
                   </div>
-                ))}  
+                ))}
               </div>
               <div className="column-services w-col w-col-6 w-col-small-small-stack">
                 <div className="subtitle-general left-subtitle">{section5.title}</div>
                 {section5.subSections.map((item, i) => (
                   <div className="columns-services w-row" key={i}>
-                  <div className="column-checks w-col w-col-1 w-col-small-1 w-col-tiny-1"><img
-                    src={item.backgroundImage.file.url}
-                    alt="" className="image-89" /></div>
-                  <div className="column-checks w-col w-col-11 w-col-small-11 w-col-tiny-11">
-                <div className="text-general">{item.title}</div>
+                    <div className="column-checks w-col w-col-1 w-col-small-1 w-col-tiny-1"><img
+                      src={item.backgroundImage.file.url}
+                      alt="" className="image-89" /></div>
+                    <div className="column-checks w-col w-col-11 w-col-small-11 w-col-tiny-11">
+                      <div className="text-general">{item.title}</div>
+                    </div>
                   </div>
-                </div>
                 ))}
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="section-general blue-background">
+        <div className="container-general w-container">
+          <div className="text-banner">{section6.title}
+        </div>
+                <div className="div-cta"><a href="#heroplus" className="cta-general w-button">{section6.subSections[0].title}</a></div>
         </div>
       </div>
       <Footer />
