@@ -8,8 +8,8 @@ if (typeof window !== 'undefined') {
 
 import Helmet from 'react-helmet'
 import '../../styles/movinga-de.css'
-import Navbar from '../navbar'
 import Footer from '../footer'
+import Navbar from '../navbar'
 
 const isOdd = num => num % 2 > 0
 
