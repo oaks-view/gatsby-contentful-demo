@@ -28,10 +28,11 @@ const HomeDE = ({ data }) => {
   const section4 = sections.find(x => x.slug.startsWith('always-included-in-your-move'))
   const section5 = sections.find(x => x.slug.startsWith('optional-services'))
   const section6 = sections.find(x => x.slug.startsWith('movinga-move-your-home-professional-moving-companies-all-over-germany'))
-  // heres-how-it-works
   const section7 = sections.find(x => x.slug.startsWith('heres-how-it-works'))
+  const section8 = sections.find(x => x.slug.startsWith('thats-what-our-customers-say'))
+  // thats-what-our-customers-say
 
-  console.log('section1Subsection2 => ', section1);
+  console.log('section1Subsection8 => ', section8.subSections);
 
 
   useEffect(() => {
@@ -243,6 +244,29 @@ const HomeDE = ({ data }) => {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+
+
+      <div className="section-general gray-background">
+        <div className="container-general w-container">
+          <h3 className="h3-general city">{section8.title}</h3>
+          <div className="columns-blog w-row">
+            {section8.subSections.map((item, i) => (
+              <div className="column-general w-col w-col-4" key={i}>
+                <div className="div-testimonials"><img
+                  src={item.backgroundImage.file.url}
+                  alt="" />
+                  <div className="text-general">{item.body.body}</div>
+                  {/* <div className="text-general">„Alles lief super, die Umzugshelfer waren sehr nett und pünktlich. Meine
+                        Sachen wurden sicher in die neue Wohnung transportiert. Jederzeit wieder.“<br />‍<br />‍<em>von
+                            Essen nach Berlin</em></div> */}
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Todo Translate */}
+          <div className="div-cta"><a href="/bewertungen" className="cta-general w-button">Read more</a></div>
         </div>
       </div>
       <Footer />
