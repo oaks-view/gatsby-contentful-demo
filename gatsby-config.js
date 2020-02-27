@@ -16,9 +16,15 @@ if (!spaceId || !accessToken) {
   )
 }
 
+const languages = {
+  langs: ['en', 'de'],
+  defaultLangKey: 'en',
+}
+
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Contentful starter',
+    title: 'Movinga',
+    languages,
   },
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
@@ -27,15 +33,16 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sharp',
     {
-      resolve: 'gatsby-source-contentful',
-      options: contentfulConfig,
-    },
-    {
       resolve: 'gatsby-plugin-i18n',
       options: {
-        langKeyDefault: 'en',
+        langKeyForNull: 'any',
+        langKeyDefault: languages.defaultLangKey,
         useLangKeyLayout: false,
       },
+    },
+    {
+      resolve: 'gatsby-source-contentful',
+      options: contentfulConfig,
     },
   ],
 }
