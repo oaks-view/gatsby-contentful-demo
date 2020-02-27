@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
 
-import $ from 'jquery'
-window.jQuery = window.$ = $
+// https://www.gatsbyjs.org/docs/debugging-html-builds/#how-to-check-if-window-is-defined
+if (typeof window !== 'undefined') {
+  const $ = require('jquery')
+  window.jQuery = window.$ = $
+}
 
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
