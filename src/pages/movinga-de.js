@@ -28,6 +28,8 @@ const HomeDE = ({ data }) => {
   const section4 = sections.find(x => x.slug.startsWith('always-included-in-your-move'))
   const section5 = sections.find(x => x.slug.startsWith('optional-services'))
   const section6 = sections.find(x => x.slug.startsWith('movinga-move-your-home-professional-moving-companies-all-over-germany'))
+  // heres-how-it-works
+  const section7 = sections.find(x => x.slug.startsWith('heres-how-it-works'))
 
   console.log('section1Subsection2 => ', section1);
 
@@ -215,12 +217,32 @@ const HomeDE = ({ data }) => {
           </div>
         </div>
       </div>
-
       <div className="section-general blue-background">
         <div className="container-general w-container">
           <div className="text-banner">{section6.title}
+          </div>
+          <div className="div-cta"><a href="#heroplus" className="cta-general w-button">{section6.subSections[0].title}</a></div>
         </div>
-                <div className="div-cta"><a href="#heroplus" className="cta-general w-button">{section6.subSections[0].title}</a></div>
+      </div>
+
+      <div className="section-general">
+        <div className="container-general w-container">
+          <h3 className="h3-general city">{section7.title}</h3>
+          <div className="columns-general center w-row">
+            <div className="column-images w-col w-col-4">
+              <img
+                src={section7.backgroundImage.file.url}
+                alt="" className="image-99" />
+            </div>
+            <div className="column-general w-col w-col-8">
+              {section7.subSections.map((item, i) => (
+                <>
+                  <div className="subtitle-general left-subtitle" key={i}>{item.title}</div>
+                  <div className="text-general">{item.body.body}</div>
+                </>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
