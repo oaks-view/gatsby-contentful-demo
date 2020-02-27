@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+// https://www.gatsbyjs.org/docs/debugging-html-builds/#how-to-check-if-window-is-defined
 if (typeof window !== 'undefined') {
   const $ = require('jquery')
   window.jQuery = window.$ = $
