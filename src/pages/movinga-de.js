@@ -24,6 +24,9 @@ const HomeDE = ({ data }) => {
 
   const section1 = sections.find(x => x.slug.startsWith('more-than-just'))
   const section2 = sections.find(x => x.slug.startsWith('just-move-with-movinga'))
+  const section3 = sections.find(x => x.slug.startsWith('basic-package-and-additional-services'))
+  const section4 = sections.find(x => x.slug.startsWith('always-included-in-your-move'))
+  const section5 = sections.find(x => x.slug.startsWith('optional-services'))
 
   console.log('section1Subsection2 => ', section1);
 
@@ -176,13 +179,43 @@ const HomeDE = ({ data }) => {
           </div>
         </div>
       </div>
-      {/* <div className="section-hero"> */}
-      {/*   <img src={section1.backgroundImage.file.url} alt="" /> */}
-      {/*   <div className="container-hero w-container"> */}
-      {/*     <h1 className="h1-general">{section1.title}</h1> */}
-      {/*     <h2 className="h2-general">{section1.body.body}</h2> */}
-      {/*   </div> */}
-      {/* </div> */}
+
+
+      <div className="section-general gray-background">
+        <div className="container-general w-container">
+          <h3 className="h3-general city">{section3.title}</h3>
+          <div className="white-background">
+            <div className="columns-services w-row">
+              <div className="column-services w-col w-col-6 w-col-small-small-stack">
+                <div className="subtitle-general left-subtitle">{section4.title}</div>
+                {section4.subSections.map((item, i) => (
+                  <div className="columns-services w-row" key={i}>
+                    <div className="column-checks centered w-col w-col-1 w-col-small-1 w-col-tiny-1"><img
+                      src={item.backgroundImage.file.url}
+                      alt="" className="image-89" /></div>
+                    <div className="column-checks w-col w-col-11 w-col-small-11 w-col-tiny-11">
+                      <div className="text-general">{item.title}</div>
+                    </div>
+                  </div>
+                ))}  
+              </div>
+              <div className="column-services w-col w-col-6 w-col-small-small-stack">
+                <div className="subtitle-general left-subtitle">{section5.title}</div>
+                {section5.subSections.map((item, i) => (
+                  <div className="columns-services w-row" key={i}>
+                  <div className="column-checks w-col w-col-1 w-col-small-1 w-col-tiny-1"><img
+                    src={item.backgroundImage.file.url}
+                    alt="" className="image-89" /></div>
+                  <div className="column-checks w-col w-col-11 w-col-small-11 w-col-tiny-11">
+                <div className="text-general">{item.title}</div>
+                  </div>
+                </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <Footer />
     </>
   )
