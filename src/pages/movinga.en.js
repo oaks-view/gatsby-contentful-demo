@@ -1,3 +1,4 @@
+import React from 'react'
 import { graphql } from 'gatsby'
 import MovingaDE from '../components/pages/MovingaDE'
 
