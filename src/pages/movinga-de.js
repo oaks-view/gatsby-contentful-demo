@@ -30,6 +30,7 @@ const HomeDE = ({ data }) => {
   const section6 = sections.find(x => x.slug.startsWith('movinga-move-your-home-professional-moving-companies-all-over-germany'))
   const section7 = sections.find(x => x.slug.startsWith('heres-how-it-works'))
   const section8 = sections.find(x => x.slug.startsWith('thats-what-our-customers-say'))
+  const section9 = sections.find(x => x.slug.startsWith('movinga-awards-2'))
   // thats-what-our-customers-say
 
   console.log('section1Subsection8 => ', section8.subSections);
@@ -246,8 +247,6 @@ const HomeDE = ({ data }) => {
           </div>
         </div>
       </div>
-
-
       <div className="section-general gray-background">
         <div className="container-general w-container">
           <h3 className="h3-general city">{section8.title}</h3>
@@ -267,6 +266,47 @@ const HomeDE = ({ data }) => {
           </div>
           {/* Todo Translate */}
           <div className="div-cta"><a href="/bewertungen" className="cta-general w-button">Read more</a></div>
+        </div>
+      </div>
+
+      <div className="section-general badges">
+        <div className="container-general w-container">
+          <div className="columns-trusted-shop-big w-row">
+            {section9.subSections.slice(0, section9.subSections.length - 1).map((item, i) => (
+              <div className="column-icon-trusted-shop w-col w-col-2 w-col-small-small-stack" key={i}>
+                <a href={item.linkTo}
+              className="link-badges w-inline-block"><img
+                src={item.backgroundImage.file.url}
+                height="75" alt="" /></a></div>
+            ))}
+            <div className="column-icon-trusted-shop w-col w-col-3 w-col-small-small-stack">
+              <div className="div-block-215">
+              <div className="text-block-21">{section9.subSections.slice(-1)[0].body.body}</div><a href="/auszeichnungen"
+                  className="link-badges w-inline-block w-clearfix"><img
+                    src={section9.subSections.slice(-1)[0].backgroundImage.file.url}
+                    height="42" alt="certificates-item" className="image-58" /></a>
+              </div>
+            </div>
+          </div>
+          <div className="columns-trusted-shop-small hide w-row">
+            <div className="column-icon-trusted-shop-2 w-col w-col-3"><a href="#" className="link-badges w-inline-block"><img
+              src="https://assets-global.website-files.com/5a857fcd20c95100013eacc2/5c669f452f71d6889deb1d5b_Siegel-Fair-Unterwegs-Movinga.png"
+              height="75" alt="" /></a></div>
+            <div className="column-icon-trusted-shop-2 w-col w-col-3"><a href="#" className="link-badges w-inline-block"><img
+              src="https://assets-global.website-files.com/5e1c72a86a0073eba5f27dfa/5e1c72a86a00732e6ef27f61_kunden-empehlung.svg"
+              height="75" alt="" /></a></div>
+            <div className="column-icon-trusted-shop-2 w-col w-col-3"><a href="#" className="link-badges w-inline-block"><img
+              src="https://assets-global.website-files.com/5e1c72a86a0073eba5f27dfa/5e1c72a86a00734f54f27f54_IAM.svg"
+              height="60" alt="" /></a></div>
+            <div className="column-icon-trusted-shop-2 w-col w-col-3">
+              <div className="div-block-215">
+                <div className="text-block-21">Bekannt aus dem TV</div><a href="#"
+                  className="link-badges w-inline-block w-clearfix"><img
+                    src="https://assets-global.website-files.com/5a857fcd20c95100013eacc2/5b61b796dcbf28850904c218_channels-1.png"
+                    height="42" alt="certificates-item" className="image-58" /></a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
