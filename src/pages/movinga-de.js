@@ -6,6 +6,8 @@ import '../styles/movinga-de.css'
 import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 
+const isOdd = (num) => { return num % 2 > 0; }
+
 const HomeDE = ({ data }) => {
   const {
     node: { sections },
@@ -14,6 +16,10 @@ const HomeDE = ({ data }) => {
   console.log(sections)
 
   const section1 = sections.find(x => x.slug.startsWith('more-than-just'))
+  const section2 = sections.find(x => x.slug.startsWith('just-move-with-movinga'))
+
+  console.log('section1Subsection2 => ', section1);
+
 
   return (
     <>
@@ -112,7 +118,7 @@ const HomeDE = ({ data }) => {
                 </a>
               </div>
               <div className="column-168 w-col w-col-10 w-col-small-10 w-col-tiny-10">
-                <p className="text-phone-cta">Jetzt beraten lassen</p>
+                <p className="text-phone-cta">{section1.subSections[0].title}</p>
                 <a href="tel:+493076758002" className="link-phone">
                   +49 30 76758002
                 </a>
@@ -135,23 +141,27 @@ const HomeDE = ({ data }) => {
       </div>
       <div className="section-general">
         <div className="container-general w-container">
-          <h3 className="h3-general city">Einfach Umziehen mit Movinga</h3>
+          <h3 className="h3-general city">{section2.title}</h3>
           <div className="columns-icons w-hidden-tity w-row">
-            <div className="column-center-icon w-col w-col-2">
-              <img
-                src="https://assets-global.website-files.com/5a857fcd20c95100013eacc2/5d5faf9738c00e100eadbead_01.svg"
-                height="60"
-                alt=""
-                className="image-53 w-hidden-small w-hidden-tiny"
-              />
-            </div>
-            <div className="column-text w-row">
-              <div className="column-text w-col w-col-2">
+            {section2.subSections.map((item, i) => (
+              <div className={`column-center-icon w-col w-col-${isOdd(i) ? 3 : 2}`} key={i}>
+                <img
+                  src={item.backgroundImage.file.url}
+                  height="60"
+                  alt=""
+                  className="image-53 w-hidden-small w-hidden-tiny"
+                />
+              </div>
+            ))}
+          </div>
+          <div className="columns-text w-row">
+            {section2.subSections.map((item, i) => (
+              <div className={`column-text w-col w-col-${isOdd(i) ? 3 : 2}`} key={i}>
                 <div className="subtitle-general small">
-                  Persönliche Expertenberatung
+                  {item.title}
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
