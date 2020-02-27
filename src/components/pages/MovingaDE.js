@@ -6,7 +6,6 @@ if (typeof window !== 'undefined') {
   window.jQuery = window.$ = $
 }
 
-import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import '../../styles/movinga-de.css'
 import Navbar from '../navbar'
@@ -14,10 +13,8 @@ import Footer from '../footer'
 
 const isOdd = num => num % 2 > 0
 
-const MovingaDE = ({ data }) => {
-  const {
-    node: { sections },
-  } = get(data, 'allContentfulPage.edges[0]')
+const MovingaDE = props => {
+  const { sections } = props.data.contentfulPage
 
   console.log(sections)
 
