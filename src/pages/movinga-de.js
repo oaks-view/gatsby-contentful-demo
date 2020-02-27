@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
@@ -15,6 +15,30 @@ const HomeDE = ({ data }) => {
 
   const section1 = sections.find(x => x.slug.startsWith('more-than-just'))
 
+  useEffect(() => {
+    const script1 = document.createElement('script')
+    script1.src =
+      'https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js'
+    script1.integrity = 'sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo='
+    script1.crossOrigin = 'anonymous'
+    const script2 = document.createElement('script')
+    script2.src =
+      'https://s3.eu-central-1.amazonaws.com/movinga-leadgen/DE/final-widget/dist/scripts/intlTelInput.js'
+    const script3 = document.createElement('script')
+    script3.src =
+      'https://s3.eu-central-1.amazonaws.com/movinga-leadgen/DE/final-widget/dist/scripts/app.js'
+
+    document.body.appendChild(script1)
+    document.body.appendChild(script2)
+    document.body.appendChild(script3)
+
+    return () => {
+      document.body.removeChild(script3)
+      document.body.removeChild(script2)
+      document.body.removeChild(script1)
+    }
+  }, [])
+
   return (
     <>
       <Helmet bodyAttributes={{ class: 'body-general' }}>
@@ -22,21 +46,6 @@ const HomeDE = ({ data }) => {
           href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"
           rel="stylesheet"
         />
-        <script
-          src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js"
-          type="text/javascript"
-          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-          crossorigin="anonymous"
-          defer
-        ></script>
-        <script
-          src="https://s3.eu-central-1.amazonaws.com/movinga-leadgen/DE/final-widget/dist/scripts/intlTelInput.js"
-          defer
-        ></script>
-        <script
-          src="https://s3.eu-central-1.amazonaws.com/movinga-leadgen/DE/final-widget/dist/scripts/app.js"
-          defer
-        ></script>
       </Helmet>
       <Navbar />
       <div id="top" className="clean-hero" data-ix="shownavbar-de">
