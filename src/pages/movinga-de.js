@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 
-import $ from 'jquery'
-window.jQuery = window.$ = $
+if (typeof window !== 'undefined') {
+  const $ = require('jquery')
+  window.jQuery = window.$ = $
+}
 
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
