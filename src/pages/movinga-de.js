@@ -1,4 +1,8 @@
 import React, { useEffect } from 'react'
+
+import $ from 'jquery'
+window.jQuery = window.$ = $
+
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
@@ -18,27 +22,19 @@ const HomeDE = ({ data }) => {
   useEffect(() => {
     const script1 = document.createElement('script')
     script1.src =
-      'https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js'
-    script1.integrity = 'sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo='
-    script1.crossOrigin = 'anonymous'
+      'https://s3.eu-central-1.amazonaws.com/movinga-leadgen/DE/final-widget/dist/scripts/intlTelInput.js'
     script1.defer = true
     const script2 = document.createElement('script')
     script2.src =
-      'https://s3.eu-central-1.amazonaws.com/movinga-leadgen/DE/final-widget/dist/scripts/intlTelInput.js'
-    script2.defer = true
-    const script3 = document.createElement('script')
-    script3.src =
       'https://s3.eu-central-1.amazonaws.com/movinga-leadgen/DE/final-widget/dist/scripts/app.js'
-    script3.defer = true
+    script2.defer = true
 
     document.body.appendChild(script1)
     document.body.appendChild(script2)
-    document.body.appendChild(script3)
 
     return () => {
-      document.body.removeChild(script3)
-      document.body.removeChild(script2)
       document.body.removeChild(script1)
+      document.body.removeChild(script2)
     }
   }, [])
 
