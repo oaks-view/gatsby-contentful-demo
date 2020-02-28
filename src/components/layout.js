@@ -12,6 +12,8 @@ import { StaticQuery, graphql } from 'gatsby'
 import Header from './header'
 import './layout.css'
 
+// TODO: remove header that came with material-ui boilerplate. Each template may define its own header.
+// maybe this layout file can be removed alltogether and templates define the header
 const Layout = ({ children }) => {
   return (
     <StaticQuery
@@ -29,10 +31,7 @@ const Layout = ({ children }) => {
           <Header siteTitle={data.site.siteMetadata.title} />
           <div
             style={{
-              margin: `0 auto`,
-              maxWidth: 960,
-              padding: `0px 1.0875rem 1.45rem`,
-              paddingTop: 100,
+              paddingTop: 65,
             }}
           >
             <main>{children}</main>

@@ -47,7 +47,7 @@ exports.createPages = ({ graphql, actions }) => {
           component: cityTemplate,
           context: {
             id: edge.node.id,
-            node_locale: edge.node_locale,
+            locale: edge.node.node_locale,
           },
         })
       })
