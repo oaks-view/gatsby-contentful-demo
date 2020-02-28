@@ -16,8 +16,6 @@ const isOdd = num => num % 2 > 0
 const MovingaDE = props => {
   const { sections } = props.data.contentfulPage
 
-  console.log(sections)
-
   const section1 = sections.find(x => x.slug.startsWith('more-than-just'))
   const section2 = sections.find(x => x.slug.startsWith('just-move-with-movinga'))
   const section3 = sections.find(x => x.slug.startsWith('basic-package-and-additional-services'))
@@ -28,9 +26,6 @@ const MovingaDE = props => {
   const section8 = sections.find(x => x.slug.startsWith('thats-what-our-customers-say'))
   const section9 = sections.find(x => x.slug.startsWith('movinga-awards-2'))
   // thats-what-our-customers-say
-
-  console.log('section1Subsection8 => ', section8.subSections);
-
 
   useEffect(() => {
     const script1 = document.createElement('script')
