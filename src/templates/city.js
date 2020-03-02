@@ -1,23 +1,18 @@
+import _ from 'lodash'
 import React from 'react'
 import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 
-import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import Box from '@material-ui/core/Box'
 
-import ContentfulSection from '../components/ContentfulSection'
-import ContentfulCard from '../components/ContentfulCard'
-
-// When content is fetched, it get an internal.type prop which is Contentful + content type
-// At Page can have many blocks, and block maybe of different type. This example only supports
-// two types `Section` and `Card`.
-const PageComponents = {
-  ContentfulSection,
-  ContentfulCard,
-}
+import theme from '../themes/city'
+import { getBlockComponent } from '../utils'
+import CityHeader from '../components/types/CityHeader'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,22 +25,32 @@ const useStyles = makeStyles(theme => ({
 
 const CityTemplate = props => {
   const classes = useStyles()
-  const page = props.data.contentfulPage
+  const { title, blocks } = props.data.contentfulPage
+  const [headerBlock, ...pageBlocks] = blocks
 
-  // TODO:
-  // create styles for this template
-  // create header
-  // create footer
+  if (
+    !(
+      headerBlock.internal.type === 'ContentfulSection' &&
+      headerBlock.type === 'banner'
+    )
+  ) {
+    throw new Error(
+      `First block in city template must be a Section of type banner`
+    )
+  }
+
   return (
-    <Layout>
-      <SEO title={page.title} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Box className={classes.root}>
-        {page.blocks.map((block, i) => {
-          const BlockComponent = PageComponents[block.internal.type]
-          return <BlockComponent {...block} key={`block-${i}`} />
-        })}
+        <SEO title={title} />
+        <CityHeader {...headerBlock} />
+        {/* pageBlocks.map((block, i) => {
+          const { BlockComponent } = getBlockComponent(block)
+          return <BlockComponent {...block} key={`b-${i}`} />
+        }) */}
       </Box>
-    </Layout>
+    </ThemeProvider>
   )
 }
 
@@ -56,6 +61,59 @@ CityTemplate.propTypes = {
 export default CityTemplate
 
 export const pageQuery = graphql`
+  fragment cardType on ContentfulCard {
+    id
+    body {
+      body
+      childMarkdownRemark {
+        html
+      }
+    }
+    image {
+      file {
+        url
+      }
+    }
+    order
+    orientation
+    title
+    titlePosition
+    internal {
+      type
+    }
+  }
+
+  fragment sectionFields on ContentfulSection {
+    id
+    type
+    title
+    titlePosition
+    slug
+    orientation
+    backgroundColor
+    backgroundImage {
+      file {
+        url
+      }
+    }
+    internal {
+      type
+    }
+  }
+
+  fragment sectionType on ContentfulSection {
+    ...sectionFields
+    blocks {
+      ...cardType
+      ... on ContentfulSection {
+        ...sectionFields
+        blocks {
+          ...cardType
+        }
+      }
+    }
+  }
+
   query cityQuery($id: String!, $locale: String!) {
     site {
       siteMetadata {
@@ -70,42 +128,11 @@ export const pageQuery = graphql`
       blocks: { elemMatch: { node_locale: { eq: $locale } } }
     ) {
       title
+      template
       slug
       id
-      template
       blocks {
-        id
-        backgroundColor
-        backgroundImage {
-          file {
-            url
-          }
-        }
-        orientation
-        slug
-        title
-        titlePosition
-        internal {
-          type
-        }
-        blocks {
-          body {
-            childMarkdownRemark {
-              html
-            }
-          }
-          image {
-            file {
-              url
-            }
-          }
-          orientation
-          title
-          titlePosition
-          internal {
-            type
-          }
-        }
+        ...sectionType
       }
     }
   }

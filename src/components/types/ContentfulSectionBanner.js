@@ -6,12 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 
-import ContentfulCard from '../components/ContentfulCard'
-
-// TODO: Display list of Cards of a given Section
-const PageComponents = {
-  ContentfulCard,
-}
+import { getBlockComponent } from '../../utils'
 
 const bgImgPros = img => {
   if (!img) return {}
