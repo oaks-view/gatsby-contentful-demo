@@ -6,8 +6,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 
-import { getBlockComponent } from '../../utils'
-
 const bgImgPros = img => {
   if (!img) return {}
   return {
@@ -27,12 +25,7 @@ const titlePosition = pos => {
   }[pos || 'center']
 }
 
-// TODO add prop to model to differentiate sections (banner, tabs, list, generic)
-
-// TODO add material-ui theme, responsive fonts, responsiveness. see trolley example
-
 // const useStyles = makeStyles(theme => ({}))
-
 const ContentfulSection = props => {
   // const classes = useStyles()
   console.log(props)
