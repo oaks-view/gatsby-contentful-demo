@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import * as PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
@@ -8,16 +9,7 @@ import SEO from '../components/seo'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 
-import ContentfulSection from '../components/ContentfulSection'
-import ContentfulCard from '../components/ContentfulCard'
-
-// When content is fetched, it get an internal.type prop which is Contentful + content type
-// At Page can have many blocks, and block maybe of different type. This example only supports
-// two types `Section` and `Card`.
-const PageComponents = {
-  ContentfulSection,
-  ContentfulCard,
-}
+import { getBlockComponent } from '../utils'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,8 +33,8 @@ const CityTemplate = props => {
       <SEO title={page.title} />
       <Box className={classes.root}>
         {page.blocks.map((block, i) => {
-          const BlockComponent = PageComponents[block.internal.type]
-          return <BlockComponent {...block} key={`block-${i}`} />
+          const { BlockComponent } = getBlockComponent(block)
+          return <BlockComponent {...block} key={`b-${i}`} />
         })}
       </Box>
     </Layout>
