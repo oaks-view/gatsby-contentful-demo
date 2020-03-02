@@ -88,6 +88,7 @@ export const pageQuery = graphql`
         internal {
           type
         }
+        type
         blocks {
           body {
             childMarkdownRemark {
@@ -100,6 +101,7 @@ export const pageQuery = graphql`
             }
           }
           orientation
+          order
           title
           titlePosition
           internal {
