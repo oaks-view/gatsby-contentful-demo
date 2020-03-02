@@ -53,8 +53,13 @@ const ContentfulSection = props => {
             {props.blocks.map((block, i) => {
               try {
                 const { BlockComponent } = getBlockComponent(block)
+                const blockProps = {
+                  display: 'flex',
+                  flexDirection: block.orientation || 'column',
+                  xs: block.orientation !== 'row',
+                }
                 return (
-                  <Box component={Grid} item xs display="flex">
+                  <Box component={Grid} item {...blockProps}>
                     <BlockComponent {...block} key={`b-${i}`} />
                   </Box>
                 )
