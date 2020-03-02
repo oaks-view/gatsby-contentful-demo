@@ -6,19 +6,24 @@ import blockTypes from '../components/types'
 
 // Select the right component for the block. Section has subtypes, tabs and banner
 // Later if another subtype is added, a new component must be added under components/types
-export const getBlockComponent = ({ type = 'generic', internal }) => {
-  let componentName = internal.type
+export const getBlockComponent = ({ type = 'generic', internal, ...props }) => {
+  try {
+    let componentName = internal ? internal.type : props.__typename
 
-  if (internal.type === 'ContentfulSection') {
-    if (['tabs', 'banner'].includes(type)) {
-      componentName = `${internal.type}${_.capitalize(type)}`
+    if (componentName === 'ContentfulSection') {
+      if (['tabs', 'banner'].includes(type)) {
+        componentName = `${internal.type}${_.capitalize(type)}`
+      }
     }
-  }
 
-  if (componentName in blockTypes) {
-    return { BlockComponent: blockTypes[componentName] }
+    if (componentName in blockTypes) {
+      return { BlockComponent: blockTypes[componentName] }
+    }
+    throw new Error(`Type ${componentName} is not supported.`)
+  } catch (error) {
+    console.error({ props, message: error.message, stack: error.stack })
+    throw error
   }
-  throw new Error(`${componentName} is not supported.`)
 }
 
 export const getPosition = pos =>

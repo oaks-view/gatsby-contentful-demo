@@ -19,7 +19,9 @@ exports.createPages = ({ graphql, actions }) => {
     // from the fetched data that you can run queries against.
     graphql(`
       {
-        allContentfulPage(filter: {template: {eq: "city"}, node_locale: {eq: "de"}}) {
+        allContentfulPage(
+          filter: { template: { eq: "city" }, node_locale: { eq: "de" } }
+        ) {
           edges {
             node {
               title

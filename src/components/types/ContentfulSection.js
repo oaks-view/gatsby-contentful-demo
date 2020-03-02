@@ -32,7 +32,6 @@ const useStyles = makeStyles(theme => ({
 
 const ContentfulSection = props => {
   const classes = useStyles(props)
-  console.log(props.blocks)
 
   return (
     <Box className={`${classes.root} ${classes.bgImage}`}>
@@ -52,12 +51,23 @@ const ContentfulSection = props => {
         {props.blocks && (
           <Box component={Grid} container width="100%" my={3} spacing={3}>
             {props.blocks.map((block, i) => {
-              const { BlockComponent } = getBlockComponent(block)
-              return (
-                <Box component={Grid} item xs display="flex">
-                  <BlockComponent {...block} key={`b-${i}`} />
-                </Box>
-              )
+              try {
+                const { BlockComponent } = getBlockComponent(block)
+                return (
+                  <Box component={Grid} item xs display="flex">
+                    <BlockComponent {...block} key={`b-${i}`} />
+                  </Box>
+                )
+              } catch (error) {
+                console.error(error)
+                return (
+                  <Box component={Grid} item width="100%" bgcolor="#FDECEA">
+                    <Typography variant="subtitle1">
+                      ERROR: {error.message}
+                    </Typography>
+                  </Box>
+                )
+              }
             })}
           </Box>
         )}
