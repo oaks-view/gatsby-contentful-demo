@@ -45,10 +45,10 @@ const CityTemplate = props => {
       <Box className={classes.root}>
         <SEO title={title} />
         <CityHeader {...headerBlock} />
-        {/* pageBlocks.map((block, i) => {
+        {pageBlocks.map((block, i) => {
           const { BlockComponent } = getBlockComponent(block)
           return <BlockComponent {...block} key={`b-${i}`} />
-        }) */}
+        })}
       </Box>
     </ThemeProvider>
   )

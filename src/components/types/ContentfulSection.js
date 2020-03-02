@@ -4,51 +4,64 @@ import { Link, graphql } from 'gatsby'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
+import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 
-const bgImgPros = img => {
-  if (!img) return {}
-  return {
-    backgroundImage: `url('${img.file.url}')`,
-    backgroundSize: 'cover',
-    backgroundPosition: '50% 50%',
-    height: 600,
-    width: '70%',
-  }
-}
+import { getPosition, getBlockComponent } from '../../utils'
 
-const titlePosition = pos => {
-  return {
-    left: { justifySelf: 'flex-start', alignSelf: 'flex-start' },
-    center: { justifySelf: 'center', alignSelf: 'center' },
-    right: { justifySelf: 'flex-end', alignSelf: 'flex-end' },
-  }[pos || 'center']
-}
+const useStyles = makeStyles(theme => ({
+  root: props => ({
+    width: '100%',
+    display: 'flex',
+    flexDirection: props.orientation || 'column',
+    padding: '50px 0',
+    backgroundColor: props.backgroundColor || 'inherit',
+  }),
+  bgImage: ({ backgroundImage: img }) =>
+    img
+      ? {
+          backgroundImage: `url('${img.file.url}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: '50% 50%',
+        }
+      : {},
+}))
 
-// const useStyles = makeStyles(theme => ({}))
+// TODO rethink titlePosition field. for now we hardcode position as `justifyPosition=center`
+
 const ContentfulSection = props => {
-  // const classes = useStyles()
-  console.log(props)
-  console.log(titlePosition(props.titlePosition))
+  const classes = useStyles(props)
+  console.log(props.blocks)
+
   return (
-    <Box
-      width="100%"
-      style={{
-        ...bgImgPros(props.backgroundImage),
-      }}
-      display="flex"
-      flexDirection={props.orientation || 'row'}
-    >
-      {/* TODO: Handle title position left|center|right. map align-self to them */}
-      <Box
-        component={Typography}
-        variant="h2"
-        component="h2"
-        {...titlePosition(props.titlePosition)}
-        color={props.backgroundImage ? '#fff' : 'primary'}
-      >
-        {props.title}
-      </Box>
+    <Box className={`${classes.root} ${classes.bgImage}`}>
+      <Container maxWidth="md">
+        {props.title && (
+          <Box
+            component={Typography}
+            component="h3"
+            display="flex"
+            justifyContent="center"
+            color="primary.main"
+            my={3}
+          >
+            {props.title}
+          </Box>
+        )}
+        {props.blocks && (
+          <Box component={Grid} container width="100%" my={3} spacing={3}>
+            {props.blocks.map((block, i) => {
+              const { BlockComponent } = getBlockComponent(block)
+              return (
+                <Box component={Grid} item xs display="flex">
+                  <BlockComponent {...block} key={`b-${i}`} />
+                </Box>
+              )
+            })}
+          </Box>
+        )}
+      </Container>
     </Box>
   )
 }
