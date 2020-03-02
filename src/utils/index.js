@@ -1,3 +1,4 @@
+import _ from 'lodash'
 // content fetched has an internal type which `Contentful` + its id. Eg. `section` becomes
 // available in the result as `ContentfulSection`. That name is used then to select the
 // React component that render its content. There's also sub type, which is the case for `Section`.

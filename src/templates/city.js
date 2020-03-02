@@ -83,6 +83,15 @@ export const pageQuery = graphql`
     }
   }
 
+  fragment actionType on ContentfulAction {
+    id
+    urlTo
+    title
+    internal {
+      type
+    }
+  }
+
   fragment sectionFields on ContentfulSection {
     id
     type
@@ -104,10 +113,12 @@ export const pageQuery = graphql`
   fragment sectionType on ContentfulSection {
     ...sectionFields
     blocks {
+      ...actionType
       ...cardType
       ... on ContentfulSection {
         ...sectionFields
         blocks {
+          ...actionType
           ...cardType
         }
       }
