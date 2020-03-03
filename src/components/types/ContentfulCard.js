@@ -4,10 +4,12 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 const CardTitle = props => {
+  const align = props.titlePosition || 'center'
+
   return (
     props.title && (
       <Box component={Grid} item {...props.styleProps}>
-        <Typography variant="subtitle1" component="h6" align="center">
+        <Typography variant="subtitle1" component="h6" align={align}>
           {props.title}
         </Typography>
       </Box>

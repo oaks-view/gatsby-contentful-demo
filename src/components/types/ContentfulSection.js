@@ -34,7 +34,7 @@ const ContentfulSection = props => {
   const classes = useStyles(props)
 
   return (
-    <Box className={`${classes.root} ${classes.bgImage}`}>
+    <Box className={`${classes.root} ${classes.bgImage} ${props.className || ''}`}>
       <Container maxWidth="md">
         {props.title && (
           <Box
@@ -59,8 +59,8 @@ const ContentfulSection = props => {
                   xs: block.orientation !== 'row',
                 }
                 return (
-                  <Box component={Grid} item {...blockProps}>
-                    <BlockComponent {...block} key={`b-${i}`} />
+                  <Box component={Grid} item key={`b-${i}`} {...blockProps}>
+                    <BlockComponent {...block} />
                   </Box>
                 )
               } catch (error) {
