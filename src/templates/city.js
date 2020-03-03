@@ -87,6 +87,12 @@ export const pageQuery = graphql`
     id
     urlTo
     title
+    image {
+      file {
+        url
+      }
+    }
+    openInNewTab
     internal {
       type
     }
