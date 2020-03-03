@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
   body: {
     '& * a': {
       color: theme.palette.secondary.main,
+      textDecoration: 'none',
     },
   },
 }))
