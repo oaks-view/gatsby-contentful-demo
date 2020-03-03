@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import MovingaLogo from '../MovingaLogo'
+import LeadGen from '../LeadGen'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -73,15 +74,8 @@ const ContentfulSection = props => {
           {props.title}
         </Box>
       </Box>
-      <Box
-        component={Grid}
-        item
-        sm={12}
-        md={4}
-        bgcolor="white"
-        height="100%"
-      >
-        <Typography component="h5">leadgen form</Typography>
+      <Box component={Grid} item sm={12} md={4} bgcolor="#F0EFEC">
+        <LeadGen />
       </Box>
     </Box>
   )
