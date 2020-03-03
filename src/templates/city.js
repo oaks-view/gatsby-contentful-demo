@@ -89,6 +89,7 @@ export const pageQuery = graphql`
     id
     urlTo
     title
+    size
     image {
       file {
         url

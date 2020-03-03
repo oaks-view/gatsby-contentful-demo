@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import get from 'lodash/get'
 import { makeStyles } from '@material-ui/core/styles'
+import { Box } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   actionButton: {
@@ -9,6 +10,8 @@ const useStyles = makeStyles(theme => ({
     color: '#fff',
     fontSize: '16px',
     fontWeight: '700',
+    paddingLeft: theme.spacing(7),
+    paddingRight: theme.spacing(7),
     '&:hover': {
       backgroundColor: theme.palette.secondary.main
     }
@@ -26,12 +29,9 @@ const useStyles = makeStyles(theme => ({
 
 const ContentfulAction = (props) => {
   const classes = useStyles();
-  console.log('Props %j', props);
 
-  const { title, urlTo, openInNewTab } = props;
+  const { title, urlTo, openInNewTab, size } = props;
   const image = get(props, 'image.file.url');
-
-  console.log('props =< ', props);
 
   const linkProps = {
     href: urlTo,
@@ -44,11 +44,13 @@ const ContentfulAction = (props) => {
     </a>
   }
 
-  return <Button className={classes.actionButton}>
-    <a className={classes.actionButtonLink} {...linkProps}>
-      {title && title}
-    </a>
-  </Button>
+  return <Box display="flex" justifyContent="center" alignItems="center" margin={0}>
+    <Button className={classes.actionButton} size={size || 'medium'}>
+      <a className={classes.actionButtonLink} {...linkProps}>
+        {title && title}
+      </a>
+    </Button>
+  </Box>
 }
 
 export default ContentfulAction
