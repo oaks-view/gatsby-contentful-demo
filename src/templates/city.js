@@ -13,6 +13,7 @@ import Box from '@material-ui/core/Box'
 import theme from '../themes/city'
 import { getBlockComponent } from '../utils'
 import CityHeader from '../components/types/CityHeader'
+import Footer from '../components/CityFooter'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,6 +51,7 @@ const CityTemplate = props => {
           return <BlockComponent {...block} key={`b-${i}`} />
         })}
       </Box>
+      <Footer />
     </ThemeProvider>
   )
 }
