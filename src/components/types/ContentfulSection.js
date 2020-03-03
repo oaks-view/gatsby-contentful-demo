@@ -34,7 +34,9 @@ const ContentfulSection = props => {
   const classes = useStyles(props)
 
   return (
-    <Box className={`${classes.root} ${classes.bgImage} ${props.className || ''}`}>
+    <Box
+      className={`${classes.root} ${classes.bgImage} ${props.className || ''}`}
+    >
       <Container maxWidth="md">
         {props.title && (
           <Box
@@ -56,7 +58,8 @@ const ContentfulSection = props => {
                 const blockProps = {
                   display: 'flex',
                   flexDirection: block.orientation || 'column',
-                  xs: block.orientation !== 'row',
+                  xs: 12, // by default on mobile stack element upon each other. TODO: add config on contentful for mobile?
+                  sm: block.orientation !== 'row',
                 }
                 return (
                   <Box component={Grid} item key={`b-${i}`} {...blockProps}>

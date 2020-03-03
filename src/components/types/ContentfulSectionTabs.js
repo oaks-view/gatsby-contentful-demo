@@ -9,6 +9,7 @@ import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 import { getPosition, getBlockComponent } from '../../utils'
 
@@ -60,6 +61,7 @@ const TabPanel = props => {
 const ContentfulSectionTabs = props => {
   const classes = useStyles(props)
   const [value, setValue] = React.useState(0)
+  const matches = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
   const blocks = props.blocks || []
 
@@ -67,14 +69,17 @@ const ContentfulSectionTabs = props => {
     setValue(newValue)
   }
 
+  const scrollable = matches ? { scrollButtons: 'on' } : {}
+
   const SectionTabs = () => (
     <Box>
       <Tabs
-        variant="fullWidth"
         indicatorColor="secondary"
         textColor="secondary"
         value={value}
         onChange={handleChange}
+        variant={matches ? 'scrollable' : 'fullWidth'}
+        {...scrollable}
         area-label="full width tabs example"
       >
         {blocks.map((block, i) => (
