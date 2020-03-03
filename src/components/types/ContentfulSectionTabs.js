@@ -71,8 +71,8 @@ const ContentfulSectionTabs = props => {
     <Box>
       <Tabs
         variant="fullWidth"
-        indicatorColor="primary"
-        textColor="primary"
+        indicatorColor="secondary"
+        textColor="secondary"
         value={value}
         onChange={handleChange}
         area-label="full width tabs example"
