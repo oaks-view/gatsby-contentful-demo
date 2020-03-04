@@ -31,8 +31,6 @@ const useStyles = makeStyles(theme => ({
 const ContentfulAction = (props) => {
   const classes = useStyles(props);
 
-  console.log('props => ', props);
-
   const { title, urlTo, openInNewTab, size } = props;
   const image = get(props, 'image.file.url');
 
