@@ -1,6 +1,6 @@
 import React from "react"
 import { Router } from "@reach/router"
-import Layout from "../components/Layout"
+import Layout from "../components/layout"
 import SectionPreview from "../components/preview/section"
 import ActionPreview from "../components/preview/action"
 
