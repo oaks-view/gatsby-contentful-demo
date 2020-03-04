@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(7),
     '&:hover': {
       backgroundColor: theme.palette.secondary.main
-    }
+    },
+    textTransform: props => props.textTransform || 'uppercase'
   },
   actionButtonLink: {
     color: 'inherit',
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ContentfulAction = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   const { title, urlTo, openInNewTab, size } = props;
   const image = get(props, 'image.file.url');
