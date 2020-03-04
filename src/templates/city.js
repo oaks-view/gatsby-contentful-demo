@@ -79,7 +79,8 @@ export const pageQuery = graphql`
     order
     orientation
     title
-    titlePosition
+    subtitle
+    titleAlignment
     internal {
       type
     }
