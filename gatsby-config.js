@@ -25,6 +25,7 @@ module.exports = {
   siteMetadata: {
     title: 'Movinga',
     languages,
+    contentfulConfig
   },
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
@@ -62,6 +63,10 @@ module.exports = {
         // },
       },
       // 'gatsby-plugin-styled-components',
+    },
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/preview/*`] },
     },
   ],
 }
