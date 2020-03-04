@@ -109,8 +109,8 @@ export const pageQuery = graphql`
     id
     type
     title
-    titlePosition
     slug
+    titleAlignment
     orientation
     backgroundImage {
       file {
@@ -150,10 +150,10 @@ export const pageQuery = graphql`
       id: { eq: $id }
       blocks: { elemMatch: { node_locale: { eq: $locale } } }
     ) {
-      title
-      template
-      slug
       id
+      title
+      slug
+      template
       blocks {
         ...sectionType
       }
