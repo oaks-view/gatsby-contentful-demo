@@ -1,89 +1,94 @@
 import React from 'react'
-
 import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
+import Box from '@material-ui/core/Box'
+
+// TODO add actions
 
 const useStyles = makeStyles(theme => ({
-  body: {
-    '& * a': {
-      color: theme.palette.secondary.main,
-      textDecoration: 'none',
+  root: {
+    backgroundColor: 'transparent',
+  },
+  title: props => ({
+    textAlign: props.textAlignment || 'center',
+    padding: 0,
+  }),
+  image: {
+    display: 'flex',
+    justifyContent: 'center',
+    '& > img': {
+      maxWidth: '100%',
     },
+  },
+  content: {
+    padding: 0,
   },
 }))
 
-const CardTitle = props => {
-  const align = props.titlePosition || 'center'
-
+const MyCardTitle = ({ title, subtitle, titleAlignment, classes }) => {
+  const align = titleAlignment || 'center'
   return (
-    props.title && (
-      <Box component={Grid} item {...props.styleProps}>
-        <Typography variant="subtitle1" component="h6" align={align}>
-          {props.title}
-        </Typography>
-      </Box>
-    )
+    <CardHeader
+      className={classes.title}
+      title={
+        title && (
+          <Typography variant="subtitle1" align={align}>
+            {title}
+          </Typography>
+        )
+      }
+      subheader={subtitle || undefined}
+    />
+  )
+}
+const MyCardImage = ({ image, classes }) => {
+  const Image = () => (
+    <Box className={classes.image}>
+      <img src={image.file.url} alt={image.title} />
+    </Box>
+  )
+  return <CardMedia component={Image} />
+}
+const MyCardBody = ({ body, classes }) => {
+  return (
+    <CardContent className={classes.content}>
+      <Typography
+        paragraph
+        dangerouslySetInnerHTML={{ __html: body.childMarkdownRemark.html }}
+      />
+    </CardContent>
   )
 }
 
-const CardImage = props => {
-  return (
-    props.image && (
-      <Box
-        component={Grid}
-        item
-        display="flex"
-        justifyContent="center"
-        {...props.styleProps}
-      >
-        <img src={props.image.file.url} alt={props.image.title} />
-      </Box>
-    )
-  )
+const DEFAULT_ORDER = 'title,image,body'
+const CARD_ITEMS = {
+  title: MyCardTitle,
+  image: MyCardImage,
+  body: MyCardBody,
 }
-
-const CardBody = ({ body, classes, styleProps }) => {
-  return (
-    body && (
-      <Box component={Grid} item className={classes.body} {...styleProps}>
-        <Typography
-          variant="body1"
-          component="div"
-          dangerouslySetInnerHTML={{ __html: body.childMarkdownRemark.html }}
-        />
-      </Box>
-    )
-  )
-}
-
-const items = { title: CardTitle, image: CardImage, body: CardBody }
 
 const ContentfulCard = props => {
-  const classes = useStyles(classes)
-  const order = (props.order || 'image,title,body').split(',')
-  const itemsPresent = order.filter(name => !!props[name.trim()])
+  const classes = useStyles(props)
+  const order = (props.order || DEFAULT_ORDER).replace(/\s+/g, '').split(',')
+
+  if (order.length !== 3) {
+    throw new Error(
+      `Card.order field is not correct. It should contain three items (title, image, body), but got (${order})`
+    )
+  }
 
   return (
-    <Box
-      component={Grid}
-      container
-      display="flex"
-      flexDirection={props.orientation || 'column'}
-    >
-      {itemsPresent.map(name => {
-        const Component = items[name.trim()]
-        return (
-          <Component
-            {...props}
-            classes={classes}
-            styleProps={{ xs: true }}
-            key={name}
-          />
-        )
+    <Card className={classes.root} elevation={0}>
+      {order.map(name => {
+        if (!props[name]) return null
+        const Component = CARD_ITEMS[name]
+        return <Component {...props} classes={classes} key={name} />
       })}
-    </Box>
+    </Card>
   )
 }
 
