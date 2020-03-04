@@ -15,7 +15,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     display: 'flex',
     flexDirection: props.orientation || 'column',
-    backgroundColor: props.backgroundColor || 'inherit',
     padding: get(props, `caller.ContentfulSection.padding`, '50px 0'),
   }),
   bgImage: ({ backgroundImage: img }) =>

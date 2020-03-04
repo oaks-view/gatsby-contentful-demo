@@ -21,6 +21,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     flexDirection: 'column',
+    '& > div:nth-child(odd)': {
+      backgroundColor: '#F8F9FB'
+    }
   },
 }))
 
@@ -109,7 +112,6 @@ export const pageQuery = graphql`
     titlePosition
     slug
     orientation
-    backgroundColor
     backgroundImage {
       file {
         url
