@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography'
 import { useStaticQuery, graphql } from "gatsby"
+import * as _ from 'lodash'
 
 const contentful = require("contentful");
+import ContentfulAction from '../types/ContentfulAction';
 
-function SectionPreview(props) {
-    const [section, setSection] = useState()
+
+function ActionPreview(props) {
+    const [action, setAction] = useState();
 
     const { site: { siteMetadata: { contentfulConfig } } } = useStaticQuery(
         graphql`
-          query SectionPreviewQuery {
+          query ActionPreviewQuery {
             site {
               siteMetadata {
                 contentfulConfig {
@@ -32,17 +35,24 @@ function SectionPreview(props) {
     useEffect(() => {
         client.getEntry(props.entry_id)
             .then((entry) => {
-                console.log(entry)
-                setSection(entry)
+                console.log('entry => %j', entry)
+
+                const imageUrl = _.get(entry.fields, 'image.fields.file.url');
+
+                const contenfulAction = {
+                    ...entry.fields,
+                    ...(imageUrl && { image: { file: { url: imageUrl }}})
+                };
+
+                setAction(contenfulAction)
             })
             .catch(console.error)
     }, [])
 
     return (<>
-        <h1>Section Preview</h1>
-        <Box component={Typography} display="flex" justifyContent="center" py={4} variant='h4'>Preview Section <b>"{props.entry_id}"</b></Box>
-        {section && <Box component={Typography} variant='body1'>{JSON.stringify(section, null, 2)}></Box>}
+        <Box component={Typography} display="flex" justifyContent="center" py={4} variant='h4'>Action Preview <b> "{props.entry_id}"</b></Box>
+        {action && <ContentfulAction {...action} />}
     </>)
 }
 
-export default SectionPreview
+export default ActionPreview

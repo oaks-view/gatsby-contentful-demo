@@ -2,15 +2,14 @@ import React from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/Layout"
 import SectionPreview from "../components/preview/section"
-// import Details from "../components/Details"
-// import Login from "../components/Login"
-// import Default from "../components/Default"
+import ActionPreview from "../components/preview/action"
 
 const Preview = () => {
     return (
         <Layout>
             <Router basepath="/preview">
-                <SectionPreview path="/section" />
+                <SectionPreview path="/section/:entry_id" />
+                <ActionPreview path="/action/:entry_id" />
                 {/* Todo handle default routes */}
                 {/*<Default path="/" /> */}
             </Router>

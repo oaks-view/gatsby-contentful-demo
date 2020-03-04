@@ -25,6 +25,7 @@ module.exports = {
   siteMetadata: {
     title: 'Movinga',
     languages,
+    contentfulConfig
   },
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
