@@ -26,6 +26,13 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     padding: 0,
+    '& p': {
+      margin: theme.spacing(0),
+      lineHeight: 1.5,
+      fontWeight: 400,
+      color: '#4a4a4a',
+      fontSize: '1rem',
+    },
   },
 }))
 
@@ -55,12 +62,10 @@ const MyCardImage = ({ image, classes }) => {
 }
 const MyCardBody = ({ body, classes }) => {
   return (
-    <CardContent className={classes.content}>
-      <Typography
-        paragraph
-        dangerouslySetInnerHTML={{ __html: body.childMarkdownRemark.html }}
-      />
-    </CardContent>
+    <CardContent
+      className={classes.content}
+      dangerouslySetInnerHTML={{ __html: body.childMarkdownRemark.html }}
+    />
   )
 }
 
