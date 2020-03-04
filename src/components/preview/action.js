@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
 import { useStaticQuery, graphql } from "gatsby"
 import * as _ from 'lodash'
+import ReplayIcon from '@material-ui/icons/Replay';
 
 const contentful = require("contentful");
 import ContentfulAction from '../types/ContentfulAction';
@@ -41,16 +43,22 @@ function ActionPreview(props) {
 
                 const contenfulAction = {
                     ...entry.fields,
-                    ...(imageUrl && { image: { file: { url: imageUrl }}})
+                    ...(imageUrl && { image: { file: { url: imageUrl } } })
                 };
 
                 setAction(contenfulAction)
             })
             .catch(console.error)
-    }, [])
+    }, [action])
 
     return (<>
-        <Box component={Typography} display="flex" justifyContent="center" py={4} variant='h4'>Action Preview <b> "{props.entry_id}"</b></Box>
+        <Box component={Typography} display="flex" alignItems="center"
+        justifyContent="center" py={4} variant='h4'>
+            Action Preview
+        <IconButton onClick={() => { setAction(null)}}>
+                <ReplayIcon fontSize="large" />
+            </IconButton>
+        </Box>
         {action && <ContentfulAction {...action} />}
     </>)
 }
