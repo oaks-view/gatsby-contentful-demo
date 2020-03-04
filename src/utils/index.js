@@ -27,20 +27,6 @@ export const getBlockComponent = ({ type = 'generic', internal, ...props }) => {
   }
 }
 
-export const getPosition = pos =>
-  ({
-    'top-left': { justifySelf: 'flex-start', alignSelf: 'flex-start' },
-    'top-center': { justifySelf: 'center', alignSelf: 'flex-start' },
-    'top-right': { justifySelf: 'flex-start', alignSelf: 'flex-end' },
-    'center-left': { justifySelf: 'flex-start', alignSelf: 'center' },
-    'center-center': { justifySelf: 'center', alignSelf: 'center' },
-    'center-right': { justifySelf: 'flex-end', alignSelf: 'center' },
-    'bottom-left': { justifySelf: 'flex-start', alignSelf: 'flex-end' },
-    'bottom-center': { justifySelf: 'center', alignSelf: 'flex-end' },
-    'bottom-right': { justifySelf: 'flex-end', alignSelf: 'flex-end' },
-  }[pos || 'top-center'])
-
 export default {
   getBlockComponent,
-  getPosition,
 }

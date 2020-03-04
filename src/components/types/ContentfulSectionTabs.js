@@ -11,7 +11,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
-import { getPosition, getBlockComponent } from '../../utils'
+import { getBlockComponent } from '../../utils'
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
