@@ -6,6 +6,19 @@
 
 const path = require('path')
 
+// https://github.com/gatsbyjs/gatsby/issues/11934#issuecomment-538662592
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  if (stage.startsWith('develop')) {
+    actions.setWebpackConfig({
+      resolve: {
+        alias: {
+          'react-dom': '@hot-loader/react-dom',
+        },
+      },
+    })
+  }
+}
+
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programmatically
