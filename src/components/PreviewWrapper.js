@@ -31,7 +31,9 @@ function normalizeData(data) {
   }
 
   // we standardize long text fields name as `body` whenever a `body` is present we parse its content with remark
-  const { blocks = [], body, ...fields } = data.fields || {}
+  // TODO maybe standardize asset fiel. instead of image,backgroundImage just name image|asset|file
+  // TODO we only handle single file now. handle list of images when available
+  const { blocks = [], body, image, backgroundImage, ...fields } = data.fields
 
   const normalizeBlock = block => normalizeData(block)
 
@@ -39,6 +41,8 @@ function normalizeData(data) {
     internal: { type: `Contentful${contentfulType}` },
     ...fields,
     ...(body && { body: normalizeBody(body) }),
+    ...(image && { image: { ...image.fields } }),
+    ...(backgroundImage && { backgroundImage: { ...backgroundImage.fields } }),
     ...(blocks.length && {
       blocks: blocks.map(normalizeBlock),
     }),
