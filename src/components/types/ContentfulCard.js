@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
     '& p': {
       margin: theme.spacing(0),
       lineHeight: 1.5,
+      fontSize: '1rem',
     },
   },
 }))
