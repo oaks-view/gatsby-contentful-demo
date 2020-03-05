@@ -44,12 +44,16 @@ function normalizeContentfulSection(contentfulSection) {
     },
   }
 
-  const { backgroundImage } = fields
+  const { backgroundImage, blocks } = fields
 
   if (backgroundImage) {
     normalizedContent.backgroundImage = {
       file: { url: backgroundImage.fields.file.url },
     }
+  }
+
+  if (blocks) {
+    normalizedContent.blocks = blocks.map(block => normalizeEntry(block))
   }
 
   return normalizedContent
@@ -75,7 +79,7 @@ function parseBody(body) {
   return value.contents
 }
 
-export function normalizeEntry(entry) {
+function normalizeEntry(entry) {
   const contentType = entry.sys.contentType.sys.id
   let normalizedEntry = {}
 
@@ -95,3 +99,5 @@ export function normalizeEntry(entry) {
 
   return normalizedEntry
 }
+
+export { normalizeEntry }

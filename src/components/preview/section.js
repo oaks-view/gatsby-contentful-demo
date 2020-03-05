@@ -6,49 +6,8 @@ import IconButton from '@material-ui/core/IconButton'
 import ReplayIcon from '@material-ui/icons/Replay'
 import * as contentful from 'contentful'
 import * as _ from 'lodash'
-import remark from 'remark'
-import html from 'remark-html'
 import ContentfulSection from '../types/ContentfulSection'
-
-function parseBody(body) {
-  const value = remark()
-    .use(html)
-    .processSync(body)
-
-  return value.contents
-}
-
-function normaliseContentfulSection(contentfulSection) {
-  const { fields } = contentfulSection
-
-  const normalisedContent = {
-    ...fields,
-    internal: {
-      type: 'ContentfulSection',
-    },
-  }
-
-  const { body, backgroundImage } = fields
-
-  if (backgroundImage) {
-    normalisedContent.backgroundImage = {
-      file: { url: backgroundImage.fields.file.url },
-    }
-  }
-
-  if (body) {
-    console.log(body)
-    const html = parseBody(body)
-    normalisedContent.body = {
-      body,
-      childMarkdownRemark: {
-        html,
-      },
-    }
-  }
-
-  return normalisedContent
-}
+import { normalizeEntry } from '../../utils/previewHelper'
 
 function SectionPreview(props) {
   const [section, setSection] = useState()
@@ -81,13 +40,16 @@ function SectionPreview(props) {
 
   useEffect(() => {
     client
-      .getEntry(props.entryId)
+      .getEntry(props.entryId, {
+        content_type: 'section',
+        locale: 'de',
+        include: 5, // indicates how many level to go when retrieving links. max is 10
+      })
       .then(entry => {
         setEntryId(props.entryId)
 
-        const normalisedSection = normaliseContentfulSection(entry)
+        const normalisedSection = normalizeEntry(entry)
         setSection(normalisedSection)
-        // console.log(entry)
       })
       .catch(console.error)
   }, [entryId])
@@ -111,11 +73,7 @@ function SectionPreview(props) {
           <ReplayIcon fontSize="large" />
         </IconButton>
       </Box>
-      {section && (
-        <Box component={Typography} variant="body1">
-          {JSON.stringify(section, null, 2)}
-        </Box>
-      )}
+      {section && <ContentfulSection {...section} />}
     </>
   )
 }
