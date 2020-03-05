@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { useStaticQuery, graphql } from "gatsby"
 import IconButton from '@material-ui/core/IconButton'
 import ReplayIcon from '@material-ui/icons/Replay'
 
-const contentful = require("contentful");
+const contentful = require('contentful')
 
 function SectionPreview(props) {
     const [section, setSection] = useState()
     const [entryId, setEntryId] = useState();
 
-    const { site: { siteMetadata: { contentfulConfig } } } = useStaticQuery(
-        graphql`
-          query SectionPreviewQuery {
-            site {
-              siteMetadata {
-                contentfulConfig {
-                    spaceId
-                    accessToken
-                }
-              }
+  const {
+    site: {
+      siteMetadata: { contentfulConfig },
+    },
+  } = useStaticQuery(
+    graphql`
+      query SectionPreviewQuery {
+        site {
+          siteMetadata {
+            contentfulConfig {
+              spaceId
+              accessToken
             }
           }
-        `
-    )
+        }
+      }
+    `
+  )
 
-    const client = contentful.createClient({
-        space: contentfulConfig.spaceId,
-        accessToken: contentfulConfig.accessToken,
-        host: "preview.contentful.com"
-    });
+  const client = contentful.createClient({
+    space: contentfulConfig.spaceId,
+    accessToken: contentfulConfig.accessToken,
+    host: 'preview.contentful.com',
+  })
 
     useEffect(() => {
         client.getEntry(props.entryId)
