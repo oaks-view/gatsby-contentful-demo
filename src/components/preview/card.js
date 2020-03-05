@@ -6,49 +6,9 @@ import IconButton from '@material-ui/core/IconButton'
 import ReplayIcon from '@material-ui/icons/Replay'
 import * as contentful from 'contentful'
 import * as _ from 'lodash'
-import remark from 'remark'
-import html from 'remark-html'
 import ContentfulCard from '../types/ContentfulCard'
 
-function parseBody(body) {
-  const value = remark()
-    .use(html)
-    .processSync(body)
-
-  return value.contents
-}
-
-function normaliseContentfulCard(contentfulCard) {
-  const { fields } = contentfulCard
-
-  const normalisedContent = {
-    ...fields,
-    internal: {
-      type: 'ContentfulCard',
-    },
-  }
-
-  const { body, image } = fields
-
-  if (image) {
-    normalisedContent.image = {
-      file: { url: image.fields.file.url },
-    }
-  }
-
-  if (body) {
-    console.log(body)
-    const html = parseBody(body)
-    normalisedContent.body = {
-      body,
-      childMarkdownRemark: {
-        html,
-      },
-    }
-  }
-
-  return normalisedContent
-}
+import { normalizeEntry } from '../../utils/previewHelper'
 
 function CardPreview(props) {
   const [card, setCard] = useState()
@@ -83,12 +43,10 @@ function CardPreview(props) {
     client
       .getEntry(props.entryId)
       .then(entry => {
-        // console.log(JSON.stringify(entry, null, 2))
         setEntryId(props.entryId)
 
-        const normalisedCard = normaliseContentfulCard(entry)
+        const normalisedCard = normalizeEntry(entry)
         setCard(normalisedCard)
-        // setCard(entry)
       })
       .catch(console.error)
   }, [entryId])

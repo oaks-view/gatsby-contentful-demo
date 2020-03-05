@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { useStaticQuery, graphql } from 'gatsby'
 import * as _ from 'lodash'
 import ReplayIcon from '@material-ui/icons/Replay'
+import { normalizeEntry } from '../../utils/previewHelper'
 
 const contentful = require('contentful')
 import ContentfulAction from '../types/ContentfulAction'
@@ -44,12 +45,7 @@ function ActionPreview(props) {
       .then(entry => {
         console.log('entry => %j', entry)
 
-        const imageUrl = _.get(entry.fields, 'image.fields.file.url')
-
-        const contenfulAction = {
-          ...entry.fields,
-          ...(imageUrl && { image: { file: { url: imageUrl } } }),
-        }
+        const contenfulAction = normalizeEntry(entry)
 
         setAction(contenfulAction)
         setEntryId(props.entryId)
