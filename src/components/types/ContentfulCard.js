@@ -12,10 +12,12 @@ import Box from '@material-ui/core/Box'
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: 'transparent',
+    padding: theme.spacing(2, 1),
   },
   title: props => ({
     textAlign: props.textAlignment || 'center',
     padding: 0,
+    paddingBottom: theme.spacing(1),
   }),
   image: {
     display: 'flex',
@@ -29,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     '& p': {
       margin: theme.spacing(0),
       lineHeight: 1.5,
-      fontSize: '1rem',
+      fontSize: 16,
     },
   },
 }))

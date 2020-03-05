@@ -57,7 +57,7 @@ const ContentfulSection = props => {
         </Box>
       )}
       {props.blocks && (
-        <Box component={Grid} container width="100%" my={3} spacing={3}>
+        <Box component={Grid} container width="100%" my={3} spacing={2}>
           {props.blocks.map((block, i) => {
             try {
               const { BlockComponent } = getBlockComponent(block)
