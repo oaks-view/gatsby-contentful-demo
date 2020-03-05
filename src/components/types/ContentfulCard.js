@@ -29,9 +29,6 @@ const useStyles = makeStyles(theme => ({
     '& p': {
       margin: theme.spacing(0),
       lineHeight: 1.5,
-      fontWeight: 400,
-      color: '#4a4a4a',
-      fontSize: '1rem',
     },
   },
 }))
@@ -43,7 +40,7 @@ const MyCardTitle = ({ title, subtitle, titleAlignment, classes }) => {
       className={classes.title}
       title={
         title && (
-          <Typography variant="subtitle1" align={align}>
+          <Typography variant="subtitle2" align={align}>
             {title}
           </Typography>
         )

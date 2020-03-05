@@ -1,10 +1,8 @@
 import React from 'react'
-import * as PropTypes from 'prop-types'
 import { Link, graphql } from 'gatsby'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import Tabs from '@material-ui/core/Tabs'
@@ -29,9 +27,8 @@ const useStyles = makeStyles(theme => ({
           backgroundPosition: '50% 50%',
         }
       : {},
-  panel: {},
   panelContent: {
-    paddingTop: '0 !important',
+    paddingTop: 0,
   },
 }))
 
@@ -51,6 +48,7 @@ const TabPanel = props => {
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
+      mt={3}
       {...other}
     >
       {children}
@@ -65,8 +63,13 @@ const ContentfulSectionTabs = props => {
 
   const blocks = props.blocks || []
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_event, newValue) => {
     setValue(newValue)
+  }
+
+  // render nested section without title and padding
+  const caller = {
+    ContentfulSection: { padding: 0, hideTitle: true },
   }
 
   const scrollable = matches ? { scrollButtons: 'on' } : {}
@@ -111,7 +114,11 @@ const ContentfulSectionTabs = props => {
               const { BlockComponent } = getBlockComponent(block)
               return (
                 <TabPanel value={value} index={i} key={i}>
-                  <BlockComponent {...block} className={classes.panelContent} />
+                  <BlockComponent
+                    {...block}
+                    caller={caller}
+                    className={classes.panelContent}
+                  />
                 </TabPanel>
               )
             })}
