@@ -12,6 +12,7 @@ import ContentfulAction from '../types/ContentfulAction';
 
 function ActionPreview(props) {
     const [action, setAction] = useState();
+    const [entryId, setEntryId] = useState();
 
     const { site: { siteMetadata: { contentfulConfig } } } = useStaticQuery(
         graphql`
@@ -35,7 +36,7 @@ function ActionPreview(props) {
     });
 
     useEffect(() => {
-        client.getEntry(props.entry_id)
+        client.getEntry(props.entryId)
             .then((entry) => {
                 console.log('entry => %j', entry)
 
@@ -47,15 +48,16 @@ function ActionPreview(props) {
                 };
 
                 setAction(contenfulAction)
+                setEntryId(props.entryId)
             })
             .catch(console.error)
-    }, [action])
+    }, [entryId])
 
     return (<>
         <Box component={Typography} display="flex" alignItems="center"
         justifyContent="center" py={4} variant='h4'>
             Action Preview
-        <IconButton onClick={() => { setAction(null)}}>
+        <IconButton onClick={() => { setEntryId(null)}}>
                 <ReplayIcon fontSize="large" />
             </IconButton>
         </Box>

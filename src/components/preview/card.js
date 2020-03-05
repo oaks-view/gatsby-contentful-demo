@@ -7,13 +7,13 @@ import ReplayIcon from '@material-ui/icons/Replay'
 
 const contentful = require("contentful");
 
-function SectionPreview(props) {
-    const [section, setSection] = useState()
+function CardPreview(props) {
+    const [card, setCard] = useState()
     const [entryId, setEntryId] = useState();
 
     const { site: { siteMetadata: { contentfulConfig } } } = useStaticQuery(
         graphql`
-          query SectionPreviewQuery {
+          query CardPreviewQuery {
             site {
               siteMetadata {
                 contentfulConfig {
@@ -35,23 +35,23 @@ function SectionPreview(props) {
     useEffect(() => {
         client.getEntry(props.entryId)
             .then((entry) => {
-                setEntryId(props.entryId)
-                setSection(entry)
                 console.log(entry)
+                setEntryId(props.entryId)
+                setCard(entry)
             })
             .catch(console.error)
     }, [entryId])
 
     return (<>
-        <Box ox component={Typography} display="flex" alignItems="center"
+        <Box component={Typography} display="flex" alignItems="center"
             justifyContent="center" py={4} variant='h4'>
-            Preview Section 
+            Card Preview
             <IconButton onClick={() => { setEntryId(null) }}>
                 <ReplayIcon fontSize="large" />
             </IconButton>
-            </Box>
-        {section && <Box component={Typography} variant='body1'>{JSON.stringify(section, null, 2)}</Box>}
+        </Box>
+        {card && <Box component={Typography} variant='body1'>{JSON.stringify(card, null, 2)}</Box>}
     </>)
 }
 
-export default SectionPreview
+export default CardPreview
