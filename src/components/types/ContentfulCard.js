@@ -12,7 +12,6 @@ import Box from '@material-ui/core/Box'
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: 'transparent',
-    padding: theme.spacing(2, 1),
   },
   title: props => ({
     textAlign: props.textAlignment || 'center',
