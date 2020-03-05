@@ -39,9 +39,12 @@ const ContentfulSection = props => {
     },
   }
 
+  // when displaying a section within tabs, hide title
+  const hideTitle = get(props, 'caller.ContentfulSection.hideTitle', false)
+
   const Section = () => (
     <>
-      {props.title && (
+      {!hideTitle && props.title && (
         <Box
           component={Typography}
           component="h3"
@@ -54,7 +57,7 @@ const ContentfulSection = props => {
         </Box>
       )}
       {props.blocks && (
-        <Box component={Grid} container width="100%" my={3} spacing={3}>
+        <Box component={Grid} container width="100%" my={3} spacing={2}>
           {props.blocks.map((block, i) => {
             try {
               const { BlockComponent } = getBlockComponent(block)

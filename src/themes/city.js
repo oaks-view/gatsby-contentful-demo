@@ -44,7 +44,18 @@ const palette = {
 export default responsiveFontSizes(
   createMuiTheme({
     props: {},
-    overrides: {},
+    overrides: {
+      MuiTab: {
+        root: {
+          textTransform: 'none',
+          fontWeight: defaultTheme.typography.fontWeightRegular,
+          '&$selected': {
+            fontWeight: defaultTheme.typography.fontWeightMedium,
+          },
+        },
+        selected: {},
+      },
+    },
     typography: {
       fontFamily: 'Open Sans, arial, sans-serif',
       lineHeight: 1.15,
@@ -60,8 +71,8 @@ export default responsiveFontSizes(
         color: palette.primary.main,
       },
       subtitle2: {
-        fontWeight: '1rem',
-        color: '#4a4a4a',
+        fontWeight: 600,
+        color: palette.primary.main,
       },
       h1: {
         fontWeight: 600,
