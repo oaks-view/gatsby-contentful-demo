@@ -13,45 +13,49 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(7),
     paddingRight: theme.spacing(7),
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main
+      backgroundColor: theme.palette.secondary.main,
     },
-    textTransform: props => props.textTransform || 'uppercase'
+    textTransform: props => props.textTransform || 'uppercase',
   },
   actionButtonLink: {
     color: 'inherit',
     width: '100%',
     height: '100%',
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   actionLink: {
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 }))
 
-const ContentfulAction = (props) => {
-  const classes = useStyles(props);
+const ContentfulAction = props => {
+  const classes = useStyles(props)
 
-  const { title, urlTo, openInNewTab, size } = props;
-  const image = get(props, 'image.file.url');
+  const { title, urlTo, openInNewTab, size } = props
+  const image = get(props, 'image.file.url')
 
   const linkProps = {
     href: urlTo,
-    target: openInNewTab ? '_blank' : '_self'
+    target: openInNewTab ? '_blank' : '_self',
   }
 
   if (image) {
-    return <a classes={classes.actionLink} {...linkProps}>
-      <img src={image} />
-    </a>
+    return (
+      <a classes={classes.actionLink} {...linkProps}>
+        <img src={image} />
+      </a>
+    )
   }
 
-  return <Box display="flex" justifyContent="center" alignItems="center" margin={0}>
-    <Button className={classes.actionButton} size={size || 'medium'}>
-      <a className={classes.actionButtonLink} {...linkProps}>
-        {title && title}
-      </a>
-    </Button>
-  </Box>
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center" margin={0}>
+      <Button className={classes.actionButton} size={size || 'medium'}>
+        <a className={classes.actionButtonLink} {...linkProps}>
+          {title && title}
+        </a>
+      </Button>
+    </Box>
+  )
 }
 
 export default ContentfulAction

@@ -22,8 +22,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     '& > div:nth-child(odd)': {
-      backgroundColor: '#F8F9FB'
-    }
+      backgroundColor: '#F8F9FB',
+    },
   },
 }))
 
