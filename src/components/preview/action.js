@@ -1,80 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import { useStaticQuery, graphql } from 'gatsby'
-import * as _ from 'lodash'
-import ReplayIcon from '@material-ui/icons/Replay'
-import { normalizeEntry } from '../../utils/previewHelper'
+import React from 'react'
+import PreviewWrapper from '../PreviewWrapper'
+import ContentType from '../types/ContentfulAction'
 
-const contentful = require('contentful')
-import ContentfulAction from '../types/ContentfulAction'
-
-function ActionPreview(props) {
-  const [action, setAction] = useState()
-  const [entryId, setEntryId] = useState()
-
-  const {
-    site: {
-      siteMetadata: { contentfulConfig },
-    },
-  } = useStaticQuery(
-    graphql`
-      query ActionPreviewQuery {
-        site {
-          siteMetadata {
-            contentfulConfig {
-              spaceId
-              accessToken
-            }
-          }
-        }
-      }
-    `
-  )
-
-  const client = contentful.createClient({
-    space: contentfulConfig.spaceId,
-    accessToken: contentfulConfig.accessToken,
-    host: 'preview.contentful.com',
-  })
-
-  useEffect(() => {
-    client
-      .getEntry(props.entryId)
-      .then(entry => {
-        console.log('entry => %j', entry)
-
-        const contenfulAction = normalizeEntry(entry)
-
-        setAction(contenfulAction)
-        setEntryId(props.entryId)
-      })
-      .catch(console.error)
-  }, [entryId])
-
-  return (
-    <>
-      <Box
-        component={Typography}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        py={4}
-        variant="h4"
-      >
-        Action Preview
-        <IconButton
-          onClick={() => {
-            setEntryId(null)
-          }}
-        >
-          <ReplayIcon fontSize="large" />
-        </IconButton>
-      </Box>
-      {action && <ContentfulAction {...action} />}
-    </>
-  )
+const ContentPreview = props => {
+  return <PreviewWrapper type="Action" component={ContentType} {...props} />
 }
 
-export default ActionPreview
+export default ContentPreview
