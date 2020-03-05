@@ -54,11 +54,6 @@ function normalizeData(data) {
 }
 
 const PreviewWrapper = props => {
-  const [entryId, setEntryId] = React.useState(props.entryId)
-  const [data, setData] = React.useState()
-  const [lang, setLang] = React.useState()
-  const [loading, setLoading] = React.useState(false)
-
   const {
     site: {
       siteMetadata: {
@@ -85,25 +80,31 @@ const PreviewWrapper = props => {
     `
   )
 
+  const [entryId, setEntryId] = React.useState(props.entryId)
+  const [data, setData] = React.useState()
+  const [lang, setLang] = React.useState(defaultLangKey)
+  const [loading, setLoading] = React.useState(false)
+
   const client = getContentfulClient({ config })
 
   React.useEffect(() => {
-    setLoading(true)
-    client
-      .getEntry(props.entryId, {
-        locale: lang || defaultLangKey,
-        include: 5,
-      })
-      .then(entry => {
-        setEntryId(props.entryId)
-        setData(normalizeData(entry))
-        setLoading(false)
-      })
-      .catch(console.error)
-  }, [entryId, lang])
+    if (!data || !data[lang]) {
+      setLoading(true)
+      const locale = lang || defaultLangKey
+      client
+        .getEntry(props.entryId, { locale, include: 5 })
+        .then(entry => {
+          setEntryId(props.entryId)
+          // setData(normalizeData(entry))
+          setData({ ...data, [locale]: normalizeData(entry) })
+          setLoading(false)
+        })
+        .catch(console.error)
+    }
+  }, [entryId, data, lang])
 
-  // TODO enable support for children prop and add it to propTypes
-  const { BlockComponent = null } = data ? getBlockComponent(data) : {}
+  const langData = data && data[lang]
+  const { BlockComponent = null } = langData ? getBlockComponent(langData) : {}
 
   return (
     <>
@@ -122,11 +123,7 @@ const PreviewWrapper = props => {
           variant="h4"
         >
           {capitalize(props.type)} Preview
-          <IconButton
-            onClick={() => {
-              setEntryId(null)
-            }}
-          >
+          <IconButton onClick={() => setData(null)}>
             <ReplayIcon fontSize="large" />
           </IconButton>
         </Box>
@@ -135,7 +132,7 @@ const PreviewWrapper = props => {
             <Typography
               key={lan}
               style={{ padding: '0 5px', cursor: 'pointer' }}
-              variant={lan === (lang || defaultLangKey) ? 'h6' : 'body2'}
+              variant={lan === lang ? 'h6' : 'body2'}
               onClick={() => setLang(lan)}
             >
               {lan}
@@ -146,7 +143,7 @@ const PreviewWrapper = props => {
       <Box height="4px">{loading && <LinearProgress color="secondary" />}</Box>
       {BlockComponent && (
         <Box style={{ border: '1px solid #dbdbdb' }}>
-          <BlockComponent {...data} lang={lang} />
+          <BlockComponent {...langData} lang={lang} />
         </Box>
       )}
     </>
