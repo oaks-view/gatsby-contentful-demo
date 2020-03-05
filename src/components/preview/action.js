@@ -10,7 +10,8 @@ const contentful = require('contentful')
 import ContentfulAction from '../types/ContentfulAction'
 
 function ActionPreview(props) {
-  const [action, setAction] = useState()
+    const [action, setAction] = useState();
+    const [entryId, setEntryId] = useState();
 
   const {
     site: {
@@ -37,11 +38,10 @@ function ActionPreview(props) {
     host: 'preview.contentful.com',
   })
 
-  useEffect(() => {
-    client
-      .getEntry(props.entry_id)
-      .then(entry => {
-        console.log('entry => %j', entry)
+    useEffect(() => {
+        client.getEntry(props.entryId)
+            .then((entry) => {
+                console.log('entry => %j', entry)
 
         const imageUrl = _.get(entry.fields, 'image.fields.file.url')
 
@@ -50,33 +50,22 @@ function ActionPreview(props) {
           ...(imageUrl && { image: { file: { url: imageUrl } } }),
         }
 
-        setAction(contenfulAction)
-      })
-      .catch(console.error)
-  }, [action])
+                setAction(contenfulAction)
+                setEntryId(props.entryId)
+            })
+            .catch(console.error)
+    }, [entryId])
 
-  return (
-    <>
-      <Box
-        component={Typography}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        py={4}
-        variant="h4"
-      >
-        Action Preview
-        <IconButton
-          onClick={() => {
-            setAction(null)
-          }}
-        >
-          <ReplayIcon fontSize="large" />
-        </IconButton>
-      </Box>
-      {action && <ContentfulAction {...action} />}
-    </>
-  )
+    return (<>
+        <Box component={Typography} display="flex" alignItems="center"
+        justifyContent="center" py={4} variant='h4'>
+            Action Preview
+        <IconButton onClick={() => { setEntryId(null)}}>
+                <ReplayIcon fontSize="large" />
+            </IconButton>
+        </Box>
+        {action && <ContentfulAction {...action} />}
+    </>)
 }
 
 export default ActionPreview

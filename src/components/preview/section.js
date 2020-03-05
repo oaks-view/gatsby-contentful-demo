@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import { useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql } from "gatsby"
+import IconButton from '@material-ui/core/IconButton'
+import ReplayIcon from '@material-ui/icons/Replay'
 
 const contentful = require('contentful')
 
 function SectionPreview(props) {
-  const [section, setSection] = useState()
+    const [section, setSection] = useState()
+    const [entryId, setEntryId] = useState();
 
   const {
     site: {
@@ -33,35 +36,26 @@ function SectionPreview(props) {
     host: 'preview.contentful.com',
   })
 
-  useEffect(() => {
-    client
-      .getEntry(props.entry_id)
-      .then(entry => {
-        console.log(entry)
-        setSection(entry)
-      })
-      .catch(console.error)
-  }, [])
+    useEffect(() => {
+        client.getEntry(props.entryId)
+            .then((entry) => {
+                setEntryId(props.entryId)
+                setSection(entry)
+                console.log(entry)
+            })
+            .catch(console.error)
+    }, [entryId])
 
-  return (
-    <>
-      <h1>Section Preview</h1>
-      <Box
-        component={Typography}
-        display="flex"
-        justifyContent="center"
-        py={4}
-        variant="h4"
-      >
-        Preview Section <b>"{props.entry_id}"</b>
-      </Box>
-      {section && (
-        <Box component={Typography} variant="body1">
-          {JSON.stringify(section, null, 2)}>
-        </Box>
-      )}
-    </>
-  )
+    return (<>
+        <Box ox component={Typography} display="flex" alignItems="center"
+            justifyContent="center" py={4} variant='h4'>
+            Preview Section 
+            <IconButton onClick={() => { setEntryId(null) }}>
+                <ReplayIcon fontSize="large" />
+            </IconButton>
+            </Box>
+        {section && <Box component={Typography} variant='body1'>{JSON.stringify(section, null, 2)}</Box>}
+    </>)
 }
 
 export default SectionPreview
