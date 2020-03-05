@@ -1,31 +1,49 @@
 import React from 'react'
 import { Router } from '@reach/router'
-import { ThemeProvider } from '@material-ui/styles'
+import { ThemeProvider, makeStyles } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Box from '@material-ui/core/Box'
-import Container from '@material-ui/core/Container'
-import SectionPreview from '../components/preview/section'
-import ActionPreview from '../components/preview/action'
-import CardPreview from '../components/preview/card'
+
+import PreviewWrapper from '../components/PreviewWrapper'
+import ContentfulAction from '../components/types/ContentfulAction'
+import ContentfulCard from '../components/types/ContentfulCard'
+import ContentfulSection from '../components/types/ContentfulSection'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+}))
 
 // only considering the theme for city template
 // TODO use a more generic one once we have more templates
 import theme from '../themes/city'
 
+const types = [
+  { type: 'action', component: ContentfulAction },
+  { type: 'card', component: ContentfulCard },
+  { type: 'section', component: ContentfulSection },
+]
+
 const Preview = () => {
+  const classes = useStyles()
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box width="100%" mt={2}>
-        <Container maxWidth="md">
-          <Router basepath="/preview">
-            <SectionPreview path="/section/:entryId" />
-            <ActionPreview path="/action/:entryId" />
-            <CardPreview path="/card/:entryId" />
-            {/* Todo handle default routes */}
-            {/*<Default path="/" /> */}
-          </Router>
-        </Container>
+      <Box className={classes.root}>
+        <Router basepath="/preview">
+          {types.map(({ type, component }, i) => (
+            <PreviewWrapper
+              key={i}
+              path={`${type}/:entryId`}
+              type={type}
+              component={component}
+            />
+          ))}
+        </Router>
       </Box>
     </ThemeProvider>
   )

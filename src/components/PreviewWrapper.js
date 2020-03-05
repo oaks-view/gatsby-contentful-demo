@@ -12,6 +12,8 @@ import remarkHtml from 'remark-html'
 import capitalize from 'lodash/capitalize'
 import get from 'lodash/get'
 
+import { getBlockComponent } from '../utils'
+
 function normalizeBody(body) {
   if (!body) return null
 
@@ -88,7 +90,10 @@ const PreviewWrapper = props => {
   React.useEffect(() => {
     setLoading(true)
     client
-      .getEntry(props.entryId, { locale: lang || defaultLangKey })
+      .getEntry(props.entryId, {
+        locale: lang || defaultLangKey,
+        include: 5,
+      })
       .then(entry => {
         setEntryId(props.entryId)
         setData(normalizeData(entry))
@@ -98,26 +103,25 @@ const PreviewWrapper = props => {
   }, [entryId, lang])
 
   // TODO enable support for children prop and add it to propTypes
-  const Component = props.component
+  const { BlockComponent = null } = data ? getBlockComponent(data) : {}
 
   return (
     <>
-      <Box height="10px">{loading && <LinearProgress color="secondary" />}</Box>
       <Box
         width="100%"
         display="flex"
         justifyContent="space-between"
         alignItems="center"
+        px={2}
       >
         <Box
           component={Typography}
           display="flex"
           alignItems="center"
           justifyContent="center"
-          mt={2}
           variant="h4"
         >
-          {props.type} Preview
+          {capitalize(props.type)} Preview
           <IconButton
             onClick={() => {
               setEntryId(null)
@@ -139,9 +143,10 @@ const PreviewWrapper = props => {
           ))}
         </Box>
       </Box>
-      {data && (
+      <Box height="4px">{loading && <LinearProgress color="secondary" />}</Box>
+      {BlockComponent && (
         <Box style={{ border: '1px solid #dbdbdb' }}>
-          <Component {...data} lang={lang} />
+          <BlockComponent {...data} lang={lang} />
         </Box>
       )}
     </>
