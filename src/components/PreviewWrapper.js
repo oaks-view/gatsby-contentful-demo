@@ -118,10 +118,18 @@ const PreviewWrapper = props => {
   let PreviewComponent
 
   if (langData) {
-    const isPage = supportedPage(langData)
-    if (isPage) {
-      const Page = pages[langData.template]
-      PreviewComponent = () => <Page data={{ contentfulPage: { ...langData } }} />
+    if (langData.internal.type === 'ContentfulPage') {
+      if (Object.keys(pages).includes(langData.template)) {
+        const Page = pages[langData.template]
+        PreviewComponent = () => <Page data={{ contentfulPage: { ...langData } }} />
+      } else {
+        PreviewComponent = () => (
+          <Typography variant="body1" align="center">
+            Page <b>{langData.title}</b> not supported. To enable this page enter a <i>path</i>, select a <i>template</i> and add{' '}
+            <i>sections</i>.
+          </Typography>
+        )
+      }
     } else {
       const { BlockComponent = null } = langData ? getBlockComponent(langData) : {}
       PreviewComponent = () =>
@@ -144,7 +152,7 @@ const PreviewWrapper = props => {
             <ReplayIcon fontSize="large" />
           </IconButton>
         </Box>
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" px={2}>
           {langs.map(lan => (
             <Typography
               key={lan}
