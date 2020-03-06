@@ -15,7 +15,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     display: 'flex',
     flexDirection: props.orientation || 'column',
-    padding: get(props, `caller.ContentfulSection.padding`, '50px 0'),
   }),
   bgImage: ({ backgroundImage: img }) =>
     img
@@ -32,13 +31,6 @@ const useStyles = makeStyles(theme => ({
 const ContentfulSection = props => {
   const classes = useStyles(props)
 
-  const caller = {
-    ContentfulSection: {
-      // remove padding on nested sections
-      padding: 0,
-    },
-  }
-
   // when displaying a section within tabs, hide title
   const hideTitle = get(props, 'caller.ContentfulSection.hideTitle', false)
 
@@ -51,7 +43,7 @@ const ContentfulSection = props => {
           display="flex"
           justifyContent="center"
           color="primary.main"
-          my={3}
+          mt={0}
         >
           {props.title}
         </Box>
@@ -76,7 +68,7 @@ const ContentfulSection = props => {
               }
               return (
                 <Box component={Grid} item key={`b-${i}`} {...blockProps}>
-                  <BlockComponent {...block} caller={caller} />
+                  <BlockComponent {...block} />
                 </Box>
               )
             } catch (error) {
@@ -95,17 +87,16 @@ const ContentfulSection = props => {
     </>
   )
 
-  // only first level is rendered with Container as wrapper
   return (
     <Box
       className={`${classes.root} ${classes.bgImage} ${props.className || ''}`}
     >
-      {get(props, `caller.ContentfulSection`) ? (
-        <Section />
-      ) : (
+      {props.parentBlock ? (
         <Container maxWidth="md">
           <Section />
         </Container>
+      ) : (
+        <Section />
       )}
     </Box>
   )

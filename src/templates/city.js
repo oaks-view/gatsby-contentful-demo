@@ -18,10 +18,13 @@ import Footer from '../components/CityFooter'
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    flexDirection: 'column',
-    '& > div:nth-child(odd)': {
+  },
+  main: {
+    '& > div': {
+      width: '100%',
+      padding: theme.spacing(5, 0),
+    },
+    '& > div:nth-child(even)': {
       backgroundColor: '#F8F9FB',
     },
   },
@@ -46,15 +49,21 @@ const CityTemplate = props => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SEO title={title} />
       <Box className={classes.root}>
-        <SEO title={title} />
         <CityHeader {...headerBlock} />
-        {pageBlocks.map((block, i) => {
-          const { BlockComponent } = getBlockComponent(block)
-          return <BlockComponent {...block} key={`b-${i}`} />
-        })}
+        <main className={classes.main}>
+          {pageBlocks.map((block, i) => {
+            const { BlockComponent } = getBlockComponent(block)
+            return (
+              <BlockComponent {...block} key={`b-${i}`} parentBlock={true} />
+            )
+          })}
+        </main>
       </Box>
-      <Footer />
+      <footer>
+        <Footer />
+      </footer>
     </ThemeProvider>
   )
 }

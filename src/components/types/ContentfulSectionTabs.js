@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     display: 'flex',
     flexDirection: props.orientation || 'column',
-    padding: '50px 0',
     backgroundColor: props.backgroundColor || 'inherit',
   }),
   bgImage: ({ backgroundImage: img }) =>
@@ -69,7 +68,7 @@ const ContentfulSectionTabs = props => {
 
   // render nested section without title and padding
   const caller = {
-    ContentfulSection: { padding: 0, hideTitle: true },
+    ContentfulSection: { hideTitle: true },
   }
 
   const scrollable = matches ? { scrollButtons: 'on' } : {}
@@ -92,39 +91,49 @@ const ContentfulSectionTabs = props => {
     </Box>
   )
 
+  const Section = () => (
+    <>
+      {props.title && (
+        <Box
+          component={Typography}
+          component="h3"
+          display="flex"
+          justifyContent="center"
+          color="primary.main"
+          mt={0}
+        >
+          {props.title}
+        </Box>
+      )}
+      {blocks.length && (
+        <>
+          <SectionTabs />
+          {blocks.map((block, i) => {
+            const { BlockComponent } = getBlockComponent(block)
+            return (
+              <TabPanel value={value} index={i} key={i}>
+                <BlockComponent
+                  {...block}
+                  caller={caller}
+                  className={classes.panelContent}
+                />
+              </TabPanel>
+            )
+          })}
+        </>
+      )}
+    </>
+  )
+
   return (
     <Box className={`${classes.root} ${classes.bgImage}`}>
-      <Container maxWidth="md">
-        {props.title && (
-          <Box
-            component={Typography}
-            component="h3"
-            display="flex"
-            justifyContent="center"
-            color="primary.main"
-            my={3}
-          >
-            {props.title}
-          </Box>
-        )}
-        {blocks.length && (
-          <>
-            <SectionTabs />
-            {blocks.map((block, i) => {
-              const { BlockComponent } = getBlockComponent(block)
-              return (
-                <TabPanel value={value} index={i} key={i}>
-                  <BlockComponent
-                    {...block}
-                    caller={caller}
-                    className={classes.panelContent}
-                  />
-                </TabPanel>
-              )
-            })}
-          </>
-        )}
-      </Container>
+      {props.parentBlock ? (
+        <Container maxWidth="md">
+          <Section />
+        </Container>
+      ) : (
+        <Section />
+      )}
     </Box>
   )
 }
