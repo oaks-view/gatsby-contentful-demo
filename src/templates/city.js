@@ -118,6 +118,13 @@ export const pageQuery = graphql`
     id
     type
     title
+    subtitle
+    body {
+      body
+      childMarkdownRemark {
+        html
+      }
+    }
     slug
     titleAlignment
     orientation
