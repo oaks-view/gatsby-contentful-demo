@@ -96,7 +96,7 @@ const ContentfulSectionTabs = props => {
       {props.title && (
         <Box
           component={Typography}
-          component="h3"
+          component="h2"
           display="flex"
           justifyContent="center"
           color="primary.main"

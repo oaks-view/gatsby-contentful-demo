@@ -35,11 +35,11 @@ const HomePage = ({ data }) => {
       <Box mt={5} width="100%">
         <SEO {...meta} />
         <Container maxWidth="md">
-          {pages.map(({ node }) => (
-            <ul key={node.slug}>
+          {pages.map(({ node }, i) => (
+            <ul key={i}>
               <li>
-                <Link to={`/umzug/${node.slug}`} className={classes.link}>
-                  {node.slug} - {node.title}
+                <Link to={node.path} className={classes.link}>
+                  {node.path} - {node.title}
                 </Link>
               </li>
             </ul>
@@ -55,14 +55,12 @@ export default HomePage
 
 export const query = graphql`
   query HomeQuery {
-    allContentfulPage(
-      filter: { slug: { in: ["hamburg", "berlin"] }, node_locale: { eq: "de" } }
-    ) {
+    allContentfulPage(filter: { path: { regex: "/^/umzug/" }, node_locale: { eq: "de" } }) {
       edges {
         node {
           id
           title
-          slug
+          path
         }
       }
     }

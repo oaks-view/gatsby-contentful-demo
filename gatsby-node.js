@@ -19,27 +19,17 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
   }
 }
 
-// Implement the Gatsby API “createPages”. This is
-// called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programmatically
-// create pages.
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return new Promise((resolve, reject) => {
-    // The “graphql” function allows us to run arbitrary
-    // queries against the local Contentful graphql schema. Think of
-    // it like the site has a built-in database constructed
-    // from the fetched data that you can run queries against.
     graphql(`
       {
-        allContentfulPage(
-          filter: { template: { eq: "city" }, node_locale: { eq: "de" } }
-        ) {
+        allContentfulPage(filter: { template: { in: ["city", "home"] }, node_locale: { eq: "de" } }) {
           edges {
             node {
               title
               template
-              slug
+              path
               id
               contentful_id
               node_locale
@@ -53,13 +43,14 @@ exports.createPages = ({ graphql, actions }) => {
       }
 
       const { edges } = result.data.allContentfulPage
-      const cityTemplate = path.resolve('./src/templates/city.js')
 
       edges.forEach(edge => {
+        const templatePath = path.resolve(`./src/templates/${edge.node.template}.js`)
+
         createPage({
-          // path: `/${edge.node.node_locale}/umzug/${edge.node.slug}`, // with locale in the path
-          path: `/umzug/${edge.node.slug}`,
-          component: cityTemplate,
+          // path: `/${edge.node.node_locale}/${edge.node.path}`, // with locale in the path
+          path: edge.node.path,
+          component: templatePath,
           context: {
             id: edge.node.id,
             locale: edge.node.node_locale,

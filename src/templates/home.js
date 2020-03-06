@@ -1,28 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
+import { makeStyles } from '@material-ui/core/styles'
 import CommonTemplate from './common-template'
-import Header from '../components/types/CityHeader'
 import Footer from '../components/CityFooter'
 
-const CityTemplate = props => {
+const useStyles = makeStyles(theme => ({
+  home: {
+    '& > main > div:first-child': {
+      height: 400,
+      flexDirection: 'row',
+      alignItems: 'center',
+      '& h2': {
+        color: theme.palette.common.white,
+        fontSize: 40,
+      },
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    home: {
+      '& > main > div:first-child': {
+        height: 300,
+      },
+    },
+  },
+}))
+
+const HomeTemplate = props => {
+  const classes = useStyles()
+
   const page = props.data.contentfulPage
-  const section = page.blocks.shift()
 
-  if (section.internal.type !== 'ContentfulSection' || section.type !== 'banner') {
-    throw new Error(`For template city first section must be of type banner`)
-  }
-
-  const CityHeader = () => <Header {...section} />
-
-  return <CommonTemplate {...page} header={CityHeader} footer={Footer} />
+  return <CommonTemplate {...page} className={classes.home} footer={Footer} />
 }
 
-CityTemplate.propTypes = {
+HomeTemplate.propTypes = {
   data: PropTypes.object.isRequired,
 }
 
-export default CityTemplate
+export default HomeTemplate
 
 export const pageQuery = graphql`
   fragment cardType on ContentfulCard {
@@ -103,7 +119,7 @@ export const pageQuery = graphql`
     }
   }
 
-  query cityQuery($id: String!, $locale: String!) {
+  query homeQuery($id: String!, $locale: String!) {
     site {
       siteMetadata {
         languages {

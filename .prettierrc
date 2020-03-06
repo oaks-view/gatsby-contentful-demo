@@ -1,5 +1,12 @@
 {
-  "trailingComma": "es5",
+  "singleQuote": true,
+  "trailingComma": "all",
   "semi": false,
-  "singleQuote": true
+  "printWidth": 130,
+  "overrides": [
+    {
+      "files": ".*rc",
+      "options": { "parser": "json" }
+    }
+  ]
 }
