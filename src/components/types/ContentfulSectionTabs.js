@@ -94,17 +94,18 @@ const ContentfulSectionTabs = props => {
   const Section = () => (
     <>
       {props.title && (
-        <Box
-          component={Typography}
-          component="h3"
-          display="flex"
-          justifyContent="center"
-          color="primary.main"
-          mt={0}
-        >
-          {props.title}
+        <Box display="flex" flexDirection="column" mb={2}>
+          <Typography component="h2" variant="h5" color="primary" align="center">
+            {props.title}
+          </Typography>
+          {props.subtitle && (
+            <Typography component="h3" variant="h5" color="primary" align="center">
+              {props.subtitle}
+            </Typography>
+          )}
         </Box>
       )}
+      {props.body && <Typography variant="body1" dangerouslySetInnerHTML={{ __html: props.body.childMarkdownRemark.html }} />}
       {blocks.length && (
         <>
           <SectionTabs />
@@ -112,11 +113,7 @@ const ContentfulSectionTabs = props => {
             const { BlockComponent } = getBlockComponent(block)
             return (
               <TabPanel value={value} index={i} key={i}>
-                <BlockComponent
-                  {...block}
-                  caller={caller}
-                  className={classes.panelContent}
-                />
+                <BlockComponent {...block} caller={caller} className={classes.panelContent} />
               </TabPanel>
             )
           })}
