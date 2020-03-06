@@ -7,15 +7,15 @@ import Footer from '../components/CityFooter'
 
 const CityTemplate = props => {
   const page = props.data.contentfulPage
-  const section = page.blocks.shift()
+  const [section, ...blocks] = page.blocks
 
-  if (section.internal.type !== 'ContentfulSection' || section.type !== 'banner') {
+  if (!(section.internal.type === 'ContentfulSection' && section.type === 'banner')) {
     throw new Error(`For template city first section must be of type banner`)
   }
 
   const CityHeader = () => <Header {...section} />
 
-  return <CommonTemplate {...page} header={CityHeader} footer={Footer} />
+  return <CommonTemplate {...page} blocks={blocks} header={CityHeader} footer={Footer} />
 }
 
 CityTemplate.propTypes = {

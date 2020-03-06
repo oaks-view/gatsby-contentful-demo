@@ -11,9 +11,13 @@ const useStyles = makeStyles(theme => ({
       height: 400,
       flexDirection: 'row',
       alignItems: 'center',
-      '& h2': {
+      '& h2, & h3': {
         color: theme.palette.common.white,
+        textShadow: '1px 1px 4px rgba(0, 0, 0, .5)',
+      },
+      '& h2': {
         fontSize: 40,
+        paddingBottom: theme.spacing(2),
       },
     },
   },

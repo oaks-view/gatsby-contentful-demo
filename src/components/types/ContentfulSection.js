@@ -37,26 +37,20 @@ const ContentfulSection = props => {
   const Section = () => (
     <>
       {!hideTitle && props.title && (
-        <Box
-          component={Typography}
-          component="h2"
-          display="flex"
-          justifyContent="center"
-          color="primary.main"
-          mt={0}
-        >
-          {props.title}
+        <Box display="flex" flexDirection="column" mb={2}>
+          <Typography component="h2" variant="h5" color="primary" align="center">
+            {props.title}
+          </Typography>
+          {props.subtitle && (
+            <Typography component="h3" variant="h5" color="primary" align="center">
+              {props.subtitle}
+            </Typography>
+          )}
         </Box>
       )}
+      {props.body && <Typography variant="body1" dangerouslySetInnerHTML={{ __html: props.body.childMarkdownRemark.html }} />}
       {props.blocks && (
-        <Box
-          component={Grid}
-          container
-          width="100%"
-          my={3}
-          spacing={2}
-          className={classes.root}
-        >
+        <Box component={Grid} container width="100%" my={3} spacing={2} className={classes.root}>
           {props.blocks.map((block, i) => {
             try {
               const { BlockComponent } = getBlockComponent(block)
@@ -75,9 +69,7 @@ const ContentfulSection = props => {
               console.error(error)
               return (
                 <Box component={Grid} item width="100%" bgcolor="#FDECEA">
-                  <Typography variant="subtitle1">
-                    ERROR: {error.message}
-                  </Typography>
+                  <Typography variant="subtitle1">ERROR: {error.message}</Typography>
                 </Box>
               )
             }
@@ -88,9 +80,7 @@ const ContentfulSection = props => {
   )
 
   return (
-    <Box
-      className={`${classes.root} ${classes.bgImage} ${props.className || ''}`}
-    >
+    <Box className={`${classes.root} ${classes.bgImage} ${props.className || ''}`}>
       {props.parentBlock ? (
         <Container maxWidth="md">
           <Section />
