@@ -12,7 +12,14 @@ import remarkHtml from 'remark-html'
 import capitalize from 'lodash/capitalize'
 import get from 'lodash/get'
 
+import CommonTemplate from '../templates/common-template'
+import HomeTemplate from '../templates/home'
+import CityTemplate from '../templates/city'
 import { getBlockComponent } from '../utils'
+
+// how many levels Contentful should resolve
+const LINKS_LEVEL = 6
+const pages = { home: HomeTemplate, city: CityTemplate }
 
 function normalizeBody(body) {
   if (!body) return null
@@ -22,6 +29,10 @@ function normalizeBody(body) {
     .processSync(body).contents
 
   return { body, childMarkdownRemark: { html } }
+}
+
+function supportedPage(props) {
+  return props && props.internal.type === 'ContentfulPage' && ['city', 'home'].includes(props.template)
 }
 
 function normalizeData(data) {
@@ -77,7 +88,7 @@ const PreviewWrapper = props => {
           }
         }
       }
-    `
+    `,
   )
 
   const [entryId, setEntryId] = React.useState(props.entryId)
@@ -92,7 +103,7 @@ const PreviewWrapper = props => {
       setLoading(true)
       const locale = lang || defaultLangKey
       client
-        .getEntry(props.entryId, { locale, include: 5 })
+        .getEntry(props.entryId, { locale, include: LINKS_LEVEL })
         .then(entry => {
           setEntryId(props.entryId)
           // setData(normalizeData(entry))
@@ -104,24 +115,30 @@ const PreviewWrapper = props => {
   }, [entryId, data, lang])
 
   const langData = data && data[lang]
-  const { BlockComponent = null } = langData ? getBlockComponent(langData) : {}
+  let PreviewComponent
+
+  if (langData) {
+    const isPage = supportedPage(langData)
+    if (isPage) {
+      const Page = pages[langData.template]
+      PreviewComponent = () => <Page data={{ contentfulPage: { ...langData } }} />
+    } else {
+      const { BlockComponent = null } = langData ? getBlockComponent(langData) : {}
+      PreviewComponent = () =>
+        BlockComponent && (
+          <CommonTemplate previewBlock={true}>
+            <Box style={{ border: '1px solid #dbdbdb' }}>
+              <BlockComponent {...langData} lang={lang} />
+            </Box>
+          </CommonTemplate>
+        )
+    }
+  }
 
   return (
     <>
-      <Box
-        width="100%"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        px={2}
-      >
-        <Box
-          component={Typography}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          variant="h4"
-        >
+      <Box width="100%" display="flex" justifyContent="space-between" alignItems="center" px={2}>
+        <Box component={Typography} display="flex" alignItems="center" justifyContent="center" variant="h4">
           {capitalize(props.type)} Preview
           <IconButton onClick={() => setData(null)}>
             <ReplayIcon fontSize="large" />
@@ -141,11 +158,7 @@ const PreviewWrapper = props => {
         </Box>
       </Box>
       <Box height="4px">{loading && <LinearProgress color="secondary" />}</Box>
-      {BlockComponent && (
-        <Box style={{ border: '1px solid #dbdbdb' }}>
-          <BlockComponent {...langData} lang={lang} />
-        </Box>
-      )}
+      {PreviewComponent && <PreviewComponent />}
     </>
   )
 }
