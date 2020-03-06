@@ -48,7 +48,9 @@ const ContentfulSection = props => {
           )}
         </Box>
       )}
-      {props.body && <Typography variant="body1" dangerouslySetInnerHTML={{ __html: props.body.childMarkdownRemark.html }} />}
+      {props.body && (
+        <Typography variant="body1" component="div" dangerouslySetInnerHTML={{ __html: props.body.childMarkdownRemark.html }} />
+      )}
       {props.blocks && (
         <Box component={Grid} container width="100%" my={3} spacing={2} className={classes.root}>
           {props.blocks.map((block, i) => {
