@@ -145,7 +145,7 @@ const PreviewWrapper = props => {
 
   return (
     <>
-      <Box width="100%" display="flex" justifyContent="space-between" alignItems="center" px={2}>
+      <Box width="100%" display="flex" justifyContent="space-between" alignItems="center" px={2} position="sticky" top={0}>
         <Box component={Typography} display="flex" alignItems="center" justifyContent="center" variant="h4">
           {capitalize(props.type)} Preview
           <IconButton onClick={() => setData(null)}>
