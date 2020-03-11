@@ -24,12 +24,12 @@ exports.createPages = ({ graphql, actions }) => {
   return new Promise((resolve, reject) => {
     graphql(`
       {
-        allContentfulPage(filter: { template: { in: ["city", "home", "custom"] }, node_locale: { eq: "de" } }) {
+        allContentfulPage(filter: { template: { in: ["custom"] }, node_locale: { eq: "de" } }) {
           edges {
             node {
               title
               template
-              path
+              pathname
               id
               contentful_id
               node_locale
@@ -48,8 +48,8 @@ exports.createPages = ({ graphql, actions }) => {
         const templatePath = path.resolve(`./src/templates/${edge.node.template}.js`)
 
         createPage({
-          // path: `/${edge.node.node_locale}/${edge.node.path}`, // with locale in the path
-          path: edge.node.path,
+          // path: `/${edge.node.node_locale}/${edge.node.pathname}`, // with locale in the path
+          path: edge.node.pathname,
           component: templatePath,
           context: {
             id: edge.node.id,

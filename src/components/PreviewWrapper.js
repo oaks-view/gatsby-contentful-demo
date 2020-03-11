@@ -13,14 +13,15 @@ import capitalize from 'lodash/capitalize'
 import get from 'lodash/get'
 
 import CommonTemplate from '../templates/common-template'
-import HomeTemplate from '../templates/home'
-import CityTemplate from '../templates/city'
+// import HomeTemplate from '../templates/home'
+// import CityTemplate from '../templates/city'
 import CustomTemplate from '../templates/custom'
 import { getBlockComponent } from '../utils'
 
 // how many levels Contentful should resolve
 const LINKS_LEVEL = 6
-const pages = { home: HomeTemplate, city: CityTemplate, custom: CustomTemplate }
+// const pages = { home: HomeTemplate, city: CityTemplate, custom: CustomTemplate }
+const pages = { custom: CustomTemplate }
 
 function normalizeBody(body) {
   if (!body) return null
@@ -33,7 +34,7 @@ function normalizeBody(body) {
 }
 
 function supportedPage(props) {
-  return props && props.internal.type === 'ContentfulPage' && ['city', 'home', 'custom'].includes(props.template)
+  return props && props.internal.type === 'ContentfulPage' && Object.keys(pages).includes(props.template)
 }
 
 function normalizeData(data) {
@@ -126,8 +127,8 @@ const PreviewWrapper = props => {
       } else {
         PreviewComponent = () => (
           <Typography variant="body1" align="center">
-            Page <b>{langData.title}</b> not supported. To enable this page enter a <i>path</i>, select a <i>template</i> and add{' '}
-            <i>sections</i>.
+            Page <b>{langData.title}</b> not supported. To enable this page enter a <i>path</i>, select a{' '}
+            <i>template</i> and add <i>sections</i>.
           </Typography>
         )
       }
@@ -146,7 +147,15 @@ const PreviewWrapper = props => {
 
   return (
     <>
-      <Box width="100%" display="flex" justifyContent="space-between" alignItems="center" px={2} position="sticky" top={0}>
+      <Box
+        width="100%"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        px={2}
+        position="sticky"
+        top={0}
+      >
         <Box component={Typography} display="flex" alignItems="center" justifyContent="center" variant="h4">
           {capitalize(props.type)} Preview
           <IconButton onClick={() => setData(null)}>

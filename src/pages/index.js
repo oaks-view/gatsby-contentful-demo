@@ -38,8 +38,8 @@ const HomePage = ({ data }) => {
           {pages.map(({ node }, i) => (
             <ul key={i}>
               <li>
-                <Link to={node.path} className={classes.link}>
-                  {node.path} - {node.title}
+                <Link to={node.pathname} className={classes.link}>
+                  {node.pathname} - {node.title}
                 </Link>
               </li>
             </ul>
@@ -55,12 +55,12 @@ export default HomePage
 
 export const query = graphql`
   query HomeQuery {
-    allContentfulPage(filter: { path: { regex: "/^/umzug/" }, node_locale: { eq: "de" } }) {
+    allContentfulPage(filter: { pathname: { regex: "/^/umzug/" }, node_locale: { eq: "de" } }) {
       edges {
         node {
           id
           title
-          path
+          pathname
         }
       }
     }

@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 
+import SEO from '../components/seo'
 import theme from '../themes/city'
 import CMSLib from '../components/cms'
 import Footer from '../components/CityFooter'
@@ -70,9 +71,13 @@ const CustomTemplate = props => {
   const classes = useStylesPage()
   const page = props.data.contentfulPage
 
+  // TODO add more SEO: image, url
+  const { title, description: { description } = {} } = page
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SEO title={title} description={description} />
       {page.blocks.map((section, i) => (
         <Section key={i} {...section} />
       ))}
@@ -91,14 +96,11 @@ export default CustomTemplate
 
 export const pageQuery = graphql`
   fragment section on ContentfulSection {
-    title
-    subtitle
+    name
+    slug
     body {
       body
     }
-    slug
-    titleAlignment
-    orientation
     backgroundImage {
       file {
         url
@@ -110,7 +112,10 @@ export const pageQuery = graphql`
     contentfulPage(id: { eq: $id }, blocks: { elemMatch: { node_locale: { eq: $locale } } }) {
       id
       title
-      path
+      pathname
+      description {
+        description
+      }
       template
       blocks {
         ...section
