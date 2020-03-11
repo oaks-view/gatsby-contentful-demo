@@ -2,21 +2,13 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { makeStyles } from '@material-ui/core/styles'
-import get from 'lodash/get'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
 
 import theme from '../themes/city'
 import SEO from '../components/seo'
 import Footer from '../components/CityFooter'
-
-const useStyles = makeStyles(theme => ({
-  link: {
-    color: theme.palette.primary.main,
-    textDecoration: 'none',
-  },
-}))
 
 const meta = {
   title: 'Movinga | The new way of moving',
@@ -25,44 +17,23 @@ const meta = {
   meta: [{ name: 'twitter:card', content: 'summary' }],
 }
 
-const HomePage = ({ data }) => {
-  const classes = useStyles()
-  const pages = get(data, 'allContentfulPage.edges')
-
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box mt={5} width="100%">
-        <SEO {...meta} />
-        <Container maxWidth="md">
-          {pages.map(({ node }, i) => (
-            <ul key={i}>
-              <li>
-                <Link to={node.pathname} className={classes.link}>
-                  {node.pathname} - {node.title}
-                </Link>
-              </li>
-            </ul>
-          ))}
-        </Container>
-      </Box>
-      <Footer />
-    </ThemeProvider>
-  )
-}
+const HomePage = () => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <Box mt={5} width="100%" textAlign="center" my={5}>
+      <SEO {...meta} />
+      <Container maxWidth="md">
+        <Typography component="h1" variant="h3" color="primary">
+          Welcome to Movinga
+        </Typography>
+        <Typography component="h4" variant="h5" color="inherit">
+          Removals are more than our job, they are our passion. In order to share this passion, we’ve made it our
+          mission to provide exceptional removals at fair prices.
+        </Typography>
+      </Container>
+    </Box>
+    <Footer />
+  </ThemeProvider>
+)
 
 export default HomePage
-
-export const query = graphql`
-  query HomeQuery {
-    allContentfulPage(filter: { pathname: { regex: "/^/umzug/" }, node_locale: { eq: "de" } }) {
-      edges {
-        node {
-          id
-          title
-          pathname
-        }
-      }
-    }
-  }
-`

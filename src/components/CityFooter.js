@@ -81,15 +81,7 @@ const CityFooter = () => {
     <div className={classes.root}>
       <Container maxWidth="md">
         <Grid container>
-          <Box
-            component={Grid}
-            item
-            width="100%"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            pt={3}
-          >
+          <Box component={Grid} item width="100%" display="flex" flexDirection="column" alignItems="center" pt={3}>
             <Typography style={{ color: '#fff' }}>{data.title}</Typography>
             <Typography style={{ color: '#fff' }}>{data.schedule}</Typography>
           </Box>
@@ -98,15 +90,9 @@ const CityFooter = () => {
               const Icon = icons[link.icon]
               return (
                 <Grid item xs={12} sm key={i}>
-                  <Box
-                    component={Link}
-                    href={link.link}
-                    className={classes.iconLinks}
-                  >
+                  <Box component={Link} href={link.link} className={classes.iconLinks}>
                     <Icon />
-                    <Typography style={{ color: '#fff' }}>
-                      {link.text}
-                    </Typography>
+                    <Typography style={{ color: '#fff' }}>{link.text}</Typography>
                   </Box>
                 </Grid>
               )
@@ -118,11 +104,7 @@ const CityFooter = () => {
           <Grid item container xs={12} spacing={2}>
             {data.sections.map(({ title, actions }, i) => (
               <Grid item xs={12} sm key={i} className={classes.linksSection}>
-                <Box
-                  component={Typography}
-                  variant="subtitle2"
-                  className={classes.sectionTitle}
-                >
+                <Box component={Typography} variant="subtitle2" className={classes.sectionTitle}>
                   {title}
                 </Box>
                 {actions.map((link, i) => (
@@ -193,12 +175,12 @@ function getData() {
       {
         title: 'Ihr neues Zuhause',
         actions: [
-          { text: 'Umzug Berlin', link: '/umzug/berlin' },
+          { text: 'Umzug Berlin', link: 'https://www.movinga.de/umzug/berlin' },
           {
             text: 'Umzug München',
             link: 'https://www.movinga.de/umzug/muenchen',
           },
-          { text: 'Umzug Hamburg', link: '/umzug/hamburg' },
+          { text: 'Umzug Hamburg', link: 'https://www.movinga.de/umzug/hamburg' },
           { text: 'Umzug Köln', link: 'https://www.movinga.de/umzug/koeln' },
           {
             text: 'Umzug Düsseldorf',
