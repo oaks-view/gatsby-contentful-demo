@@ -1,6 +1,6 @@
 import React from 'react'
-import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import Tabs from '@material-ui/core/Tabs'
 import Box from '@material-ui/core/Box'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
@@ -21,14 +21,12 @@ const TabPanel = props => {
   )
 }
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  }
-}
-
 const MvTab = ({ children, ...props }) => <Tab label={children} {...props} />
+
+const a11yProps = i => ({
+  id: `simple-tab-${i}`,
+  'aria-controls': `simple-tabpanel-${i}`,
+})
 
 function MvTabs({ children, props }) {
   const [value, setValue] = React.useState(0)
@@ -39,13 +37,10 @@ function MvTabs({ children, props }) {
     setValue(newValue)
   }
 
-  const childrenTab = children.filter(x => x.type.name === 'MvTab')
-  const headers = childrenTab.filter(x => !x.props.body)
-  const bodies = childrenTab.filter(x => x.props.body)
-
-  const tabHeaders = React.Children.map(headers, (tabHeader, index) =>
-    React.cloneElement(tabHeader, { key: index, ...a11yProps(index) }),
-  )
+  const childrenTab = children.filter(x => typeof x.type === 'function')
+  const headers = childrenTab.filter(x => x.props && !x.props.body)
+  // the tab body could be any component, even a div. it only need boolean prop `body`
+  const bodies = childrenTab.filter(x => x.props && x.props.body)
 
   return (
     <Box width="100%">
@@ -58,13 +53,14 @@ function MvTabs({ children, props }) {
         {...scrollable}
         area-label="full width tabs example"
       >
-        {tabHeaders}
+        {headers.map(({ type: TabHeader, props }, i) => (
+          <TabHeader {...props} key={i} {...a11yProps(i)} />
+        ))}
       </Tabs>
 
-      {/* Tab body */}
       <Box>
-        {bodies.map((tabBody, index) => (
-          <TabPanel value={value} index={index} key={index}>
+        {bodies.map((tabBody, i) => (
+          <TabPanel value={value} index={i} key={i}>
             {tabBody.props.children}
           </TabPanel>
         ))}
@@ -74,6 +70,6 @@ function MvTabs({ children, props }) {
 }
 
 export default {
-  Tabs: MvTabs,
   Tab: MvTab,
+  Tabs: MvTabs,
 }

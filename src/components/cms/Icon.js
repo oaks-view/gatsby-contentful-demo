@@ -3,12 +3,8 @@ import toLower from 'lodash/toLower'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({}))
-
 // TODO: allow editor set props to custom icon size, color, ...
-const MvIcon = ({ name, href, ...props }) => {
-  const classes = useStyles(props)
-
+const Icon = ({ name, href, ...props }) => {
   if (!name) throw new Error(`Icon is missing "name"`)
 
   let icon = `mdi mdi-${toLower(name)}`
@@ -22,7 +18,7 @@ const MvIcon = ({ name, href, ...props }) => {
   return IconEl
 }
 
-const useStylesIcons = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
   root: props => ({
     width: '100%',
     display: 'grid',
@@ -46,12 +42,12 @@ Group of icons rendered side-by-side
 */
 const Icons = ({ children, className = '', ...props }) => {
   const iconsChildren = children.filter(x => typeof x.type === 'function')
-  const classes = useStylesIcons({ ...props, count: iconsChildren.length })
+  const classes = useStyles({ ...props, count: iconsChildren.length })
 
   return <div className={classes.root}>{iconsChildren}</div>
 }
 
 export default {
-  Icon: MvIcon,
+  Icon,
   Icons,
 }

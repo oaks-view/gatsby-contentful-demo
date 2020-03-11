@@ -79,7 +79,6 @@ const Lib = {
   BoxImg,
   Row,
   Col,
-  Box: MvBox,
   Title,
   Subtitle,
   ...tabs,
