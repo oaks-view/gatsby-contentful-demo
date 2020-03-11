@@ -1,6 +1,8 @@
 import React from 'react'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
+import Tabs from './tabs'
+import Tab from './tab'
 
 export const Row = ({ children, ...props }) => (
   <Grid container {...props}>
@@ -25,6 +27,8 @@ const Lib = {
   Row,
   Col,
   Box: MvBox,
+  Tabs,
+  Tab
 }
 
 export default Lib
