@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 
 import BoxImg from './BoxImg'
-import tabs from './tabs'
+import tabs from './Tabs'
 
 export const Row = ({ children, ...props }) => (
   <Grid container {...props}>
