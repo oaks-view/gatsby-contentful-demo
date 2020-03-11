@@ -3,9 +3,10 @@ import clsx from 'clsx'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 import BoxImg from './BoxImg'
+import icons from './Icon'
 import tabs from './Tabs'
 
 export const Row = ({ children, ...props }) => (
@@ -82,6 +83,7 @@ const Lib = {
   Title,
   Subtitle,
   ...tabs,
+  ...icons,
 }
 
 export default Lib
