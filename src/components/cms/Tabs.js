@@ -43,8 +43,6 @@ function MvTabs({ children, props }) {
   const headers = childrenTab.filter(x => !x.props.body)
   const bodies = childrenTab.filter(x => x.props.body)
 
-  console.log(children);
-
   const tabHeaders = React.Children.map(headers, (tabHeader, index) =>
     React.cloneElement(tabHeader, { key: index, ...a11yProps(index) }),
   )
