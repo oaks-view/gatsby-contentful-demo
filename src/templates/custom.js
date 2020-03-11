@@ -1,4 +1,5 @@
 import React from 'react'
+import clsx from 'clsx'
 import JsxParser from 'react-jsx-parser'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
@@ -39,42 +40,28 @@ const useStylesPage = makeStyles(theme => ({
 }))
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-  },
-  bgImage: ({ backgroundImage: img }) =>
-    img
-      ? {
-          backgroundImage: `url('${img.file.url}')`,
-          backgroundSize: 'cover',
-          backgroundPosition: '50% 50%',
-        }
-      : {},
+  root: props => ({
+    padding: theme.spacing(5, 0),
+    ...(props.backgroundImage && {
+      backgroundImage: `url('${props.backgroundImage.file.url}')`,
+      backgroundSize: 'cover',
+      backgroundPosition: '50% 50%',
+    }),
+  }),
+  title: props => ({}),
 }))
-
-const CMSBody = ({ body }) => <JsxParser components={{ ...CMSLib }} jsx={body} />
 
 const Section = props => {
   const classes = useStyles(props)
-  const { slug, title, subtitle, body } = props
+  const { slug, body } = props
 
   return (
-    <Box id={slug} className={`${classes.root} ${classes.bgImage}`}>
-      <Container maxWidth="md">
-        {title && (
-          <Box display="flex" flexDirection="column" mb={2}>
-            <Typography component="h2" variant="h5" color="primary" align="center">
-              {title}
-            </Typography>
-            {subtitle && (
-              <Typography component="h3" variant="h5" color="primary" align="center">
-                {subtitle}
-              </Typography>
-            )}
-          </Box>
-        )}
-        {body && <CMSBody body={body.body} />}
-      </Container>
+    <Box id={slug} className={classes.root}>
+      {body && (
+        <Container maxWidth="md">
+          <JsxParser components={{ ...CMSLib }} jsx={body.body} />
+        </Container>
+      )}
     </Box>
   )
 }
@@ -108,9 +95,6 @@ export const pageQuery = graphql`
     subtitle
     body {
       body
-      childMarkdownRemark {
-        html
-      }
     }
     slug
     titleAlignment
