@@ -2,6 +2,8 @@ import React from 'react'
 import clsx from 'clsx'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
+import Tabs from './tabs'
+import Tab from './tab'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 
@@ -77,6 +79,9 @@ const Lib = {
   BoxImg,
   Row,
   Col,
+  Box: MvBox,
+  Tabs,
+  Tab,
   Title,
   Subtitle,
 }
