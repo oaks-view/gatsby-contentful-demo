@@ -15,11 +15,12 @@ import get from 'lodash/get'
 import CommonTemplate from '../templates/common-template'
 import HomeTemplate from '../templates/home'
 import CityTemplate from '../templates/city'
+import CustomTemplate from '../templates/custom'
 import { getBlockComponent } from '../utils'
 
 // how many levels Contentful should resolve
 const LINKS_LEVEL = 6
-const pages = { home: HomeTemplate, city: CityTemplate }
+const pages = { home: HomeTemplate, city: CityTemplate, custom: CustomTemplate }
 
 function normalizeBody(body) {
   if (!body) return null
@@ -32,7 +33,7 @@ function normalizeBody(body) {
 }
 
 function supportedPage(props) {
-  return props && props.internal.type === 'ContentfulPage' && ['city', 'home'].includes(props.template)
+  return props && props.internal.type === 'ContentfulPage' && ['city', 'home', 'custom'].includes(props.template)
 }
 
 function normalizeData(data) {
