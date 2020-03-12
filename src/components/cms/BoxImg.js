@@ -9,7 +9,7 @@ const useStylesBoxImg = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     ...(props.src && {
-      backgroundImage: `url('${src}')`,
+      backgroundImage: `url('${props.src}')`,
       backgroundSize: 'cover',
       backgroundPosition: '50% 50%',
     }),
@@ -32,9 +32,10 @@ const useStylesBoxImg = makeStyles(theme => ({
 */
 const BoxImg = ({ children, className = '', ...props }) => {
   const classes = useStylesBoxImg(props)
+  const { src, ...otherProps } = props
 
   return (
-    <Box width="100%" className={clsx(classes.root, className)} {...props}>
+    <Box width="100%" className={clsx(classes.root, className)} {...otherProps}>
       {children}
     </Box>
   )
