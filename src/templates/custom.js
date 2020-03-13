@@ -12,6 +12,7 @@ import SEO from '../components/SEO'
 import theme from '../themes/theme'
 import CMSLib from '../components/cms'
 import Footer from '../components/Footer'
+import { SectionContext } from '../context'
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }),
 }))
 
-const Section = props => {
+const RootSection = props => {
   const classes = useStyles(props)
   const { slug, body } = props
 
@@ -32,7 +33,7 @@ const Section = props => {
     <Box id={slug} className={classes.root}>
       {body && (
         <Container maxWidth="md">
-          <JsxParser components={{ ...CMSLib }} jsx={body.body} />
+          <JsxParser components={{ ...CMSLib }} jsx={body.body} renderInWrapper={false} />
         </Container>
       )}
     </Box>
@@ -50,7 +51,9 @@ const CustomTemplate = props => {
       <CssBaseline />
       <SEO title={title} description={description} />
       {page.blocks.map((section, i) => (
-        <Section key={i} {...section} />
+        <SectionContext.Provider key={i} value={section}>
+          <RootSection {...section} />
+        </SectionContext.Provider>
       ))}
       <footer>
         <Footer />
@@ -66,7 +69,7 @@ CustomTemplate.propTypes = {
 export default CustomTemplate
 
 export const pageQuery = graphql`
-  fragment section on ContentfulSection {
+  fragment sectionFields on ContentfulSection {
     name
     slug
     body {
@@ -75,6 +78,15 @@ export const pageQuery = graphql`
     backgroundImage {
       file {
         url
+      }
+    }
+  }
+
+  fragment section on ContentfulSection {
+    ...sectionFields
+    sections {
+      ... on ContentfulSection {
+        ...sectionFields
       }
     }
   }

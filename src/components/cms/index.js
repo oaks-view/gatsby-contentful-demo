@@ -5,12 +5,13 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Section from './Section'
 import BoxImg from './BoxImg'
 import icons from './Icon'
 import tabs from './Tabs'
 
 export const Row = ({ children, ...props }) => (
-  <Grid container {...props}>
+  <Grid container spacing={2} {...props}>
     {children}
   </Grid>
 )
@@ -73,6 +74,17 @@ const Subtitle = ({ children, className = '', ...props }) => {
   )
 }
 
+const useStylesImg = makeStyles(theme => ({
+  root: {
+    maxWidth: '100%',
+  },
+}))
+
+const Image = ({ src, className = '', ...props }) => {
+  const classes = useStylesImg()
+  return <img src={src} className={clsx(classes.root, className)} {...props} />
+}
+
 // All custom elements allowed on Contentful editor besides native HTML elements
 const Lib = {
   Box: MvBox,
@@ -81,6 +93,8 @@ const Lib = {
   Col,
   Title,
   Subtitle,
+  Image,
+  Section,
   ...tabs,
   ...icons,
 }
