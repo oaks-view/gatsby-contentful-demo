@@ -38,11 +38,7 @@ function SubSection({ slug, parentSlug, subsections, children }) {
     if (slug && parentSlug === slug) throw new Error(`Cannot nest a section "${slug}" within itself`)
 
     if (children) return children
-
-    if (!slug) {
-      const names = subsections.map(s => s.slug).join(', ')
-      throw new Error(`A subsection in this page must have one of the these slugs: ${names}`)
-    }
+    if (!slug) return null
 
     const subsection = findSubsection(slug, subsections)
     if (!subsection) {
