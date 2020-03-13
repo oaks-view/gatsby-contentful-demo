@@ -29,10 +29,6 @@ function normalizeBody(body) {
   return { body, childMarkdownRemark: { html } }
 }
 
-function supportedPage(props) {
-  return props && props.internal.type === 'ContentfulPage' && Object.keys(pages).includes(props.template)
-}
-
 function normalizeData(data) {
   const contentfulType = capitalize(get(data, 'sys.contentType.sys.id'))
 
@@ -41,12 +37,10 @@ function normalizeData(data) {
     throw new Error(`Couldn't get contentful type`)
   }
 
-  // we standardize long text fields name as `body` whenever a `body` is present we parse its content with remark
+  // body contains our custom CMS tags, bultin HTML and markdown. first it runs through markdown parser
+  // blocks are for page sections and nested sections which need to recursively normalized
   // TODO maybe standardize asset fiel. instead of image,backgroundImage just name image|asset|file
-  // TODO we only handle single file now. handle list of images when available
   const { blocks = [], body, image, backgroundImage, ...fields } = data.fields
-
-  const normalizeBlock = block => normalizeData(block)
 
   let result = {
     internal: { type: `Contentful${contentfulType}` },
@@ -55,7 +49,7 @@ function normalizeData(data) {
     ...(image && { image: { ...image.fields } }),
     ...(backgroundImage && { backgroundImage: { ...backgroundImage.fields } }),
     ...(blocks.length && {
-      blocks: blocks.map(normalizeBlock),
+      blocks: blocks.map(block => normalizeData(block)),
     }),
   }
 
@@ -104,7 +98,6 @@ const PreviewWrapper = props => {
         .getEntry(props.entryId, { locale, include: LINKS_LEVEL })
         .then(entry => {
           setEntryId(props.entryId)
-          // setData(normalizeData(entry))
           setData({ ...data, [locale]: normalizeData(entry) })
           setLoading(false)
         })

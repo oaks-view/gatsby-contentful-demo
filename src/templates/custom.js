@@ -29,11 +29,13 @@ const RootSection = props => {
   const classes = useStyles(props)
   const { slug, body } = props
 
+  let jsx = body ? body.childMarkdownRemark.html : null
+
   return (
     <Box id={slug} className={classes.root}>
       {body && (
         <Container maxWidth="md">
-          <JsxParser components={{ ...CMSLib }} jsx={body.body} renderInWrapper={false} />
+          <JsxParser components={{ ...CMSLib }} jsx={jsx} renderInWrapper={false} />
         </Container>
       )}
     </Box>
@@ -74,6 +76,9 @@ export const pageQuery = graphql`
     slug
     body {
       body
+      childMarkdownRemark {
+        html
+      }
     }
     backgroundImage {
       file {
@@ -84,7 +89,7 @@ export const pageQuery = graphql`
 
   fragment section on ContentfulSection {
     ...sectionFields
-    sections {
+    blocks {
       ... on ContentfulSection {
         ...sectionFields
       }
