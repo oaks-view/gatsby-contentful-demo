@@ -26,7 +26,7 @@ function normalizeBody(body) {
     .use(remarkHtml)
     .processSync(body).contents
 
-  return { body, childMarkdownRemark: { html } }
+  return { childMarkdownRemark: { html } }
 }
 
 function normalizeData(data) {
