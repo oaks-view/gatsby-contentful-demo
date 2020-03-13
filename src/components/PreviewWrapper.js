@@ -12,16 +12,12 @@ import remarkHtml from 'remark-html'
 import capitalize from 'lodash/capitalize'
 import get from 'lodash/get'
 
-import CommonTemplate from '../templates/common-template'
-// import HomeTemplate from '../templates/home'
-// import CityTemplate from '../templates/city'
-import CustomTemplate from '../templates/custom'
-import { getBlockComponent } from '../utils'
+import templates from '../templates'
 
 // how many levels Contentful should resolve
 const LINKS_LEVEL = 6
 // const pages = { home: HomeTemplate, city: CityTemplate, custom: CustomTemplate }
-const pages = { custom: CustomTemplate }
+const pages = { custom: templates.CustomTemplate }
 
 function normalizeBody(body) {
   if (!body) return null
@@ -133,49 +129,48 @@ const PreviewWrapper = props => {
         )
       }
     } else {
-      const { BlockComponent = null } = langData ? getBlockComponent(langData) : {}
-      PreviewComponent = () =>
-        BlockComponent && (
-          <CommonTemplate previewBlock={true}>
-            <Box style={{ border: '1px solid #dbdbdb' }}>
-              <BlockComponent {...langData} lang={lang} />
-            </Box>
-          </CommonTemplate>
-        )
+      PreviewComponent = () => (
+        <Typography variant="body1" align="center">
+          Page <b>No preview support for {langData.title}</b>.
+        </Typography>
+      )
     }
   }
 
   return (
     <>
-      <Box
-        width="100%"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        px={2}
-        position="sticky"
-        top={0}
-      >
-        <Box component={Typography} display="flex" alignItems="center" justifyContent="center" variant="h4">
-          {capitalize(props.type)} Preview
-          <IconButton onClick={() => setData(null)}>
-            <ReplayIcon fontSize="large" />
-          </IconButton>
+      <div>
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          px={2}
+          position="sticky"
+          bgcolor="#fff"
+          top={0}
+        >
+          <Box component={Typography} display="flex" alignItems="center" justifyContent="center" variant="h4">
+            {capitalize(props.type)} Preview
+            <IconButton onClick={() => setData(null)}>
+              <ReplayIcon fontSize="large" />
+            </IconButton>
+          </Box>
+          <Box display="flex" alignItems="center" px={2}>
+            {langs.map(lan => (
+              <Typography
+                key={lan}
+                style={{ padding: '0 5px', cursor: 'pointer' }}
+                variant={lan === lang ? 'h6' : 'body2'}
+                onClick={() => setLang(lan)}
+              >
+                {lan}
+              </Typography>
+            ))}
+          </Box>
         </Box>
-        <Box display="flex" alignItems="center" px={2}>
-          {langs.map(lan => (
-            <Typography
-              key={lan}
-              style={{ padding: '0 5px', cursor: 'pointer' }}
-              variant={lan === lang ? 'h6' : 'body2'}
-              onClick={() => setLang(lan)}
-            >
-              {lan}
-            </Typography>
-          ))}
-        </Box>
-      </Box>
-      <Box height="4px">{loading && <LinearProgress color="secondary" />}</Box>
+        <div style={{ height: 4 }}>{loading && <LinearProgress color="secondary" />}</div>
+      </div>
       {PreviewComponent && <PreviewComponent />}
     </>
   )

@@ -1,14 +1,13 @@
 import React from 'react'
-import { Link, graphql } from 'gatsby'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 
-import theme from '../themes/city'
-import SEO from '../components/seo'
-import Footer from '../components/CityFooter'
+import theme from '../themes/theme'
+import SEO from '../components/SEO'
+import Footer from '../components/Footer'
 
 const meta = {
   title: 'Movinga | The new way of moving',

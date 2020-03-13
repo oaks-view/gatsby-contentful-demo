@@ -8,10 +8,10 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 
-import SEO from '../components/seo'
-import theme from '../themes/city'
+import SEO from '../components/SEO'
+import theme from '../themes/theme'
 import CMSLib from '../components/cms'
-import Footer from '../components/CityFooter'
+import Footer from '../components/Footer'
 
 const useStyles = makeStyles(theme => ({
   root: props => ({

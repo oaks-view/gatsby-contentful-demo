@@ -70,3 +70,5 @@ public
 
 # dev environment
 .DS_Store
+
+.vscode/
