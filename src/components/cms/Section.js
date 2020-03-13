@@ -35,7 +35,7 @@ const SectionError = ({ error }) => {
 
 function SubSection({ slug, parentSlug, subsections, children }) {
   try {
-    if (slug && parentSlug === slug) throw new Error('Cannot nest a section within itself')
+    if (slug && parentSlug === slug) throw new Error(`Cannot nest a section "${slug}" within itself`)
 
     if (children) return children
 
