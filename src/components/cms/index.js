@@ -3,6 +3,8 @@ import clsx from 'clsx'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
+import { Link as GatsbyLink } from 'gatsby'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Section from './Section'
@@ -85,6 +87,16 @@ const Image = ({ src, className = '', ...props }) => {
   return <img src={src} className={clsx(classes.root, className)} {...props} />
 }
 
+const MvLink = ({ to, children, ...other }) => {
+  const component = typeof to === 'string' && to.startsWith('/') ? GatsbyLink : null
+
+  return (
+    <Link {...other} component={component} to={to}>
+      {children}
+    </Link>
+  )
+}
+
 // All custom elements allowed on Contentful editor besides native HTML elements
 const Lib = {
   Box: MvBox,
@@ -95,6 +107,7 @@ const Lib = {
   Subtitle,
   Image,
   Section,
+  Link: MvLink,
   ...tabs,
   ...icons,
 }
