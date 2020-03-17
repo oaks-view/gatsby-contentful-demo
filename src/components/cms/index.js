@@ -87,14 +87,16 @@ const Image = ({ src, className = '', ...props }) => {
   return <img src={src} className={clsx(classes.root, className)} {...props} />
 }
 
-const MvLink = ({ to, children, ...other }) => {
-  const component = typeof to === 'string' && to.startsWith('/') ? GatsbyLink : null
+// https://www.gatsbyjs.org/docs/gatsby-link/#reminder-use-link-only-for-internal-links
+const MvLink = ({ href, children, activeClassName, partiallyActive, ...other }) => {
+  // start with exact one slash, anything else is external
+  const internal = /^\/(?!\/)/.test(href)
+  const props = internal
+    ? { to: href, activeClassName, partiallyActive, component: GatsbyLink, ...other }
+    : { href, ...other }
 
-  return (
-    <Link {...other} component={component} to={to}>
-      {children}
-    </Link>
-  )
+  console.log(props)
+  return <Link {...props}>{children}</Link>
 }
 
 // All custom elements allowed on Contentful editor besides native HTML elements
