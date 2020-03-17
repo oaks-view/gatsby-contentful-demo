@@ -3,17 +3,25 @@ import toLower from 'lodash/toLower'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
-// TODO: allow editor set props to custom icon size, color, ...
-const Icon = ({ name, href, ...props }) => {
+const sizes = { x: 15, m: 30, l: 45 }
+
+const useStylesIcon = makeStyles(theme => ({
+  root: props => ({
+    fontSize: sizes[props.size] || props.size,
+  }),
+}))
+
+/**
+ * props:
+ *  - name (any material icon name)
+ *  - size (`x`, `m`, `l` or with unit like `50px`, `3rem`)
+ */
+const Icon = ({ name, size = 'm' }) => {
+  const classes = useStylesIcon({ size })
+
   if (!name) throw new Error(`Icon is missing "name"`)
 
-  let icon = `mdi mdi-${toLower(name)}`
-
-  let IconEl = <span className={clsx(icon)}></span>
-
-  // if (href) {
-  //   IconEl = <a href={href}>{IconEl}</a>
-  // }
+  let IconEl = <span className={clsx('mdi', `mdi-${toLower(name)}`, classes.root)}></span>
 
   return IconEl
 }
@@ -24,9 +32,6 @@ const useStyles = makeStyles(theme => ({
     display: 'grid',
     gridTemplateColumns: `repeat(${props.count}, 1fr)`,
     justifyItems: 'center',
-    '& > .mdi': {
-      fontSize: 30,
-    },
   }),
 }))
 
@@ -35,9 +40,9 @@ Group of icons rendered side-by-side
 <Icons>
   <Icon name="pinterest" />
   <Icon name="facebook" />
-  <Icon name="instagram" />
+  <Icon name="instagram" size="l" />
   <Icon name="twitter" />
-  <Icon name="linkedin" />
+  <Icon name="linkedin" size="50px" />
 </Icons>
 */
 const Icons = ({ children, className = '', ...props }) => {
