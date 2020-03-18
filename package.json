@@ -9,6 +9,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
+    "@mdi/font": "^5.0.45",
     "clsx": "^1.1.0",
     "contentful": "^7.14.0",
     "gatsby-image": "^2.2.41",
