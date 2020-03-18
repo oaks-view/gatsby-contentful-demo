@@ -8,7 +8,7 @@ import { Link as GatsbyLink } from 'gatsby'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Section from './Section'
-import BoxImg from './BoxImg'
+import BgImage from './BgImage'
 import icons from './Icon'
 import tabs from './Tabs'
 
@@ -42,7 +42,7 @@ const Title = ({ children, className = '', ...props }) => {
   return (
     <Typography
       component="h1"
-      variant="h5"
+      variant="h4"
       color="primary"
       align="center"
       className={clsx(classes.root, className)}
@@ -102,7 +102,7 @@ const MvLink = ({ href, children, activeClassName, partiallyActive, ...other }) 
 // All custom elements allowed on Contentful editor besides native HTML elements
 const Lib = {
   Box: MvBox,
-  BoxImg,
+  BgImage,
   Row,
   Col,
   Title,
