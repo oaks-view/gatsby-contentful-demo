@@ -12,3 +12,10 @@ With Contentful and Gatsby you can connect your favorite static site generator w
 
 
 - [gatsby-starter-material-ui](https://www.gatsbyjs.org/starters/dominicabela/gatsby-starter-material-ui/)
+
+#### TODO
+
+- [ ] Consider using gatsby-mdx plugin to parse markdown and jsx from Contentful. Using it would result in replacing `react-jsx-parser`.
+      Right now our current setup doesnt support parsing markdown within tags. mdx supports that.
+
+
