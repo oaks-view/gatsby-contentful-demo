@@ -1,34 +1,14 @@
 import React from 'react'
 import clsx from 'clsx'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import { Link as GatsbyLink } from 'gatsby'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Section from './Section'
-import BgImage from './BgImage'
+import { Box, Row, Col } from './Box'
 import icons from './Icon'
 import tabs from './Tabs'
-
-export const Row = ({ children, ...props }) => (
-  <Grid container spacing={2} {...props}>
-    {children}
-  </Grid>
-)
-
-export const Col = ({ children, ...props }) => (
-  <Grid item xs={12} sm {...props}>
-    {children}
-  </Grid>
-)
-
-const MvBox = ({ children, ...props }) => (
-  <Box width="100%" {...props}>
-    {children}
-  </Box>
-)
 
 const useStylesTitle = makeStyles(theme => ({
   root: {
@@ -95,14 +75,12 @@ const MvLink = ({ href, children, activeClassName, partiallyActive, ...other }) 
     ? { to: href, activeClassName, partiallyActive, component: GatsbyLink, ...other }
     : { href, ...other }
 
-  console.log(props)
   return <Link {...props}>{children}</Link>
 }
 
 // All custom elements allowed on Contentful editor besides native HTML elements
 const Lib = {
-  Box: MvBox,
-  BgImage,
+  Box,
   Row,
   Col,
   Title,
