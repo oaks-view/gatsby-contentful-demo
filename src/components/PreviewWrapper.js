@@ -1,3 +1,5 @@
+// TODO handle preview with MDX before enabling this wrapper
+//
 import React from 'react'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
@@ -22,6 +24,7 @@ const pages = { custom: templates.CustomTemplate }
 function normalizeBody(body) {
   if (!body) return null
 
+  // TODO replace remark with MDX
   const html = remark()
     .use(remarkHtml)
     .processSync(body).contents

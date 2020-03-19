@@ -1,6 +1,4 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 
 const contentfulConfig = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,
@@ -15,7 +13,7 @@ if (!spaceId || !accessToken) {
 }
 
 const languages = {
-  langs: ['en', 'de'],
+  langs: ['en', 'de', 'fr', 'sv', 'no', 'it'],
   defaultLangKey: 'en',
 }
 
@@ -27,17 +25,11 @@ module.exports = {
   },
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
-    'gatsby-transformer-remark',
     'gatsby-transformer-sharp',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-mdx',
     'gatsby-plugin-sharp',
-    // {
-    //   resolve: 'gatsby-source-filesystem',
-    //   options: {
-    //     name: 'images',
-    //     path: `${__dirname}/src/images`,
-    //   },
-    // },
+    'gatsby-plugin-material-ui',
     {
       resolve: 'gatsby-plugin-i18n',
       options: {
@@ -49,22 +41,6 @@ module.exports = {
     {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
-    },
-    {
-      resolve: `gatsby-plugin-material-ui`,
-      // If you want to use styled components, in conjunction to Material-UI, you should:
-      // - Change the injection order
-      // - Add the plugin
-      options: {
-        // stylesProvider: {
-        //   injectFirst: true,
-        // },
-      },
-      // 'gatsby-plugin-styled-components',
-    },
-    {
-      resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/preview/*`] },
     },
     {
       resolve: `gatsby-plugin-netlify`,

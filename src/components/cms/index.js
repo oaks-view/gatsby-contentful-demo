@@ -5,7 +5,7 @@ import Link from '@material-ui/core/Link'
 import { Link as GatsbyLink } from 'gatsby'
 import { makeStyles } from '@material-ui/core/styles'
 
-import Section from './Section'
+// import Section from './Section'
 import { Box, Row, Col } from './Box'
 import icons from './Icon'
 import tabs from './Tabs'
@@ -86,7 +86,7 @@ const Lib = {
   Title,
   Subtitle,
   Image,
-  Section,
+  // Section,
   Link: MvLink,
   ...tabs,
   ...icons,
