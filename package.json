@@ -1,7 +1,7 @@
 {
   "name": "gatsby-contentful-starter",
   "description": "Starter Contentful Gatsby Blog",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": "Stefan Judis <stefanjudis@gmail.com>",
   "bugs": {
     "url": "https://github.com/contentful-userland/gatsby-contentful-starter/issues"
