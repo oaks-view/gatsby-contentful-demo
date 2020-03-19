@@ -63,10 +63,6 @@ module.exports = {
       // 'gatsby-plugin-styled-components',
     },
     {
-      resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/preview/*`] },
-    },
-    {
       resolve: `gatsby-plugin-netlify`,
       options: {
         headers: {}, // option to add more headers. `Link` headers are transformed by the below criteria
