@@ -1,5 +1,6 @@
 import React from 'react'
-import JsxParser from 'react-jsx-parser'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
+import { MDXProvider } from '@mdx-js/react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import { makeStyles } from '@material-ui/core/styles'
@@ -29,13 +30,11 @@ const RootSection = props => {
   const classes = useStyles(props)
   const { slug, body } = props
 
-  let jsx = body ? body.childMarkdownRemark.html : null
-
   return (
     <Box id={slug} className={classes.root}>
       {body && (
         <Container maxWidth="md">
-          <JsxParser components={{ ...CMSLib }} jsx={jsx} renderInWrapper={false} />
+          <MDXRenderer>{body.childMdx.body}</MDXRenderer>
         </Container>
       )}
     </Box>
@@ -52,11 +51,13 @@ const CustomTemplate = props => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <SEO title={title} description={description} />
-      {page.blocks.map((section, i) => (
-        <SectionContext.Provider key={i} value={section}>
-          <RootSection {...section} />
-        </SectionContext.Provider>
-      ))}
+      <MDXProvider components={CMSLib}>
+        {page.blocks.map((section, i) => (
+          <SectionContext.Provider key={i} value={section}>
+            <RootSection {...section} />
+          </SectionContext.Provider>
+        ))}
+      </MDXProvider>
       <footer>
         <Footer />
       </footer>
