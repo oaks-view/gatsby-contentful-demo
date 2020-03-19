@@ -13,7 +13,7 @@ if (!spaceId || !accessToken) {
 }
 
 const languages = {
-  langs: ['en', 'de'],
+  langs: ['en', 'de', 'fr', 'sv', 'no', 'it'],
   defaultLangKey: 'en',
 }
 
