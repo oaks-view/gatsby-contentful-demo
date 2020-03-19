@@ -270,7 +270,7 @@ exports.createPages = async ({ graphql, actions }) => {
             htmlLang: node.html_lang,
             country: node.country,
             sections: sectionsByLang,
-            path: node[pathField],
+            pagePath: node[pathField],
             title: node[`title_${lang}`],
             description: node[`description_${lang}`],
             hero: node[`hero_${lang}`],
