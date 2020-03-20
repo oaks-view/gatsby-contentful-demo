@@ -11,7 +11,6 @@ import Container from '@material-ui/core/Container'
 import SEO from '../components/SEO'
 import theme from '../themes/theme'
 import CMSLib from '../components/cms'
-import Footer from '../components/Footer'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,9 +42,6 @@ const CityTemplate = ({ pageContext }) => {
           <Section key={i} body={body} />
         ))}
       </MDXProvider>
-      <footer>
-        <Footer />
-      </footer>
     </ThemeProvider>
   )
 }
