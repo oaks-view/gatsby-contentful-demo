@@ -15,9 +15,6 @@ With Contentful and Gatsby you can connect your favorite static site generator w
 
 #### TODO
 
-- [ ] Consider using gatsby-mdx plugin to parse markdown and jsx from Contentful. Using it would result in replacing `react-jsx-parser`.
-      Right now our current setup doesnt support parsing markdown within tags. mdx supports that.
-  - [ ] See gatsby-mdx contentful example in the [mdx plugin repository](https://github.com/ChristopherBiscardi/gatsby-mdx/tree/master/examples/using-contentful)
-  - [ ] Confirm that with gatsby-mdx that production common.js bundle is smaller, 60kb. With `react-jsx-parser` this bundle is around 107kb
+- [ ] remove boilerplate files like `bin/*` and packages related
 
 

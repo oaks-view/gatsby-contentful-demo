@@ -31,7 +31,22 @@ const Section = ({ body }) => {
 }
 
 const CityTemplate = ({ pageContext }) => {
-  const { lang, sections, title, description, pagePath } = pageContext
+  // TODO use commented SEO fields, hero, body, ...
+  const {
+    // pagePath,
+    title,
+    // lang,
+    // template,
+    // category,
+    // country,
+    sections,
+    description,
+    // hero,
+    // body,
+    // robotsNoIndex,
+    // relCanonical,
+    // relAlternate,
+  } = pageContext
 
   return (
     <ThemeProvider theme={theme}>
