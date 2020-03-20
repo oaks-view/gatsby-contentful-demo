@@ -8,5 +8,12 @@
       "files": ".*rc",
       "options": { "parser": "json" }
     }
+    {
+      "files": "*.md",
+      "options": {
+        "printWidth": 120,
+        "proseWrap": "always"
+      }
+    }
   ]
 }
