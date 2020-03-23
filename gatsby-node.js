@@ -6,7 +6,6 @@
 
 const path = require("path");
 const get = require("lodash/get");
-const doSet = require("lodash/set");
 
 // https://github.com/gatsbyjs/gatsby/issues/11934#issuecomment-538662592
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
@@ -51,8 +50,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     type ContentfulPage implements Node {
       id: ID!
       active: Boolean!
-      country: String!
-      lang: String!
       category: String!
       path: String!
       template: String
@@ -88,8 +85,6 @@ exports.createPages = async ({ graphql, actions }) => {
           node {
             id
             active
-            country
-            lang
             category
             path
             template
@@ -133,7 +128,7 @@ exports.createPages = async ({ graphql, actions }) => {
     );
   }
 
-  const templates = {
+  const categories = {
     city: path.resolve("./src/templates/city.js"),
     service: path.resolve("./src/templates/service.js")
   };
@@ -142,42 +137,32 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // NOTE watch behaviour|performance when generating hundreds of pages
   for (const { node } of pages) {
-    const templatePath = templates[node.category];
+    const { path: pagePath, ...fields } = node;
 
-    if (!templatePath) {
+    const categoryPath = categories[node.category];
+
+    if (!categoryPath) {
       console.warn(
-        `[createPages][warn] category "${node.category}" is not supported yet. Skipping page "${node.path} - ${node.country}" generation`
+        `[createPages][warn] category "${node.category}" is not supported yet. Skipping page "${node.path}" generation`
       );
       continue;
     }
 
-    const sections = node.sections.map(s => get(s, "body.childMdx.body"));
+    const [country, lang] = pagePath.substring(1).split("/");
 
-    const fields = {
-      id: node.id,
-      active: node.active,
-      country: node.country,
-      lang: node.lang,
-      category: node.category,
-      pagePath: node.path,
-      template: node.template,
-      seoTitle: node.seo_title,
-      seoDescription: node.seo_description,
-      seoNoIndex: node.seo_no_index,
-      seoCanonical: node.seo_canonical,
-      seoAlternate: node.seo_alternate
-    };
-
-    console.log(`[createPages] generating page "${node.path}". %j`, fields);
+    console.log(`[createPages] generating page "${node.path}".`);
 
     createPage({
       path: node.path,
-      component: templatePath,
+      component: categoryPath,
       context: {
         ...fields,
-        sections,
+        pagePath,
+        country,
+        lang,
         hero: get(node, "hero.childMdx.body"),
         body: get(node, "body.childMdx.body"),
+        sections: node.sections.map(s => get(s, "body.childMdx.body")),
         pagesByCountry
       }
     });

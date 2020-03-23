@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -63,26 +62,9 @@ const renderPaths = pages => {
   );
 };
 
-const CityTemplate = ({ pageContext }) => {
-  // TODO use commented SEO fields, hero, body, ...
-  const {
-    // pagePath,
-    country,
-    lang,
-    seoTitle,
-    seoDescription,
-    template,
-    // category,
-    sections,
-    // hero,
-    // body,
-    seoNoIndex,
-    seoCanonical,
-    seoAlternate,
-    pagesByCountry
-  } = pageContext;
-
-  const locale = `${lang}_${country.toUpperCase()}`;
+const CityTemplate = props => {
+  const ctx = props.pageContext;
+  const locale = `${ctx.lang}_${ctx.country.toUpperCase()}`;
 
   // TODO see seo related
   // - https://ogp.me/
@@ -91,7 +73,7 @@ const CityTemplate = ({ pageContext }) => {
   const meta = [
     {
       property: "robots",
-      content: seoNoIndex ? "noindex, nofollow" : "all"
+      content: ctx.robots_no_index ? "noindex, nofollow" : "all"
     },
     {
       property: "og:locale",
@@ -100,11 +82,11 @@ const CityTemplate = ({ pageContext }) => {
   ];
 
   const links = [];
-  if (seoCanonical) {
-    links.push({ rel: "canonical", href: seoCanonical });
+  if (ctx.seo_canonical) {
+    links.push({ rel: "canonical", href: ctx.seo_canonical });
   }
-  if (seoAlternate) {
-    links.push({ rel: "alternate", href: seoAlternate });
+  if (ctx.seo_alternate) {
+    links.push({ rel: "alternate", href: ctx.seo_alternate });
   }
 
   return (
@@ -113,23 +95,18 @@ const CityTemplate = ({ pageContext }) => {
       <SEO
         lang={locale}
         link={links}
-        title={seoTitle}
-        description={seoDescription}
+        title={ctx.seo_title}
+        description={ctx.seo_description}
         meta={meta}
       />
       <MDXProvider components={CMSLib}>
-        {sections.map((body, i) => (
-          <Section key={i} body={body} template={template} />
+        {ctx.sections.map((body, i) => (
+          <Section key={i} body={body} template={ctx.template} />
         ))}
       </MDXProvider>
-      {renderPaths(pagesByCountry)}
+      {renderPaths(ctx.pagesByCountry)}
     </ThemeProvider>
   );
-};
-
-CityTemplate.propTypes = {
-  lang: PropTypes.string,
-  sections: PropTypes.array
 };
 
 export default CityTemplate;
