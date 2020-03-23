@@ -187,19 +187,21 @@ exports.createPages = async ({ graphql, actions }) => {
 };
 
 function getPagesByCountry(pages) {
-  let res = {};
+  const res = { Germany: [], German: [] };
 
   for (const page of pages) {
-    const { country, lang, path } = page.node;
+    const path = page.node.path.toLowerCase();
 
-    const temp = get(res, `${country}.${lang}`);
-    if (!temp) {
-      doSet(res, `${country}.${lang}`, []);
+    // /de/*
+    if (path.startsWith("/de/")) {
+      res.Germany.push(path);
     }
 
-    res[country][lang].push(path);
+    // */de/*
+    if (/^\/.*\/de\/.*/i.test(path)) {
+      res.German.push(path);
+    }
   }
 
-  console.log(res);
   return res;
 }
