@@ -4,47 +4,34 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-const path = require("path");
-const get = require("lodash/get");
+const path = require('path')
+const get = require('lodash/get')
 
 // https://github.com/gatsbyjs/gatsby/issues/11934#issuecomment-538662592
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
-  if (stage.startsWith("develop")) {
+  if (stage.startsWith('develop')) {
     actions.setWebpackConfig({
       resolve: {
         alias: {
-          "react-dom": "@hot-loader/react-dom"
-        }
-      }
-    });
+          'react-dom': '@hot-loader/react-dom',
+        },
+      },
+    })
   }
-};
+}
 
 // https://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions;
+  const { createTypes } = actions
 
   // TODO handle `sections` fields for ContentfulPage and then add `@dontInfer`
   // relying of inferring fields may slow things down as the content grows
   const typeDefs = `
-    type contentfulSectionBodyTextNode implements Node {
-      body: String
-      childMdx: Mdx
+    type contentfulMarkdownChildHtml implements Node {
+      html: String
     }
-
-    type contentfulPageBodyTextNode implements Node {
-      body: String
-      childMdx: Mdx
-    }
-
-    type contentfulPageHeroTextNode implements Node {
-      hero: String
-      childMdx: Mdx
-    }
-
-    type ContentfulSection implements Node {
-      name: String
-      body: contentfulSectionBodyTextNode
+    type contenfulLongText implements Node {
+      childMarkdownRemark: contentfulMarkdownChildHtml
     }
 
     type ContentfulPage implements Node {
@@ -58,15 +45,15 @@ exports.createSchemaCustomization = ({ actions }) => {
       seo_no_index: Boolean
       seo_canonical: String
       seo_alternate: String
-      hero: contentfulPageHeroTextNode
-      body: contentfulPageBodyTextNode
+      hero: contenfulLongText
+      body: contenfulLongText
     }
-  `;
-  createTypes(typeDefs);
-};
+  `
+  createTypes(typeDefs)
+}
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
 
   const result = await graphql(`
     {
@@ -78,9 +65,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      allContentfulPage(
-        filter: { active: { eq: true }, category: { in: ["city", "service"] } }
-      ) {
+      allContentfulPage(filter: { active: { eq: true }, category: { in: ["city", "service"] } }) {
         edges {
           node {
             id
@@ -94,19 +79,19 @@ exports.createPages = async ({ graphql, actions }) => {
             seo_canonical
             seo_alternate
             hero {
-              childMdx {
-                body
+              childMarkdownRemark {
+                html
               }
             }
             body {
-              childMdx {
-                body
+              childMarkdownRemark {
+                html
               }
             }
             sections {
               body {
-                childMdx {
-                  body
+                childMarkdownRemark {
+                  html
                 }
               }
             }
@@ -114,43 +99,41 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `);
+  `)
 
   if (result.errors) {
-    throw result.errors;
+    throw result.errors
   }
 
-  const pages = get(result, "data.allContentfulPage.edges", []);
+  const pages = get(result, 'data.allContentfulPage.edges', [])
 
   if (!pages.length) {
     throw new Error(
-      `[createPage][error] there are no pages to render. Double check the query or create pages on Contentful`
-    );
+      `[createPage][error] there are no pages to render. Double check the query or create pages on Contentful`,
+    )
   }
 
   const categories = {
-    city: path.resolve("./src/templates/city.js"),
-    service: path.resolve("./src/templates/service.js")
-  };
-
-  const pagesByCountry = getPagesByCountry(pages);
+    city: path.resolve('./src/templates/city.js'),
+    service: path.resolve('./src/templates/service.js'),
+  }
 
   // NOTE watch behaviour|performance when generating hundreds of pages
   for (const { node } of pages) {
-    const { path: pagePath, ...fields } = node;
+    const { path: pagePath, ...fields } = node
 
-    const categoryPath = categories[node.category];
+    const categoryPath = categories[node.category]
 
     if (!categoryPath) {
       console.warn(
-        `[createPages][warn] category "${node.category}" is not supported yet. Skipping page "${node.path}" generation`
-      );
-      continue;
+        `[createPages][warn] category "${node.category}" is not supported yet. Skipping page "${node.path}" generation`,
+      )
+      continue
     }
 
-    const [country, lang] = pagePath.substring(1).split("/");
+    const [country, lang] = pagePath.substring(1).split('/')
 
-    console.log(`[createPages] generating page "${node.path}".`);
+    console.log(`[createPages] generating page "${node.path}".`)
 
     createPage({
       path: node.path,
@@ -160,33 +143,29 @@ exports.createPages = async ({ graphql, actions }) => {
         pagePath,
         country,
         lang,
-        hero: get(node, "hero.childMdx.body"),
-        body: get(node, "body.childMdx.body"),
-        sections: node.sections.map(s => get(s, "body.childMdx.body")),
-        pagesByCountry
-      }
-    });
+      },
+    })
 
-    console.log(`[createPages] page "${node.path}" created.`);
+    console.log(`[createPages] page "${node.path}" created.`)
   }
-};
+}
 
 function getPagesByCountry(pages) {
-  const res = { Germany: [], German: [] };
+  const res = { Germany: [], German: [] }
 
   for (const page of pages) {
-    const path = page.node.path.toLowerCase();
+    const path = page.node.path.toLowerCase()
 
     // /de/*
-    if (path.startsWith("/de/")) {
-      res.Germany.push(path);
+    if (path.startsWith('/de/')) {
+      res.Germany.push(path)
     }
 
     // */de/*
     if (/^\/.*\/de\/.*/i.test(path)) {
-      res.German.push(path);
+      res.German.push(path)
     }
   }
 
-  return res;
+  return res
 }
