@@ -4,25 +4,25 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-const path = require('path')
-const get = require('lodash/get')
+const path = require("path");
+const get = require("lodash/get");
 
 // https://github.com/gatsbyjs/gatsby/issues/11934#issuecomment-538662592
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
-  if (stage.startsWith('develop')) {
+  if (stage.startsWith("develop")) {
     actions.setWebpackConfig({
       resolve: {
         alias: {
-          'react-dom': '@hot-loader/react-dom',
-        },
-      },
-    })
+          "react-dom": "@hot-loader/react-dom"
+        }
+      }
+    });
   }
-}
+};
 
 // https://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createTypes } = actions;
 
   // TODO handle `sections` fields for ContentfulPage and then add `@dontInfer`
   // relying of inferring fields may slow things down as the content grows
@@ -48,27 +48,27 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type ContentfulPage implements Node {
-      contentful_id: String!
-      title: String
-      description: String
-      category: String
+      id: ID!
+      active: Boolean!
+      country: String!
+      lang: String!
+      category: String!
+      path: String!
       template: String
-      country: String
-      lang: String
-      path: String
-      active: Boolean
+      seo_title: String!
+      seo_description: String
+      seo_no_index: Boolean
+      seo_canonical: String
+      seo_alternate: String
       hero: contentfulPageHeroTextNode
       body: contentfulPageBodyTextNode
-      rel_canonical: String
-      rel_alternate: String
-      robots_noindex: String
     }
-  `
-  createTypes(typeDefs)
-}
+  `;
+  createTypes(typeDefs);
+};
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
 
   const result = await graphql(`
     {
@@ -80,22 +80,23 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      allContentfulPage(filter: { active: { eq: true }, category: { in: ["city", "service"] } }) {
+      allContentfulPage(
+        filter: { active: { eq: true }, category: { in: ["city", "service"] } }
+      ) {
         edges {
           node {
             id
-            contentful_id
-            title
-            description
-            category
-            template
+            active
             country
             lang
+            category
             path
-            active
-            rel_canonical
-            rel_alternate
-            robots_noindex
+            template
+            seo_title
+            seo_description
+            seo_no_index
+            seo_canonical
+            seo_alternate
             hero {
               childMdx {
                 body
@@ -117,48 +118,54 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `)
+  `);
 
   if (result.errors) {
-    throw result.errors
+    throw result.errors;
   }
 
-  const pages = get(result, 'data.allContentfulPage.edges', [])
+  const pages = get(result, "data.allContentfulPage.edges", []);
 
   if (!pages.length) {
     throw new Error(
-      `[createPage][error] there are no pages to render. Double check the query or create pages on Contentful`,
-    )
+      `[createPage][error] there are no pages to render. Double check the query or create pages on Contentful`
+    );
   }
 
   const templates = {
-    city: path.resolve('./src/templates/city.js'),
-    service: path.resolve('./src/templates/service.js'),
-  }
+    city: path.resolve("./src/templates/city.js"),
+    service: path.resolve("./src/templates/service.js")
+  };
 
   // NOTE watch behaviour|performance when generating hundreds of pages
   for (const { node } of pages) {
-    const templatePath = templates[node.category]
+    const templatePath = templates[node.category];
 
     if (!templatePath) {
       console.warn(
-        `[createPages][warn] category "${node.category}" is not supported yet. Skipping page "${node.path} - ${node.lang}" generation`,
-      )
-      continue
+        `[createPages][warn] category "${node.category}" is not supported yet. Skipping page "${node.path} - ${node.country}" generation`
+      );
+      continue;
     }
 
-    const sections = node.sections.map(s => get(s, 'body.childMdx.body'))
+    const sections = node.sections.map(s => get(s, "body.childMdx.body"));
 
     const fields = {
+      id: node.id,
+      active: node.active,
       country: node.country,
       lang: node.lang,
-      pagePath: node.path,
-      title: node.title,
-      template: node.template,
       category: node.category,
-    }
+      pagePath: node.path,
+      template: node.template,
+      seoTitle: node.seo_title,
+      seoDescription: node.seo_description,
+      seoNoIndex: node.seo_no_index,
+      seoCanonical: node.seo_canonical,
+      seoAlternate: node.seo_alternate
+    };
 
-    console.log(`[createPages] generating page "${node.path}". %j`, fields)
+    console.log(`[createPages] generating page "${node.path}". %j`, fields);
 
     createPage({
       path: node.path,
@@ -166,15 +173,11 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         ...fields,
         sections,
-        description: node.description,
-        hero: get(node, 'hero.childMdx.body'),
-        body: get(node, 'body.childMdx.body'),
-        robotsNoIndex: node.robots_noindex,
-        relCanonical: node.rel_canonical,
-        relAlternate: node.rel_alternate,
-      },
-    })
+        hero: get(node, "hero.childMdx.body"),
+        body: get(node, "body.childMdx.body")
+      }
+    });
 
-    console.log(`[createPages] page "${node.path}" created.`)
+    console.log(`[createPages] page "${node.path}" created.`);
   }
-}
+};
