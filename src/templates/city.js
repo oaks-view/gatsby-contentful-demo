@@ -13,13 +13,15 @@ import theme from "../themes/theme";
 import CMSLib from "../components/cms";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(5, 0)
-  }
+  root: props => ({
+    padding: theme.spacing(5, 0),
+    ...((props.template === 'single column') && { border: '20px solid #ccc'}),
+    ...((props.template === 'two columns') && { borderLeft: '20px solid red', borderRight: '20px solid blue' }),
+  })
 }));
 
-const Section = ({ body }) => {
-  const classes = useStyles();
+const Section = ({ body, template }) => {
+  const classes = useStyles({ template });
 
   return (
     <Box className={classes.root}>
@@ -38,7 +40,7 @@ const CityTemplate = ({ pageContext }) => {
     lang,
     seoTitle,
     seoDescription,
-    // template,
+    template,
     // category,
     sections,
     // hero,
@@ -85,7 +87,7 @@ const CityTemplate = ({ pageContext }) => {
       />
       <MDXProvider components={CMSLib}>
         {sections.map((body, i) => (
-          <Section key={i} body={body} />
+          <Section key={i} body={body} template={template}/>
         ))}
       </MDXProvider>
     </ThemeProvider>
