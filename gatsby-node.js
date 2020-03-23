@@ -6,6 +6,7 @@
 
 const path = require("path");
 const get = require("lodash/get");
+const doSet = require("lodash/set");
 
 // https://github.com/gatsbyjs/gatsby/issues/11934#issuecomment-538662592
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
@@ -137,6 +138,8 @@ exports.createPages = async ({ graphql, actions }) => {
     service: path.resolve("./src/templates/service.js")
   };
 
+  const pagesByCountry = getPagesByCountry(pages);
+
   // NOTE watch behaviour|performance when generating hundreds of pages
   for (const { node } of pages) {
     const templatePath = templates[node.category];
@@ -174,10 +177,29 @@ exports.createPages = async ({ graphql, actions }) => {
         ...fields,
         sections,
         hero: get(node, "hero.childMdx.body"),
-        body: get(node, "body.childMdx.body")
+        body: get(node, "body.childMdx.body"),
+        pagesByCountry
       }
     });
 
     console.log(`[createPages] page "${node.path}" created.`);
   }
 };
+
+function getPagesByCountry(pages) {
+  let res = {};
+
+  for (const page of pages) {
+    const { country, lang, path } = page.node;
+
+    const temp = get(res, `${country}.${lang}`);
+    if (!temp) {
+      doSet(res, `${country}.${lang}`, []);
+    }
+
+    res[country][lang].push(path);
+  }
+
+  console.log(res);
+  return res;
+}

@@ -7,6 +7,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 import SEO from "../components/SEO";
 import theme from "../themes/theme";
@@ -15,6 +17,9 @@ import CMSLib from "../components/cms";
 const useStyles = makeStyles(theme => ({
   root: props => ({
     padding: theme.spacing(5, 0),
+    "&:nth-child(even)": {
+      backgroundColor: "#F8F9FB"
+    },
     ...((props.template === 'single column') && { border: '20px solid #ccc'}),
     ...((props.template === 'two columns') && { borderLeft: '20px solid red', borderRight: '20px solid blue' }),
   })
@@ -27,6 +32,35 @@ const Section = ({ body, template }) => {
     <Box className={classes.root}>
       <Container maxWidth="md">
         <MDXRenderer>{body}</MDXRenderer>
+      </Container>
+    </Box>
+  );
+};
+
+// just for the demo to display all active pages by country/lang
+const renderPaths = pages => {
+  return (
+    <Box py={5}>
+      <Container maxWidth="md">
+        <Typography variant="h5" component="h2" color="inherit">
+          Pages by country and language
+        </Typography>
+        {Object.keys(pages).map(country => (
+          <Grid container key={country}>
+            {Object.keys(pages[country]).map((lang, i) => (
+              <Grid item xs={12} sm={6} key={i}>
+                <h3>
+                  {country}/{lang}
+                </h3>
+                <ul>
+                  {pages[country][lang].map((path, i) => (
+                    <li key={i}>{path}</li>
+                  ))}
+                </ul>
+              </Grid>
+            ))}
+          </Grid>
+        ))}
       </Container>
     </Box>
   );
@@ -47,7 +81,8 @@ const CityTemplate = ({ pageContext }) => {
     // body,
     seoNoIndex,
     seoCanonical,
-    seoAlternate
+    seoAlternate,
+    pagesByCountry
   } = pageContext;
 
   const locale = `${lang}_${country.toUpperCase()}`;
@@ -90,6 +125,7 @@ const CityTemplate = ({ pageContext }) => {
           <Section key={i} body={body} template={template}/>
         ))}
       </MDXProvider>
+      {renderPaths(pagesByCountry)}
     </ThemeProvider>
   );
 };
