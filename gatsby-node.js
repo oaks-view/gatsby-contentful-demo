@@ -78,9 +78,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      allContentfulPage(
-        filter: { active: { eq: true }, category: { in: ["city", "service"] } }
-      ) {
+      allContentfulPage(filter: { active: { eq: true } }) {
         edges {
           node {
             id
@@ -130,7 +128,11 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const categories = {
     city: path.resolve("./src/templates/city.js"),
-    service: path.resolve("./src/templates/service.js")
+    service: path.resolve("./src/templates/service.js"),
+    movings: path.resolve("./src/templates/movings.js"),
+    movers: path.resolve("./src/templates/movers.js"),
+    articles: path.resolve("./src/templates/articles.js"),
+    static: path.resolve("./src/templates/static.js")
   };
 
   const pagesByCountry = getPagesByCountry(pages);
