@@ -112,18 +112,12 @@ const LeadGen = () => {
               </div>
             </Box>
             <Box width="100%">
-              <InputBase
-                className={classes.field}
-                inputProps={{ 'aria-label': 'naked', placeholder: 'Vorname' }}
-              />
+              <InputBase className={classes.field} inputProps={{ 'aria-label': 'naked', placeholder: 'Vorname' }} />
             </Box>
           </Box>
           <Box className={classes.fieldGroup} width="50%" ml={1}>
             <Box width="100%">
-              <InputBase
-                className={classes.field}
-                inputProps={{ 'aria-label': 'naked', placeholder: 'Nachname' }}
-              />
+              <InputBase className={classes.field} inputProps={{ 'aria-label': 'naked', placeholder: 'Nachname' }} />
             </Box>
           </Box>
         </Box>
@@ -135,10 +129,7 @@ const LeadGen = () => {
             </div>
           </Box>
           <Box width="100%">
-            <InputBase
-              className={classes.field}
-              inputProps={{ 'aria-label': 'naked', placeholder: 'E-mail' }}
-            />
+            <InputBase className={classes.field} inputProps={{ 'aria-label': 'naked', placeholder: 'E-mail' }} />
           </Box>
         </Box>
 
@@ -173,16 +164,9 @@ const LeadGen = () => {
         </Box>
 
         <Typography component="div">
-          <Box
-            fontStyle="normal"
-            fontSize="9px"
-            my={2}
-            textAlign="center"
-            color="#9b9b9b"
-          >
-            Ihre Daten werden nicht an Dritte weitergegeben. Ich bin
-            einverstanden, dass Movinga mich anruft, um Details zu besprechen
-            und ein unverbindliches Angebot zu erstellen.
+          <Box fontStyle="normal" fontSize="9px" my={2} textAlign="center" color="#9b9b9b">
+            Ihre Daten werden nicht an Dritte weitergegeben. Ich bin einverstanden, dass Movinga mich anruft, um Details
+            zu besprechen und ein unverbindliches Angebot zu erstellen.
           </Box>
         </Typography>
       </form>

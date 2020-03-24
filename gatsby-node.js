@@ -114,15 +114,15 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   const categories = {
-    city: path.resolve("./src/templates/city.js"),
-    service: path.resolve("./src/templates/service.js"),
-    movings: path.resolve("./src/templates/movings.js"),
-    movers: path.resolve("./src/templates/movers.js"),
-    articles: path.resolve("./src/templates/articles.js"),
-    static: path.resolve("./src/templates/static.js")
-  };
+    city: path.resolve('./src/templates/city.js'),
+    service: path.resolve('./src/templates/service.js'),
+    movings: path.resolve('./src/templates/movings.js'),
+    movers: path.resolve('./src/templates/movers.js'),
+    articles: path.resolve('./src/templates/articles.js'),
+    static: path.resolve('./src/templates/static.js'),
+  }
 
-  const pagesByCountry = getPagesByCountry(pages);
+  const pagesByCountry = getPagesByCountry(pages)
 
   // NOTE watch behaviour|performance when generating hundreds of pages
   for (const { node } of pages) {

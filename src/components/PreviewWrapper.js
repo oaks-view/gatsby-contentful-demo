@@ -59,9 +59,7 @@ function normalizeData(data) {
 const PreviewWrapper = props => {
   const {
     site: {
-      siteMetadata: {
-        contentfulConfig: config,
-      },
+      siteMetadata: { contentfulConfig: config },
     },
   } = useStaticQuery(
     graphql`
@@ -79,7 +77,7 @@ const PreviewWrapper = props => {
           }
         }
       }
-    `,
+    `
   )
 
   const [entryId, setEntryId] = React.useState(props.entryId)
@@ -113,8 +111,8 @@ const PreviewWrapper = props => {
       } else {
         PreviewComponent = () => (
           <Typography variant="body1" align="center">
-            Page <b>{data.category}</b> not supported. To enable this page enter a <i>path</i>, select a{' '}
-            <i>template</i> and add <i>sections</i>.
+            Page <b>{data.category}</b> not supported. To enable this page enter a <i>path</i>, select a <i>template</i>{' '}
+            and add <i>sections</i>.
           </Typography>
         )
       }

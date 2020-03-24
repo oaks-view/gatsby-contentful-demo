@@ -3,9 +3,7 @@ import { Router } from '@reach/router'
 
 import PreviewWrapper from '../components/PreviewWrapper'
 
-const types = [
-  { type: 'page', component: null },
-]
+const types = [{ type: 'page', component: null }]
 
 const Preview = () => {
   return (

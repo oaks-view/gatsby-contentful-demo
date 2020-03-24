@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react'
 
 export default function MoversCategory() {
-  return <div>movers category</div>;
+  return <div>movers category</div>
 }
