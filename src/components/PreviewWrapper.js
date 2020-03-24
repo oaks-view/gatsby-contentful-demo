@@ -18,8 +18,7 @@ import templates from '../templates'
 
 // how many levels Contentful should resolve
 const LINKS_LEVEL = 6
-// const pages = { home: HomeTemplate, city: CityTemplate, custom: CustomTemplate }
-const pages = { custom: templates.CustomTemplate }
+const pageCategories = { city: templates.CityTemplate }
 
 function normalizeBody(body) {
   if (!body) return null
@@ -41,18 +40,16 @@ function normalizeData(data) {
   }
 
   // body contains our custom CMS tags, bultin HTML and markdown. first it runs through markdown parser
-  // blocks are for page sections and nested sections which need to recursively normalized
+  // blocks are for page sections and need to recursively normalized
   // TODO maybe standardize asset fiel. instead of image,backgroundImage just name image|asset|file
-  const { blocks = [], body, image, backgroundImage, ...fields } = data.fields
+  const { sections = [], body, ...fields } = data.fields
 
   let result = {
     internal: { type: `Contentful${contentfulType}` },
     ...fields,
     ...(body && { body: normalizeBody(body) }),
-    ...(image && { image: { ...image.fields } }),
-    ...(backgroundImage && { backgroundImage: { ...backgroundImage.fields } }),
-    ...(blocks.length && {
-      blocks: blocks.map(block => normalizeData(block)),
+    ...(sections.length && {
+      sections: sections.map(section => normalizeData(section)),
     }),
   }
 
@@ -64,7 +61,6 @@ const PreviewWrapper = props => {
     site: {
       siteMetadata: {
         contentfulConfig: config,
-        languages: { langs, defaultLangKey },
       },
     },
   } = useStaticQuery(
@@ -88,38 +84,36 @@ const PreviewWrapper = props => {
 
   const [entryId, setEntryId] = React.useState(props.entryId)
   const [data, setData] = React.useState()
-  const [lang, setLang] = React.useState(defaultLangKey)
   const [loading, setLoading] = React.useState(false)
 
   const client = getContentfulClient({ config })
 
   React.useEffect(() => {
-    if (!data || !data[lang]) {
+    if (!data) {
       setLoading(true)
-      const locale = lang || defaultLangKey
       client
-        .getEntry(props.entryId, { locale, include: LINKS_LEVEL })
+        .getEntry(props.entryId, { include: LINKS_LEVEL })
         .then(entry => {
           setEntryId(props.entryId)
-          setData({ ...data, [locale]: normalizeData(entry) })
+          setData({ ...data, ...normalizeData(entry) })
           setLoading(false)
         })
         .catch(console.error)
     }
-  }, [entryId, data, lang])
+  }, [entryId, data])
 
-  const langData = data && data[lang]
   let PreviewComponent
 
-  if (langData) {
-    if (langData.internal.type === 'ContentfulPage') {
-      if (Object.keys(pages).includes(langData.template)) {
-        const Page = pages[langData.template]
-        PreviewComponent = () => <Page data={{ contentfulPage: { ...langData } }} />
+  if (data) {
+    if (data.internal.type === 'ContentfulPage') {
+      const [country, lang] = data.path.substring(1).split('/')
+      if (Object.keys(pageCategories).includes(data.category)) {
+        const Page = pageCategories[data.category]
+        PreviewComponent = () => <Page pageContext={{ ...data, country, lang }} />
       } else {
         PreviewComponent = () => (
           <Typography variant="body1" align="center">
-            Page <b>{langData.title}</b> not supported. To enable this page enter a <i>path</i>, select a{' '}
+            Page <b>{data.category}</b> not supported. To enable this page enter a <i>path</i>, select a{' '}
             <i>template</i> and add <i>sections</i>.
           </Typography>
         )
@@ -127,7 +121,7 @@ const PreviewWrapper = props => {
     } else {
       PreviewComponent = () => (
         <Typography variant="body1" align="center">
-          Page <b>No preview support for {langData.title}</b>.
+          Page <b>No preview support for {data.title}</b>.
         </Typography>
       )
     }
@@ -150,18 +144,6 @@ const PreviewWrapper = props => {
           <IconButton onClick={() => setData(null)}>
             <ReplayIcon fontSize="large" />
           </IconButton>
-        </Box>
-        <Box display="flex" alignItems="center" px={2}>
-          {langs.map(lan => (
-            <Typography
-              key={lan}
-              style={{ padding: '0 5px', cursor: 'pointer' }}
-              variant={lan === lang ? 'h6' : 'body2'}
-              onClick={() => setLang(lan)}
-            >
-              {lan}
-            </Typography>
-          ))}
         </Box>
       </Box>
       <div style={{ height: 4 }}>{loading && <LinearProgress color="secondary" />}</div>
